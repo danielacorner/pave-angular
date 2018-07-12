@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar',
+  selector: "app-navbar",
   template: `
    <nav>
       <div class="nav-wrapper grey lighten-4">
@@ -13,14 +13,17 @@ import { Component, OnInit } from '@angular/core';
           <li><a routerLink="/help" exact>Help</a></li>
           <li><a routerLink="/feedback" exact>Feedback</a></li>
         <!-- search box -->
-        <li class="right"><a class="btn waves-effect waves-light">search</a></li>
         <li class="right"><form>
-          <div class="input-field">
+          <ul>
+          <li><div class="input-field">
             <input type="search" id="search" required/>
             <i class="prefix label-icon material-icons green-text">search</i>
-            <label id="search-label" for="search" class="">Search jobs...</label>
+            <label id="search-label" for="search" class="">Search jobs...
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <i class="material-icons">close</i>
-          </div>
+          </div></li>
+          <li class="right"><button class="btn waves-effect waves-light">search</button></li>
+          </ul>
         </form></li>
         </ul>
 
@@ -69,12 +72,14 @@ import { Component, OnInit } from '@angular/core';
       #search-label {
         margin: -12px 0 0 50px;
         font-size: 16px;
+        text-decoration: underline;
         /* color: #27AE60; */
       }
       #search-label.active {
         margin: -2px 0 0 50px;
       }
-      form div {
+      form button {
+        margin: -5px 12px 0px 12px;
       }
     `
   ]
@@ -84,7 +89,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(function() {
-      $('.sidenav').sidenav();
+      $(".sidenav").sidenav();
     });
   }
 }
