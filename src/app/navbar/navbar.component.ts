@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-navbar",
+  selector: 'app-navbar',
   template: `
    <nav>
       <div class="nav-wrapper grey lighten-4">
@@ -68,6 +68,7 @@ import { Component, OnInit } from '@angular/core';
       }
       input#search {
         height: 64px;
+        margin-bottom: 0;
       }
       #search-label {
         margin: -12px 0 0 50px;
@@ -89,7 +90,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(function() {
-      $(".sidenav").sidenav();
+      // $(".sidenav").sidenav();
     });
   }
 }
