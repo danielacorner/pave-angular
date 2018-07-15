@@ -14,6 +14,9 @@ import { DataService } from '../data.service';
         /> -->
       </g>
     </svg>
+    <div class='container'>
+      <app-colour-legend-button [forceSimulation]="vizSimulation"></app-colour-legend-button>
+    </div>
   </div>
   `,
   styles: [`
@@ -35,8 +38,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   constructor(private _dataService: DataService) {}
 
   public navbarHeight = 64;
-  public width = window.innerWidth;
   public height = window.innerHeight - this.navbarHeight;
+  public width = window.innerWidth;
   // data viz properties
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
@@ -55,6 +58,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public gTransform = 'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
   public data$ = [];
   public nodes = [];
+  public vizSimulation;
   ngOnInit() {
   }
   ngAfterContentInit() {
@@ -101,7 +105,10 @@ export class VizComponent implements OnInit, AfterContentInit {
         return d;
       });
 
-      // resolving function scope by saving outer scope
+      // VIZ NODES
+      console.log('Viz nodes: ' + this.nodes);
+
+      // resolve function scope by saving outer scope
       const that = this;
 
       // append the circles to svg then style
@@ -139,6 +146,9 @@ export class VizComponent implements OnInit, AfterContentInit {
         .force('collide', collide)
         .force('cluster', clustering)
         .on('tick', ticked);
+
+      // pass the simulation to child components
+      this.vizSimulation = simulation;
 
       function ticked() {
         circles
