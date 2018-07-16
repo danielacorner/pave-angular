@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../data.service';
 import * as d3 from 'd3';
 
@@ -21,6 +21,7 @@ import * as d3 from 'd3';
 })
 export class FilterSliderComponent implements OnInit {
   public sliderValue;
+  @Input() public filterVariable;
   @Output() public childEvent = new EventEmitter();
   public min;
   public max;

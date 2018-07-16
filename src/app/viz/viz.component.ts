@@ -14,6 +14,7 @@ import { DataService } from '../data.service';
 
       <app-filter-slider class="sliderLang"
       (childEvent)="handleSliderUpdate($event, 'language')"
+      [filterVariable]="'language'"
       ></app-filter-slider>
 
       <app-colour-legend-button
@@ -92,38 +93,40 @@ export class VizComponent implements OnInit, AfterContentInit {
   public nodes = [];
 
   public simulation;
+
   public forceXCombine = d3.forceX().strength(0.4);
   public forceYCombine = d3.forceY().strength(0.4);
   public forceGravity = d3.forceManyBody().strength(this.height * -0.08);
   public forceCollide = d3.forceCollide(this.height * 0.009);
   public clustering;
   public collide;
-  public dragstarted;
-  public dragged;
-  public dragended;
   public ticked;
 
-  // min and max skill values
-  public skills = {
-    language: {
-      min: d3.min(this.data$.map(d => d.skillsLang)),
-      max: d3.max(this.data$.map(d => d.skillsLang))
-    },
-    logic: {
-      min: 10,
-      max: 30
-    },
-    math: {
-      min: 10,
-      max: 30
-    },
-    computer: {
-      min: 10,
-      max: 30
-    }
-  };
+  public div;
+
   // the current slider values
   public sliderLangValue;
+
+  // Drag functions used for interactivity
+  public dragstarted = function (d) {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0.3).restart();
+      }
+      d.fx = d.x;
+      d.fy = d.y;
+    };
+  public dragged = function (d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    };
+  public dragended = function (d) {
+      if (!d3.event.active) {
+        this.simulation.alphaTarget(0);
+      }
+      d.fx = null;
+      d.fy = null;
+    };
+
   ngOnInit() {}
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope
@@ -135,7 +138,7 @@ export class VizComponent implements OnInit, AfterContentInit {
 
       // Define the div for the tooltip
       // todo: extract tooltip component
-      const div = d3
+      this.div = d3
         .select('body')
         .append('div')
         .attr('class', 'tooltip')
@@ -213,11 +216,11 @@ export class VizComponent implements OnInit, AfterContentInit {
         )
         // add tooltips to each circle
         .on('mouseover', function(d) {
-          div
+          that.div
             .transition()
             .duration(200)
             .style('opacity', 0.9);
-          div
+          that.div
             .html(
               'The major ' +
                 d.major +
@@ -232,7 +235,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             .style('top', d3.event.pageY - 28 + 'px');
         })
         .on('mouseout', function(d) {
-          div
+          that.div
             .transition()
             .duration(500)
             .style('opacity', 0);
@@ -242,27 +245,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
-      // Drag functions used for interactivity
-      this.dragstarted = function(d) {
-        if (!d3.event.active) {
-          this.simulation.alphaTarget(0.3).restart();
-        }
-        d.fx = d.x;
-        d.fy = d.y;
-      };
 
-      this.dragged = function(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-      };
-
-      this.dragended = function(d) {
-        if (!d3.event.active) {
-          this.simulation.alphaTarget(0);
-        }
-        d.fx = null;
-        d.fy = null;
-      };
       // These are implementations of the custom forces.
       this.clustering = function (alpha) {
         that.nodes.forEach(function (d) {
@@ -344,36 +327,51 @@ export class VizComponent implements OnInit, AfterContentInit {
     // TODO: faster = include skills values in the nodes initially and ONLY filter the nodes
     const filteredNodes = this.nodes.filter(d => d[filterVariable] >= $event);
 
-    // update the viz from the new nodes
-    this.circles = this.circles.data(filteredNodes);
-
-    this.circles.exit().remove(); // TODO: transition in and out
-
-    this.circles.enter().append('circle')
+    // UPDATE the viz data
+    this.circles = this.circles.data(filteredNodes, function (d) { return d.id; });
+    // EXIT
+    this.circles.exit().transition().duration(500)
+      // exit "pop" transition: enlarge radius & fade out
+      .attr('r', $(window).height() * 0.03)
+      .styleTween('opacity', function (d) {
+        const i = d3.interpolate(1, 0);
+        return function (t) { return i(t); };
+      }).remove();
+    // ENTER and MERGE
+    const newCircles = this.circles.enter().append('circle')
       .attr('r', (d) => d.r)
       .attr('fill', (d) => that.colorScale(d.cluster))
-      .call(d3.drag()
-        .on('start', that.dragstarted)
-        .on('drag', that.dragged)
-        .on('end', that.dragended));
 
-    // Update and restart the simulation.
-    this.simulation.nodes(filteredNodes).alpha(0.3).restart();
+        // add tooltips to each circle
+        // todo: extract tooltips
+        .on('mouseover', function (d) {
+          that.div.transition()
+            .duration(200)
+            .style('opacity', .9);
+          that.div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat +
+            '<br/>Total: ' + d.total + '; Radius:' + d.r)
+            .style('left', (d3.event.pageX) + 'px')
+            .style('top', (d3.event.pageY - 28) + 'px');
+        })
+        .on('mouseout', function (d) {
+          that.div.transition()
+            .duration(500)
+            .style('opacity', 0);
+        });
 
-      // add tooltips to each circle
-      // .on('mouseover', function (d) {
-      //   div.transition()
-      //     .duration(200)
-      //     .style('opacity', .9);
-      //   div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat +
-      //     '<br/>Total: ' + d.total + '; Radius:' + d.r)
-      //     .style('left', (d3.event.pageX) + 'px')
-      //     .style('top', (d3.event.pageY - 28) + 'px');
-      // })
-      // .on('mouseout', function (d) {
-      //   div.transition()
-      //     .duration(500)
-      //     .style('opacity', 0);
-      // });
+    this.circles = this.circles.merge(newCircles);
+    // todo: modify to eliminate "freeze twitch" on drag-call
+    setTimeout(function () {
+      that.circles
+        .call(d3.drag()
+          .on('start', that.dragstarted)
+          .on('drag', that.dragged)
+          .on('end', that.dragended));
+    }, 2000);
+    // Update nodes and restart the simulation.
+    this.simulation.nodes(filteredNodes)
+      .alpha(0.3).restart();
+
+
   }
 }
