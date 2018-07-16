@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 
@@ -8,14 +8,38 @@ import { DataService } from '../data.service';
   <div>
     <svg [ngStyle]="canvasStyles">
       <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
-        <!-- <circle *ngFor="let node of nodes"
-         [style.r]="node.r"
-         [style.fill]="colorScale(node.cluster)"
-        /> -->
       </g>
     </svg>
     <div class='container'>
-      <app-colour-legend-button [forceSimulation]="vizSimulation"></app-colour-legend-button>
+
+      <app-filter-slider class="sliderLang"
+      [min]="skills.language.min"
+      [max]="skills.language.max"
+      (childEvent)="sliderLangValue=$event"
+      ></app-filter-slider>
+
+      <div>Parent div: {{sliderLangValue}}</div>
+
+      <app-colour-legend-button
+      [forceSimulation]="vizSimulation"
+      [forceXCombine]="forceXCombine"
+      [forceYCombine]="forceYCombine"
+      [nClusters]="numClusters"
+      [vizWidth]="width"
+      [vizHeight]="height"
+      [navbarHeight]="navbarHeight"
+      ></app-colour-legend-button>
+
+      <app-size-legend-button
+      [forceSimulation]="vizSimulation"
+      [forceXCombine]="forceXCombine"
+      [nClusters]="numClusters"
+      [vizWidth]="width"
+      [vizHeight]="height"
+      [navbarHeight]="navbarHeight"
+      [radiusRange]="radiusRange"
+      ></app-size-legend-button>
+
     </div>
   </div>
   `,
@@ -43,10 +67,12 @@ export class VizComponent implements OnInit, AfterContentInit {
   // data viz properties
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
+  public minRadius = 4;
   public maxRadius = this.height * 0.1;
-  public m = 10; // number of distinct clusters
+  public radiusRange = [this.minRadius, this.maxRadius];
+  public numClusters = 10; // number of distinct clusters
   public colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-  public clusters = new Array(this.m);
+  public clusters = new Array(this.numClusters);
   // the graphing canvas
   public canvasStyles = {
             position: 'absolute',
@@ -59,12 +85,31 @@ export class VizComponent implements OnInit, AfterContentInit {
   public data$ = [];
   public nodes = [];
   public vizSimulation;
+  public forceXCombine = d3.forceX().strength(.4);
+  public forceYCombine = d3.forceY().strength(.4);
+  public forceGravity = d3.forceManyBody().strength(this.height * -0.08);
+  public forceCollide = d3.forceCollide(this.height * 0.009);
+     // min and max skill values
+  public skills = {
+        language: {
+          min: 10, max: 30 },
+        logic: {
+          min: 10, max: 30 },
+        math: {
+          min: 10, max: 30 },
+        computer: {
+          min: 10, max: 30 }
+      };
+  // the current slider values
+  public sliderLangValue;
   ngOnInit() {
   }
   ngAfterContentInit() {
     this._dataService.getData().subscribe(receivedData => {
       // load data
       this.data$ = receivedData;
+
+
 
       // Define the div for the tooltip
       // todo: extract tooltip component
@@ -75,9 +120,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       // SELECT THE RADIUS VARIABLE
       const radiusSelector = 'Total';
 
-      const radiusScale = d3.scaleLinear() // should be scaleSqrt because circle areas?
+      const radiusScale = d3.scaleSqrt() // should be scaleSqrt because circle areas?
         .domain(d3.extent(this.data$, function (d) { return +d[radiusSelector]; }))
-        .range([4, this.maxRadius]);
+        .range([this.minRadius, this.maxRadius]);
 
       // SELECT THE CLUSTER VARIABLE 1/2
       // convert each unique value to a cluster number
@@ -97,7 +142,8 @@ export class VizComponent implements OnInit, AfterContentInit {
           cluster: forcedCluster,
           r: scaledRadius,
           major: d.Major,
-          major_cat: d.Major_category
+          major_cat: d.Major_category,
+          total: d.Total,
         };
         // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
         if (!this.clusters[forcedCluster] || (scaledRadius > this.clusters[forcedCluster].r)) { this.clusters[forcedCluster] = d; }
@@ -106,9 +152,10 @@ export class VizComponent implements OnInit, AfterContentInit {
       });
 
       // VIZ NODES
-      console.log('Viz nodes: ' + this.nodes);
+      console.log('Viz nodes:');
+      console.log(this.nodes);
 
-      // resolve function scope by saving outer scope
+      // resolve d3 function scope by saving outer scope
       const that = this;
 
       // append the circles to svg then style
@@ -128,7 +175,8 @@ export class VizComponent implements OnInit, AfterContentInit {
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat)
+          div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat +
+                   '<br/>Total: ' + d.total + '; Radius:' + d.r)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
         })
@@ -140,10 +188,11 @@ export class VizComponent implements OnInit, AfterContentInit {
 
       // create the clustering/collision force simulation
       const simulation = d3.forceSimulation(this.nodes)
-        .velocityDecay(0.2)
-        .force('x', d3.forceX().strength(.0005))
-        .force('y', d3.forceY().strength(.0005))
+        .velocityDecay(0.3)
+        .force('x', that.forceXCombine)
+        .force('y', that.forceYCombine)
         .force('collide', collide)
+        .force('gravity', that.forceGravity)
         .force('cluster', clustering)
         .on('tick', ticked);
 

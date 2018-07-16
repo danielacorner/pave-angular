@@ -18,6 +18,51 @@
     "Total": 3000
   },
   {
+    "A": 2,
+    "B": 2,
+    "C": 3,
+    "Major": "test2",
+    "Major_category": "tested2",
+    "Major_category_code": "tested2",
+    "Total": 300
+  },
+  {
+    "A": 2,
+    "B": 2,
+    "C": 3,
+    "Major": "test2",
+    "Major_category": "tested2",
+    "Major_category_code": "tested2",
+    "Total": 1000
+  },
+  {
+    "A": 2,
+    "B": 2,
+    "C": 3,
+    "Major": "test2",
+    "Major_category": "tested2",
+    "Major_category_code": "tested2",
+    "Total": 500
+  },
+  {
+    "A": 2,
+    "B": 2,
+    "C": 3,
+    "Major": "test2",
+    "Major_category": "tested2",
+    "Major_category_code": "tested2",
+    "Total": 300
+  },
+  {
+    "A": 2,
+    "B": 2,
+    "C": 3,
+    "Major": "test2",
+    "Major_category": "tested2",
+    "Major_category_code": "tested2",
+    "Total": 100
+  },
+  {
     "A": 4,
     "B": 3,
     "C": 1,
@@ -60,6 +105,24 @@
     "Major": "test7",
     "Major_category": "tested7",
     "Major_category_code": "tested2",
+    "Total": 4000
+  },
+  {
+    "A": 7,
+    "B": 6,
+    "C": 5,
+    "Major": "test7",
+    "Major_category": "tested7",
+    "Major_category_code": "tested7",
+    "Total": 4000
+  },
+  {
+    "A": 7,
+    "B": 6,
+    "C": 5,
+    "Major": "test7",
+    "Major_category": "tested7",
+    "Major_category_code": "tested9",
     "Total": 4000
   },
   {

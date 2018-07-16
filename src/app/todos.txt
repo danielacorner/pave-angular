@@ -1,0 +1,8 @@
+todos
+-----
+send sliderLangValue and
+dataset to a filter service
+and return the filtered dataset
+
+when the filtered dataset returns
+update the viz with filtered data
