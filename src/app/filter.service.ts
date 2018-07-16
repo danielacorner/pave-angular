@@ -9,15 +9,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class FilterService {
   public _url = '../assets/NOC-data.json';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getData(): Observable<CircleData[]> {
-    return this.http.get<CircleData[]>(this._url);
-    // .pipe(map(res => res),
-    //   catchError((error: HttpErrorResponse) => {
-    //     return Observable.throwError(error.message || 'Server error');
-    //   }));
+  getFilteredData(filterValues): Observable<CircleData[]> {
+    const filteredData = this.http.get<CircleData[]>(this._url);
+    return filteredData;
   }
 }

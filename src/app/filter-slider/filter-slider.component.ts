@@ -1,33 +1,41 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-filter-slider',
   template: `
     <mat-slider thumbLabel [min]="min" [max]="max" step="1"
-    [(ngModel)]="myModel"
-    tickInterval="5"
+    [(ngModel)]="sliderValue"
+    tickInterval="10"
     (change)="fireEvent()"
     ></mat-slider>
-    <div>{{myModel}}</div>
   `,
   styles: [
     `
       mat-slider {
-        width: 40%;
+        width: 35%;
       }
     `
   ]
 })
 export class FilterSliderComponent implements OnInit {
-  @Input() public min;
-  @Input() public max;
-  @Output() public myModel = new EventEmitter();
+  public sliderValue;
   @Output() public childEvent = new EventEmitter();
-  constructor() {}
+  public min;
+  public max;
 
-  ngOnInit() {}
+  constructor(private _dataService: DataService) {}
+
+  ngOnInit() {
+    // load data and set slider range on creation
+    this._dataService.getData().subscribe(receivedData => {
+      this.min = d3.min(receivedData.map(d => d[this.filterVariable]));
+      this.max = d3.max(receivedData.map(d => d[this.filterVariable])) * 0.75;
+    });
+  }
 
   fireEvent() {
-    this.childEvent.emit(this.myModel);
+    this.childEvent.emit(this.sliderValue);
   }
 }
