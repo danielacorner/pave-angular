@@ -1,8 +1,12 @@
 todos
 -----
-send sliderLangValue and
-dataset to a filter service
-and return the filtered dataset
-
-when the filtered dataset returns
-update the viz with filtered data
+big
+- search function
+- settimeout 0 for each step of apply draghandler to new nodes
+- extract tooltip component
+- fine-tune the colour, size legend buttons
+- fine-tune the force simulation
+- extract simulation component?
+small
+- calculate numClusters from dataset
+- bring in the colorScale
