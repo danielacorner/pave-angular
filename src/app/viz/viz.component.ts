@@ -59,22 +59,23 @@ import { DataService } from '../data.service';
 })
 export class VizComponent implements OnInit, AfterContentInit {
   constructor(private _dataService: DataService) {}
-
+  // positioning
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
   public width = window.innerWidth;
-  // data viz properties
+  // circle properties
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
   public minRadius = 4;
   public maxRadius = this.width * 0.03;
   public radiusRange = [this.minRadius, this.maxRadius];
   public radiusScale;
-
+  // custom circle sizes and colours/clusters
   public radiusSelector = 'workers';
   public clusterSelector = 'industry';
   public uniqueClusterValues;
-
+  // circles and clusters
+  public nodes = [];
   public circles;
   public numClusters = 10; // number of distinct clusters
   public colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -88,12 +89,12 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   // move the circles into the center
   public gTransform =
-    'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
+  'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
+  // data
   public data$ = [];
-  public nodes = [];
-
+  // simulation
   public simulation;
-
+  // simulation forces
   public forceXCombine = d3.forceX().strength(0.4);
   public forceYCombine = d3.forceY().strength(0.4);
   public forceGravity = d3.forceManyBody().strength(this.height * -0.08);
@@ -101,25 +102,21 @@ export class VizComponent implements OnInit, AfterContentInit {
   public clustering;
   public collide;
   public ticked;
-
+  // tooltip
   public div;
-
-  // the current slider values
-  public sliderLangValue;
-
   // Drag functions used for interactivity
-  public dragstarted = function (d) {
+  public dragstarted = d => {
       if (!d3.event.active) {
-        this.simulation.alphaTarget(0.3).restart();
+        this.simulation.alphaTarget(0.3)
       }
       d.fx = d.x;
       d.fy = d.y;
     };
-  public dragged = function (d) {
+  public dragged = d => {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     };
-  public dragended = function (d) {
+  public dragended = d => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0);
       }
@@ -128,131 +125,83 @@ export class VizComponent implements OnInit, AfterContentInit {
     };
 
   ngOnInit() {}
+
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope
     const that = this;
 
+    // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
-      // load data
+
       this.data$ = receivedData;
-
       // Define the div for the tooltip
-      // todo: extract tooltip component
-      this.div = d3
-        .select('body')
-        .append('div')
-        .attr('class', 'tooltip')
+      // TODO: extract tooltip component
+      this.div = d3.select('body')
+        .append('div').attr('class', 'tooltip')
         .style('opacity', 0);
-
       // SELECT THE RADIUS VARIABLE
       this.radiusSelector = 'workers';
-
-      this.radiusScale = d3
-        .scaleSqrt() // should be scaleSqrt because circle areas?
-        .domain(
-          d3.extent(this.data$, function(d) {
-            return +d[that.radiusSelector];
-          })
-        )
-        .range([this.minRadius, this.maxRadius]);
-
+      this.radiusScale = d3.scaleSqrt() // sqrt because circle areas
+        .domain( d3.extent(this.data$, d => +d[that.radiusSelector]) )
+        .range(  [this.minRadius, this.maxRadius] );
       // SELECT THE CLUSTER VARIABLE 1/2
-      // convert each unique value to a cluster number
       const clusterSelector = 'industry';
+      // convert each unique value to a cluster number
       this.uniqueClusterValues = this.data$.map(d => d[clusterSelector]);
 
-      // defining the nodes
+      // define the nodes
       this.nodes = this.data$.map(d => {
         // scale radius to fit on the screen
         const scaledRadius = this.radiusScale(+d[this.radiusSelector]),
-          // SELECT THE CLUSTER VARIABLE 2/2
-          // cluster = the item's index in uniqueClusterValues
-          forcedCluster =
-            this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
-
-        // add cluster id and radius to array
+        // SELECT THE CLUSTER VARIABLE 2/2
+          forcedCluster = this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+        // define the nodes
         d = {
-          cluster: forcedCluster,
-          r: scaledRadius,
-          // TOOLTIP DATA TO DISPLAY
           id: d.id,
-          language: d.skillsLang,
-          logic: d.skillsLogi,
+          r: scaledRadius,
+          cluster: forcedCluster,
           math: d.skillsMath,
+          logic: d.skillsLogi,
+          language: d.skillsLang,
           computer: d.skillsComputer
-          // total: d.Total,
         };
         // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
-        if (
-          !this.clusters[forcedCluster] ||
-          scaledRadius > this.clusters[forcedCluster].r
-        ) {
-          this.clusters[forcedCluster] = d;
-        }
-
+        if ( !this.clusters[forcedCluster] || scaledRadius > this.clusters[forcedCluster].r ) {
+              this.clusters[forcedCluster] = d; }
         return d;
       });
 
-      // VIZ NODES
-      // console.log('Viz nodes:');
-      // console.log(this.nodes);
-
       // append the circles to svg then style
       // add functions for interaction
-      this.circles = d3
-        .select('.circlesG')
-        .selectAll('.circle')
-        .data(that.nodes)
-        .enter()
-        .append('circle')
+      this.circles = d3.select('.circlesG').selectAll('.circle')
+        .data(that.nodes).enter().append('circle')
         .attr('r', d => d.r)
         .attr('fill', d => this.colorScale(d.cluster))
-        .call(
-          d3
-            .drag()
-            .on('start', that.dragstarted)
-            .on('drag', that.dragged)
-            .on('end', that.dragended)
-        )
-        // add tooltips to each circle
-        .on('mouseover', function(d) {
-          that.div
-            .transition()
-            .duration(200)
-            .style('opacity', 0.9);
-          that.div
-            .html(
-              'The major ' +
-                d.major +
-                '<br/>In the category ' +
-                d.major_cat +
-                '<br/>Total: ' +
-                d.total +
-                '; Radius:' +
-                d.r
-            )
-            .style('left', d3.event.pageX + 'px')
-            .style('top', d3.event.pageY - 28 + 'px');
+        .call(d3.drag()
+                .on('start', that.dragstarted)
+                .on('drag', that.dragged)
+                .on('end', that.dragended) )
+        // TODO: extract tooltips - add tooltips to each circle
+        .on('mouseover', d => {
+          that.div.transition() .duration(200) .style('opacity', 0.9);
+          that.div.html( 'The major ' + d.major + '<br/>In the category ' +
+                      d.major_cat + '<br/>Total: ' + d.total + '; Radius:' + d.r )
+                  .style('left', d3.event.pageX + 'px')
+                  .style('top', d3.event.pageY - 28 + 'px');
         })
-        .on('mouseout', function(d) {
-          that.div
-            .transition()
-            .duration(500)
-            .style('opacity', 0);
+        .on('mouseout', () => {
+          that.div .transition() .duration(500) .style('opacity', 0);
         });
 
-      this.ticked = function() {
+      this.ticked = () => {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
-
       // These are implementations of the custom forces.
-      this.clustering = function (alpha) {
-        that.nodes.forEach(function (d) {
+      this.clustering = alpha => {
+        that.nodes.forEach( d => {
           const cluster = that.clusters[d.cluster];
-          if (cluster === d) {
-            return;
-          }
+          if (cluster === d) { return; }
           let x = d.x - cluster.x,
             y = d.y - cluster.y,
             l = Math.sqrt(x * x + y * y);
@@ -265,18 +214,15 @@ export class VizComponent implements OnInit, AfterContentInit {
             cluster.y += y;
           }
         });
-      }
+      };
 
-      this.collide = function (alpha) {
-        const quadtree = d3
-          .quadtree()
-          .x(d => d.x)
-          .y(d => d.y)
+      this.collide = alpha => {
+        const quadtree = d3 .quadtree()
+          .x(d => d.x) .y(d => d.y)
           .addAll(that.nodes);
 
-        that.nodes.forEach(function (d) {
-          let r =
-            d.r + that.maxRadius + Math.max(that.padding, that.clusterPadding);
+        that.nodes.map(d => {
+          let r = d.r + that.maxRadius + Math.max(that.padding, that.clusterPadding);
           const nx1 = d.x - r,
             nx2 = d.x + r,
             ny1 = d.y - r,
@@ -286,12 +232,8 @@ export class VizComponent implements OnInit, AfterContentInit {
               let x = d.x - quad.data.x,
                 y = d.y - quad.data.y,
                 l = Math.sqrt(x * x + y * y);
-              r =
-                d.r +
-                quad.data.r +
-                (d.cluster === quad.data.cluster
-                  ? that.padding
-                  : that.clusterPadding);
+              r = d.r + quad.data.r +
+                (d.cluster === quad.data.cluster ? that.padding : that.clusterPadding);
               if (l < r) {
                 l = ((l - r) / l) * alpha;
                 d.x -= x *= l;
@@ -303,23 +245,20 @@ export class VizComponent implements OnInit, AfterContentInit {
             return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
           });
         });
-      }
+      };
 
       // create the clustering/collision force simulation
-      // and pass the simulation to child components
-      this.simulation = d3
-        .forceSimulation(this.nodes)
+      this.simulation = d3.forceSimulation(this.nodes)
         .velocityDecay(0.3)
-        .force('x', that.forceXCombine)
-        .force('y', that.forceYCombine)
+        .force('x', that.forceXCombine).force('y', that.forceYCombine)
         .force('collide', that.collide)
         .force('gravity', that.forceGravity)
         .force('cluster', that.clustering)
         .on('tick', that.ticked);
-
     });
-  }
+  } // end ngAfterContentinit
 
+  // Filter slider function
   handleSliderUpdate($event, filterVariable) {
     const that = this;
     // update the viz with the slider value, $event
@@ -333,14 +272,14 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.circles.exit().transition().duration(500)
       // exit "pop" transition: enlarge radius & fade out
       .attr('r', $(window).height() * 0.03)
-      .styleTween('opacity', function (d) {
+      .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
-        return function (t) { return i(t); };
+        return t => i(t);
       }).remove();
     // ENTER and MERGE
     const newCircles = this.circles.enter().append('circle')
-      .attr('r', (d) => d.r)
-      .attr('fill', (d) => that.colorScale(d.cluster))
+      .attr('r', d => d.r)
+      .attr('fill', d => that.colorScale(d.cluster))
 
         // add tooltips to each circle
         // todo: extract tooltips
