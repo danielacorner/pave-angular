@@ -107,32 +107,28 @@ export class VizComponent implements OnInit, AfterContentInit {
   // Drag functions used for interactivity
   public dragstarted = d => {
       if (!d3.event.active) {
-        this.simulation.alphaTarget(0.3)
-      }
+        this.simulation.alphaTarget(0.3); }
       d.fx = d.x;
       d.fy = d.y;
-    };
+    }
   public dragged = d => {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
-    };
+    }
   public dragended = d => {
       if (!d3.event.active) {
-        this.simulation.alphaTarget(0);
-      }
+        this.simulation.alphaTarget(0); }
       d.fx = null;
       d.fy = null;
-    };
+    }
 
   ngOnInit() {}
 
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope
     const that = this;
-
     // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
-
       this.data$ = receivedData;
       // Define the div for the tooltip
       // TODO: extract tooltip component
@@ -227,7 +223,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             nx2 = d.x + r,
             ny1 = d.y - r,
             ny2 = d.y + r;
-          quadtree.visit(function (quad, x1, y1, x2, y2) {
+          quadtree.visit( (quad, x1, y1, x2, y2) => {
             if (quad.data && quad.data !== d) {
               let x = d.x - quad.data.x,
                 y = d.y - quad.data.y,
@@ -267,7 +263,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     const filteredNodes = this.nodes.filter(d => d[filterVariable] >= $event);
 
     // UPDATE the viz data
-    this.circles = this.circles.data(filteredNodes, function (d) { return d.id; });
+    this.circles = this.circles.data(filteredNodes, d => d.id );
     // EXIT
     this.circles.exit().transition().duration(500)
       // exit "pop" transition: enlarge radius & fade out
@@ -277,30 +273,24 @@ export class VizComponent implements OnInit, AfterContentInit {
         return t => i(t);
       }).remove();
     // ENTER and MERGE
-    const newCircles = this.circles.enter().append('circle')
+    this.circles = this.circles.enter().append('circle')
       .attr('r', d => d.r)
       .attr('fill', d => that.colorScale(d.cluster))
-
         // add tooltips to each circle
-        // todo: extract tooltips
-        .on('mouseover', function (d) {
+        // TODO: extract tooltips
+        .on('mouseover', d => {
           that.div.transition()
             .duration(200)
             .style('opacity', .9);
-          that.div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat +
-            '<br/>Total: ' + d.total + '; Radius:' + d.r)
+          that.div.html('The major ' + d.major + '<br/>In the category ' + d.major_cat + '<br/>Total: ' + d.total + '; Radius:' + d.r)
             .style('left', (d3.event.pageX) + 'px')
             .style('top', (d3.event.pageY - 28) + 'px');
-        })
-        .on('mouseout', function (d) {
-          that.div.transition()
-            .duration(500)
-            .style('opacity', 0);
-        });
+        }).on('mouseout', d => {
+          that.div.transition() .duration(500) .style('opacity', 0);
+        }).merge(this.circles);
 
-    this.circles = this.circles.merge(newCircles);
     // todo: modify to eliminate "freeze twitch" on drag-call
-    setTimeout(function () {
+    setTimeout(() => {
       that.circles
         .call(d3.drag()
           .on('start', that.dragstarted)
@@ -308,9 +298,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           .on('end', that.dragended));
     }, 2000);
     // Update nodes and restart the simulation.
-    this.simulation.nodes(filteredNodes)
-      .alpha(0.3).restart();
-
+    this.simulation.nodes(filteredNodes).alpha(0.3).restart();
 
   }
 }
