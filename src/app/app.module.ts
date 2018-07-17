@@ -1,22 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
+// Modules
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '../../node_modules/@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+
+// Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
-import * as $ from 'jquery';
 import { VizComponent } from './viz/viz.component';
-
-import { DataService } from './data.service';
-import { HttpClientModule } from '@angular/common/http';
 import { ColourLegendButtonComponent } from './colour-legend-button/colour-legend-button.component';
 import { SizeLegendButtonComponent } from './size-legend-button/size-legend-button.component';
 import { FilterSliderComponent } from './filter-slider/filter-slider.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
 
-import { MatButtonModule, MatSliderModule } from '@angular/material';
+// Services
+import { DataService } from './data.service';
+
+// Material
+import {
+  MatButtonModule,
+  MatSliderModule,
+  MatTooltipModule,
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '../../node_modules/@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +33,7 @@ import { FormsModule } from '../../node_modules/@angular/forms';
     ColourLegendButtonComponent,
     SizeLegendButtonComponent,
     FilterSliderComponent,
+    TooltipComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,7 @@ import { FormsModule } from '../../node_modules/@angular/forms';
     BrowserAnimationsModule,
     MatButtonModule,
     MatSliderModule,
+    MatTooltipModule,
     FormsModule,
   ],
   providers: [DataService],
