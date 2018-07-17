@@ -60,20 +60,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ]),
   trigger('easeInOut', [
       transition('void => *', [
-        style({
-          opacity: 0
-        }),
-        animate('200ms ease-in-out', style({
-          opacity: 1
-        }))
+        style({ opacity: 0 }),
+        animate('200ms ease-in-out', style({ opacity: 1 }) )
       ]),
       transition('* => void', [
-        style({
-          opacity: '*'
-        }),
-        animate('400ms ease-in-out', style({
-          opacity: 0
-        }))
+        style({ opacity: '*' }),
+        animate('400ms ease-in-out', style({ opacity: 0 }))
       ])
     ])
   ]
@@ -132,18 +124,18 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
     d.fx = d.x;
     d.fy = d.y;
-  };
+  }
   public dragged = d => {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
-  };
+  }
   public dragended = d => {
     if (!d3.event.active) {
       this.simulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
-  };
+  }
 
   ngOnInit() {}
 
@@ -196,9 +188,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.circles = d3
         .select('.circlesG')
         .selectAll('.circle')
-        .data(that.nodes)
-        .enter()
-        .append('circle')
+        .data(that.nodes) .enter() .append('circle')
         .attr('r', d => d.r)
         .attr('fill', d => this.colorScale(d.cluster))
         .call(
@@ -215,13 +205,15 @@ export class VizComponent implements OnInit, AfterContentInit {
             x: d.x + that.width / 2,
             y: d.y + that.height / 2
           };
-          d3.select('app-tooltip')
-            .transition()
-            .duration(200)
-            .style('opacity', 0.9);
+          d3.selectAll('circle')
+          .filter(c => c.id === d.id)
+          .attr('stroke', 'black')
+          .style('stroke-width', '2px');
         })
         .on('mouseout', () => {
           that.tooltipData = null;
+          d3.selectAll('circle')
+          .attr('stroke', 'none');
         });
 
       this.ticked = () => {
