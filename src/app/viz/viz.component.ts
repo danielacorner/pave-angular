@@ -40,33 +40,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ></app-size-legend-button>
     </div>
 
-    <div *ngIf="tooltipData" @ngIfAnimation>
-      <app-tooltip @easeInOut [tooltipData]="tooltipData" ></app-tooltip>
+    <div *ngIf="tooltipData" @ngIfAnimation
+    >
+      <app-tooltip @easeInOut
+      [tooltipData]="tooltipData"
+      [expanded]="tooltipExpanded"
+      ></app-tooltip>
     </div>
+
   </div>
   `,
-  styles: [
-    `
-      app-tooltip {
-        pointer-events: none;
-      }
-    `
-  ],
+  styles: [``],
   animations: [
     trigger('ngIfAnimation', [
-      transition(':enter, :leave', [
-        query('@*', animateChild())
-      ])
+      transition(':enter, :leave', [query('@*', animateChild())])
     ]),
-  trigger('easeInOut', [
+    trigger('easeInOut', [
       transition('void => *', [
         style({ opacity: 0 }),
-        animate('200ms ease-in-out', style({ opacity: 1 }) )
+        animate('200ms ease-in-out', style({ opacity: 1 }))
       ]),
-      transition('* => void', [
-        style({ opacity: '*' }),
-        animate('400ms ease-in-out', style({ opacity: 0 }))
-      ])
+      // TODO: transition-out bug opens tooltip before deleting
+      // transition('* => void', [
+      //   style({ opacity: '*' }),
+      //   animate('400ms ease-in-out', style({ opacity: 0 }))
+      // ])
     ])
   ]
 })
@@ -117,6 +115,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   public ticked;
   // tooltip
   public tooltipData;
+  public tooltipExpanded = false;
+
   // Drag functions used for interactivity
   public dragstarted = d => {
     if (!d3.event.active) {
@@ -124,18 +124,18 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
     d.fx = d.x;
     d.fy = d.y;
-  }
+  };
   public dragged = d => {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
-  }
+  };
   public dragended = d => {
     if (!d3.event.active) {
       this.simulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
-  }
+  };
 
   ngOnInit() {}
 
@@ -175,7 +175,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           language: d.skillsLang,
           computer: d.skillsComputer,
           // tooltip info
-          all: d,
+          all: d
         };
         // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
         if (
@@ -192,7 +192,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.circles = d3
         .select('.circlesG')
         .selectAll('.circle')
-        .data(that.nodes) .enter() .append('circle')
+        .data(that.nodes)
+        .enter()
+        .append('circle')
         .attr('r', d => d.r)
         .attr('fill', d => this.colorScale(d.cluster))
         .call(
@@ -209,15 +211,23 @@ export class VizComponent implements OnInit, AfterContentInit {
             x: d.x + that.width / 2,
             y: d.y + that.height / 2
           };
+
           d3.selectAll('circle')
-          .filter(c => c.id === d.id)
-          .attr('stroke', 'black')
-          .style('stroke-width', '2px');
+            .filter(c => c.id === d.id)
+            .attr('stroke', 'black')
+            .style('stroke-width', '2px');
         })
         .on('mouseout', () => {
-          that.tooltipData = null;
-          d3.selectAll('circle')
-          .attr('stroke', 'none');
+          d3.selectAll('circle').attr('stroke', 'none');
+
+          if (that.tooltipExpanded) {
+            return;
+          } else {
+            that.tooltipData = null;
+          }
+        })
+        .on('click', () => {
+          that.tooltipExpanded = !that.tooltipExpanded;
         });
 
       this.ticked = () => {
@@ -286,7 +296,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       // create the clustering/collision force simulation
       this.simulation = d3
         .forceSimulation(this.nodes)
-        .velocityDecay(0.3)
+        .velocityDecay(0.9)
         .force('x', that.forceXCombine)
         .force('y', that.forceYCombine)
         .force('collide', that.collide)

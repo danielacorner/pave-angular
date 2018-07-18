@@ -3,10 +3,12 @@ todos
 next
 - expand tooltip on circle click or timeout
 big
+- graph mode toggle
 - fill tooltip component
   - material card top
   - material expansion panel bottom
   - material tabs in expansion panel
+  - expand tooltip avatar to img on expand?
 - search function with material autocomplete
 - filter function with material autocomplete
 - settimeout 0 for each step of apply draghandler to new nodes
