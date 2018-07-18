@@ -166,12 +166,16 @@ export class VizComponent implements OnInit, AfterContentInit {
         // define the nodes
         d = {
           id: d.id,
+          // circle attributes
           r: scaledRadius,
           cluster: forcedCluster,
+          // skills
           math: d.skillsMath,
           logic: d.skillsLogi,
           language: d.skillsLang,
-          computer: d.skillsComputer
+          computer: d.skillsComputer,
+          // tooltip info
+          all: d,
         };
         // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
         if (

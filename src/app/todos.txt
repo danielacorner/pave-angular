@@ -1,12 +1,19 @@
 todos
 -----
+next
+- expand tooltip on circle click or timeout
 big
-- search function
+- fill tooltip component
+  - material card top
+  - material expansion panel bottom
+  - material tabs in expansion panel
+- search function with material autocomplete
+- filter function with material autocomplete
 - settimeout 0 for each step of apply draghandler to new nodes
-- extract tooltip component
 - fine-tune the colour, size legend buttons
 - fine-tune the force simulation
 - extract simulation component?
 small
 - calculate numClusters from dataset
 - bring in the colorScale
+- favourites material checkbox

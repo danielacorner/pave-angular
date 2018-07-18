@@ -22,6 +22,9 @@ import {
   MatButtonModule,
   MatSliderModule,
   MatTooltipModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatCardModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -33,7 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ColourLegendButtonComponent,
     SizeLegendButtonComponent,
     FilterSliderComponent,
-    TooltipComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +46,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatSliderModule,
     MatTooltipModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatCardModule,
     FormsModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
