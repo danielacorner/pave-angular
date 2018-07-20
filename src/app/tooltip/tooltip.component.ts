@@ -5,7 +5,11 @@ import * as d3 from 'd3';
   selector: 'app-tooltip',
   template: `
 
-<div id="tooltip" class="tooltip z-depth-3">
+<div id="tooltip" class="tooltip z-depth-3"
+  [style.top]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? null : tooltipY - 170 + 'px')"
+  [style.bottom]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? '20px' : null)"
+  [style.left]="(tooltipX > windowInnerWidth * 0.5 ? tooltipX - 360 - circleR + 'px' : tooltipX + circleR + 'px')"
+  >
     <mat-card>
           <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
@@ -76,6 +80,8 @@ import * as d3 from 'd3';
         background: lightgrey;
         border: 0px;
         border-radius: 8px;
+        transition: top 0.2s;
+        transition: bottom 0.2s;
       }
       .panel {
       }
@@ -119,13 +125,17 @@ export class TooltipComponent implements OnInit, OnDestroy {
   @Input() public expanded = false;
   public data; // shortcut to access tooltipData.d.all
   public tooltipHeight;
+  public tooltipX;
   public tooltipY;
+  public circleR;
   public headerOpenState = false;
   public hideOnExpanded = 'block';
   public headerStyles = {
     marginBottom: '0px'
     // paddingTop: '20px',
   };
+  public windowInnerHeight = window.innerHeight;
+  public windowInnerWidth = window.innerWidth;
 
   constructor() {}
 
@@ -143,6 +153,8 @@ export class TooltipComponent implements OnInit, OnDestroy {
 
   tooltipInit(d, x, y) {
     this.tooltipY = y;
+    this.tooltipX = x;
+    this.circleR = d.r;
     const that = this;
     // set avatar image
     d3.select('.header-image').style(
@@ -150,41 +162,29 @@ export class TooltipComponent implements OnInit, OnDestroy {
       'url("../../assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
     );
     // position based on height
-    d3.select('.tooltip')
-      // check top, if > ( window.height - this.height ), top = window.height - this.height
-      .style(
-        'top', () => {
-          // set max-top to prevent content bleeding below page height
-          // (1.3 * y * window.innerHeight) / (y + window.innerHeight) <
-          // window.innerHeight - this.tooltipHeight
-          //   ? (1.3 * y * window.innerHeight) / (y + window.innerHeight) + 'px'
-          //   : window.innerHeight - this.tooltipHeight - 20 + 'px'
-          // console.log(d)
-          return y - 170 + 'px';
-        }
-      )
-      .style(
-        'left',
-        x > window.innerWidth * 0.5
-          ? // right side
-            x - 360 - d.r + 'px'
-          : // left side
-            x + d.r + 'px'
-      );
-
+    // d3.select('.tooltip')
+    // check top, if > ( window.height - this.height ), top = window.height - this.height
+    // .style('top', () => {
+    // set max-top to prevent content bleeding below page height
+    // (1.3 * y * window.innerHeight) / (y + window.innerHeight) <
+    // window.innerHeight - this.tooltipHeight
+    //   ? (1.3 * y * window.innerHeight) / (y + window.innerHeight) + 'px'
+    //   : window.innerHeight - this.tooltipHeight - 20 + 'px'
+    // console.log(d)
+    // return y - 170 + 'px';
+    // })
+    // .style(
+    //   'left',
+    //   x > window.innerWidth * 0.5
+    //     ? // right side
+    //       x - 360 - d.r + 'px'
+    //     : // left side
+    //       x + d.r + 'px'
+    // );
   }
 
   tooltipOpened(event) {
     this.headerOpenState = true;
     this.hideOnExpanded = 'none';
-
-    console.log(event);
-    // if expanded tooltip bleeds below window, move up
-    const tooltipHeight = 595;
-    if (this.tooltipY + tooltipHeight > window.innerHeight) {
-      d3.select('.tooltip').transition().duration(200)
-      .style('top', '')
-      .style('bottom', 20 + 'px');
-    }
   }
 }
