@@ -1,8 +1,11 @@
 todos
 -----
 next
-- expand tooltip on circle click or timeout
+- when closed, if bottom style not null,
+  transition back to top position
 big
+- details modal component
+  - 3 tabs: can i, should i, how do i
 - graph mode toggle
 - fill tooltip component
   - material card top

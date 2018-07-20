@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   selector: 'app-viz',
   template: `
   <div>
-    <svg [ngStyle]="canvasStyles">
+    <svg [ngStyle]="canvasStyles" (click)="closeTooltip($event)">
       <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
       </g>
     </svg>
@@ -59,7 +59,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       transition('void => *', [
         style({ opacity: 0 }),
         animate('200ms ease-in-out', style({ opacity: 1 }))
-      ]),
+      ])
       // TODO: transition-out bug opens tooltip before deleting
       // transition('* => void', [
       //   style({ opacity: '*' }),
@@ -116,6 +116,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   // tooltip
   public tooltipData;
   public tooltipExpanded = false;
+  public autoExpand;
+  public justClosed = false;
 
   // Drag functions used for interactivity
   public dragstarted = d => {
@@ -206,28 +208,42 @@ export class VizComponent implements OnInit, AfterContentInit {
         )
         // TODO: extract tooltips - add tooltips to each circle
         .on('mouseover', d => {
+          // initialize the tooltip
           that.tooltipData = {
             d: d,
             x: d.x + that.width / 2,
             y: d.y + that.height / 2
           };
-
+          // highlight the circle border
           d3.selectAll('circle')
             .filter(c => c.id === d.id)
             .attr('stroke', 'black')
             .style('stroke-width', '2px');
+          // start the clock for auto-expansion after 2 seconds unless click-closed
+          if (!that.justClosed) {
+            that.autoExpand = setTimeout(() => {
+              that.tooltipExpanded = true;
+            }, 2000);
+          }
         })
         .on('mouseout', () => {
+          // clear the autoExpand timeout
+          clearTimeout(that.autoExpand);
+          // remove the border highlight
           d3.selectAll('circle').attr('stroke', 'none');
-
+          // remove the tooltip unless expanded
           if (that.tooltipExpanded) {
             return;
           } else {
             that.tooltipData = null;
           }
+          that.justClosed = false;
         })
         .on('click', () => {
           that.tooltipExpanded = !that.tooltipExpanded;
+          if (!that.tooltipExpanded) {
+            that.justClosed = true;
+          }
         });
 
       this.ticked = () => {
@@ -305,6 +321,13 @@ export class VizComponent implements OnInit, AfterContentInit {
         .on('tick', that.ticked);
     });
   } // end ngAfterContentinit
+
+  // close tooltip on background click
+  closeTooltip($event) {
+    if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
+      this.tooltipExpanded = false;
+    }
+  }
 
   // Filter slider function
   handleSliderUpdate($event, filterVariable) {

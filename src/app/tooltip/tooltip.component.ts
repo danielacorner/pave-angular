@@ -5,9 +5,9 @@ import * as d3 from 'd3';
   selector: 'app-tooltip',
   template: `
 
-<div class="tooltip z-depth-3">
+<div id="tooltip" class="tooltip z-depth-3">
     <mat-card>
-          <mat-card-header >
+          <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
             <mat-card-title>{{data.job}}</mat-card-title>
             <mat-card-subtitle>{{data.sector}}</mat-card-subtitle>
@@ -16,13 +16,12 @@ import * as d3 from 'd3';
     <mat-accordion>
 
     <!-- PANEL 1 -->
-    <mat-expansion-panel hideToggle
-    class="panel"
+    <mat-expansion-panel
+    class="panel panel-1"
     [ngStyle]="headerStyles"
-    [style.paddingBottom]="headerOpenState ? '0px' : '20px'"
+    [style.paddingBottom]="(headerOpenState ? '0px' : '20px')"
     [expanded]="expanded"
-    (opened)="headerOpenState = true;
-    hideOnExpanded = 'none';"
+    (opened)="tooltipOpened($event)"
     (closed)="headerOpenState = false;
     hideOnExpanded = 'block';"
     >
@@ -120,6 +119,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
   @Input() public expanded = false;
   public data; // shortcut to access tooltipData.d.all
   public tooltipHeight;
+  public tooltipY;
   public headerOpenState = false;
   public hideOnExpanded = 'block';
   public headerStyles = {
@@ -136,31 +136,32 @@ export class TooltipComponent implements OnInit, OnDestroy {
       this.tooltipData.x,
       this.tooltipData.y
     );
-    console.log(this.tooltipData.d.all);
+    // console.log(this.tooltipData.d.all);
   }
 
   ngOnDestroy(): void {}
 
   tooltipInit(d, x, y) {
+    this.tooltipY = y;
+    const that = this;
     // set avatar image
     d3.select('.header-image').style(
       'background-image',
       'url("../../assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
     );
-    // get tooltip height
-    this.tooltipHeight = document
-      .getElementsByClassName('tooltip')[0]
-      .getBoundingClientRect().height;
     // position based on height
     d3.select('.tooltip')
       // check top, if > ( window.height - this.height ), top = window.height - this.height
       .style(
-        'top',
-        // set max-top to prevent content bleeding below page height
-        (1.3 * y * window.innerHeight) / (y + window.innerHeight) <
-        window.innerHeight - this.tooltipHeight
-          ? (1.3 * y * window.innerHeight) / (y + window.innerHeight) + 'px'
-          : window.innerHeight - this.tooltipHeight - 20 + 'px'
+        'top', () => {
+          // set max-top to prevent content bleeding below page height
+          // (1.3 * y * window.innerHeight) / (y + window.innerHeight) <
+          // window.innerHeight - this.tooltipHeight
+          //   ? (1.3 * y * window.innerHeight) / (y + window.innerHeight) + 'px'
+          //   : window.innerHeight - this.tooltipHeight - 20 + 'px'
+          // console.log(d)
+          return y - 170 + 'px';
+        }
       )
       .style(
         'left',
@@ -170,5 +171,20 @@ export class TooltipComponent implements OnInit, OnDestroy {
           : // left side
             x + d.r + 'px'
       );
+
+  }
+
+  tooltipOpened(event) {
+    this.headerOpenState = true;
+    this.hideOnExpanded = 'none';
+
+    console.log(event);
+    // if expanded tooltip bleeds below window, move up
+    const tooltipHeight = 595;
+    if (this.tooltipY + tooltipHeight > window.innerHeight) {
+      d3.select('.tooltip').transition().duration(200)
+      .style('top', '')
+      .style('bottom', 20 + 'px');
+    }
   }
 }
