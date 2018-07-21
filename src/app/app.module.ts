@@ -32,6 +32,7 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './details/details.component';
+import { GraphModeComponent } from './graph-mode/graph-mode.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DetailsComponent } from './details/details.component';
     SizeLegendButtonComponent,
     FilterSliderComponent,
     TooltipComponent,
-    DetailsComponent
+    DetailsComponent,
+    GraphModeComponent
   ],
   imports: [
     BrowserModule,

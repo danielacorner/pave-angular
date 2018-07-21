@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  public _url = '../assets/NOC-data.json';
+  public _url = ( window.location.href.includes('localhost') ?
+    '../assets/NOC-data.json' : '../pave-angular/assets/NOC-data.json' );
   constructor(private http: HttpClient) {}
 
   getData(): Observable<CircleData[]> {
