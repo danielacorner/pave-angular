@@ -30,6 +30,8 @@ import * as d3 from 'd3';
 export class SizeLegendButtonComponent implements OnInit {
   @Input() public forceSimulation;
   @Input() public forceXCombine;
+  @Input() public forceYCombine;
+  @Input() public forceCluster;
   @Input() public nClusters: number;
   @Input() public vizWidth: number;
   @Input() public vizHeight: number;
@@ -63,11 +65,11 @@ export class SizeLegendButtonComponent implements OnInit {
     const forceXSeparate = d3
       .forceX(function(d) {
         return (
-          // 70% screen width
-          0.85 *
+          // 40% screen width
+          0.3 *
           // split the width into the range (min, max radius)
           (((that.vizWidth / (that.radiusRange[1] - that.radiusRange[0])) * d.r)
-          - (that.vizWidth / 2 / 0.85))
+          - (that.vizWidth / 2 ))
         );
       })
       .strength(0.3);
@@ -75,12 +77,16 @@ export class SizeLegendButtonComponent implements OnInit {
     if (this.active) {
       this.forceSimulation
         .force('x', forceXSeparate)
+        // .force('y', that.forceYCombine)
+        .force('cluster', null)
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();
-    } else {
-      this.forceSimulation
+      } else {
+        this.forceSimulation
         .force('x', that.forceXCombine)
+        .force('cluster', that.forceCluster)
+        // .force('y', that.forceYCombine)
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material';
 import * as d3 from 'd3';
+import { DetailsComponent } from '../details/details.component';
 
 @Component({
   selector: 'app-tooltip',
@@ -43,8 +45,10 @@ import * as d3 from 'd3';
                 </p>
 
               <mat-action-row class="btn-row">
-                <button mat-button> <mat-icon class="btn-icon blue-icon">info</mat-icon> LEARN MORE</button>
-                <button mat-button> <mat-icon class="btn-icon orange-icon">star</mat-icon> FAVOURITE</button>
+                <button (click)="openDetails(data)" mat-button> <mat-icon class="btn-icon blue-icon">info</mat-icon>
+                LEARN MORE</button>
+                <button mat-button> <mat-icon class="btn-icon orange-icon">star</mat-icon>
+                FAVOURITE</button>
               </mat-action-row>
 
     </mat-expansion-panel>
@@ -137,7 +141,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
   public windowInnerHeight = window.innerHeight;
   public windowInnerWidth = window.innerWidth;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     this.data = this.tooltipData.d.all;
@@ -161,30 +165,18 @@ export class TooltipComponent implements OnInit, OnDestroy {
       'background-image',
       'url("../../assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
     );
-    // position based on height
-    // d3.select('.tooltip')
-    // check top, if > ( window.height - this.height ), top = window.height - this.height
-    // .style('top', () => {
-    // set max-top to prevent content bleeding below page height
-    // (1.3 * y * window.innerHeight) / (y + window.innerHeight) <
-    // window.innerHeight - this.tooltipHeight
-    //   ? (1.3 * y * window.innerHeight) / (y + window.innerHeight) + 'px'
-    //   : window.innerHeight - this.tooltipHeight - 20 + 'px'
-    // console.log(d)
-    // return y - 170 + 'px';
-    // })
-    // .style(
-    //   'left',
-    //   x > window.innerWidth * 0.5
-    //     ? // right side
-    //       x - 360 - d.r + 'px'
-    //     : // left side
-    //       x + d.r + 'px'
-    // );
   }
 
   tooltipOpened(event) {
     this.headerOpenState = true;
     this.hideOnExpanded = 'none';
+  }
+
+  openDetails(jobData): void {
+    const dialogRef = this.dialog.open(DetailsComponent, {
+      height: '95%',
+      width: 'auto',
+      data: jobData
+    });
   }
 }

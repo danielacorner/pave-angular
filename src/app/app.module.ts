@@ -25,8 +25,13 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatCardModule,
+  MatDialogModule,
+  MatTabsModule,
+  MatDialogTitle,
+  MatDividerModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ColourLegendButtonComponent,
     SizeLegendButtonComponent,
     FilterSliderComponent,
-    TooltipComponent
+    TooltipComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +55,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     MatIconModule,
     MatCardModule,
-    FormsModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatDividerModule,
+    FormsModule
   ],
-  providers: [DataService],
+  entryComponents: [DetailsComponent],
+  providers: [DataService, MatDialogTitle],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

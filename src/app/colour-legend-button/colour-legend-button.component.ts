@@ -59,19 +59,17 @@ export class ColourLegendButtonComponent implements OnInit {
     // split the clusters horizontally
     const forceXSeparate = d3
       .forceX(function(d) {
-        if(d.id===1){
-          console.log(that.vizWidth)
-          console.log(window.innerWidth)
-          console.log(that.nClusters)
-          console.log(d)
-          console.log(d.cluster)
+        if (d.id === 1) {
+          console.log(that.vizWidth);
+          console.log(window.innerWidth);
+          console.log(that.nClusters);
+          console.log(d);
+          console.log(d.cluster);
         }
         return (
-          // 70% (screen width / number of clusters)
-          // 0.7 *
-          ((that.vizWidth / that.nClusters) * d.cluster)
-            // window.innerWidth / 2)
-        );
+          // 40% (screen width / number of clusters)
+          0.4 * ((that.vizWidth / that.nClusters) * d.cluster) -
+          (0.4 * that.vizWidth / 2)) ;
       })
       .strength(0.3);
     // split the clusters vertically
@@ -79,10 +77,10 @@ export class ColourLegendButtonComponent implements OnInit {
       .forceY(function(d) {
         if (d.cluster % 2 === 0) {
           // even clusters go up to 2/6 height
-          return -(that.vizHeight / 6) - that.navbarHeight / 2;
+          return -(that.vizHeight / 8) - that.navbarHeight / 2;
         } else {
           // odd clusters go down to 4/6 height
-          return that.vizHeight / 6 - that.navbarHeight / 2;
+          return that.vizHeight / 8 - that.navbarHeight / 2;
         }
       })
       .strength(0.3);

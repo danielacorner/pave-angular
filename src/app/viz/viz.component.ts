@@ -32,6 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       <app-size-legend-button
       [forceSimulation]="simulation"
       [forceXCombine]="forceXCombine"
+      [forceYCombine]="forceYCombine"
+      [forceCluster]="clustering"
       [nClusters]="numClusters"
       [vizWidth]="width"
       [vizHeight]="height"
