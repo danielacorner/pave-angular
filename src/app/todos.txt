@@ -1,8 +1,6 @@
 todos
 -----
 next
-- when closed, if bottom style not null,
-  transition back to top position
 big
 - details modal component
   - 3 tabs: can i, should i, how do i
@@ -20,5 +18,7 @@ big
 - extract simulation component?
 small
 - calculate numClusters from dataset
+- when tooltip closed, if bottom style not null,
+  transition back to top position
 - bring in the colorScale
 - favourites material checkbox

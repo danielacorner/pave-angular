@@ -156,7 +156,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       // SELECT THE CLUSTER VARIABLE 1/2
       const clusterSelector = 'industry';
       // convert each unique value to a cluster number
-      this.uniqueClusterValues = this.data$.map(d => d[clusterSelector]);
+      this.uniqueClusterValues = this.data$.map(d => d[clusterSelector])
+        // filter uniqueOnly
+        .filter((value, index, self) => self.indexOf(value) === index );
 
       // define the nodes
       this.nodes = this.data$.map(d => {
@@ -164,7 +166,8 @@ export class VizComponent implements OnInit, AfterContentInit {
         const scaledRadius = this.radiusScale(+d[this.radiusSelector]),
           // SELECT THE CLUSTER VARIABLE 2/2
           forcedCluster =
-            this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+          this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+
         // define the nodes
         d = {
           id: d.id,
@@ -312,7 +315,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       // create the clustering/collision force simulation
       this.simulation = d3
         .forceSimulation(this.nodes)
-        .velocityDecay(0.9)
+        .velocityDecay(0.3)
         .force('x', that.forceXCombine)
         .force('y', that.forceYCombine)
         .force('collide', that.collide)
