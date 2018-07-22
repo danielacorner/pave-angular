@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-colour-legend-button',
   template: `
-  <button class='colourBtn btn waves-effect z-depth-3'
+  <button class='btn waves-effect z-depth-3'
     [ngStyle]='btnStyles'
     [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
     [style.left]="'5%'"
@@ -77,14 +77,6 @@ export class ColourLegendButtonComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    // transition height down by half button height
-    // setTimeout(() => {
-    // d3.select('.colourBtn')
-    //   .transition()
-    //   .duration(500)
-    //   .style('top', ($('.colourBtn').position().top) - ($('.colourBtn').height() / 2) + 'px')
-    //   .style('opacity', 1);
-    // }, 2000);
   }
 
   handleClick() {

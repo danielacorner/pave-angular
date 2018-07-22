@@ -1,7 +1,15 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
-import { trigger, state, style, animate, transition, query, animateChild } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  query,
+  animateChild
+} from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -20,7 +28,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ></app-filter-slider>
 
       <app-graph-mode
+      [nodes]="nodes"
       [buttonData]="buttonData"
+      [forceSimulation]="forceSimulation"
+      [forceXCombine]="forceXCombine"
+      [forceYCombine]="forceYCombine"
+      [forceCluster]="forceCluster"
+      [nClusters]="numClusters"
+      [width]="width"
+      [height]="height"
+      [navbarHeight]="navbarHeight"
+      [radiusRange]="radiusRange"
       ></app-graph-mode>
 
       <app-colour-legend-button
@@ -28,10 +46,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
+      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
       [width]="width"
       [height]="height"
       [navbarHeight]="navbarHeight"
+      [radiusRange]="radiusRange"
       ></app-colour-legend-button>
 
       <app-size-legend-button
@@ -46,6 +66,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [navbarHeight]="navbarHeight"
       [radiusRange]="radiusRange"
       ></app-size-legend-button>
+
     </div>
 
     <div *ngIf="tooltipData" @ngIfAnimation
@@ -129,7 +150,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     height: this.height,
     navbarHeight: this.navbarHeight,
     forceCluster: this.forceCluster,
-    radiusRange: this.radiusRange,
+    radiusRange: this.radiusRange
   };
   // tooltip
   public tooltipData;
@@ -144,18 +165,18 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
     d.fx = d.x;
     d.fy = d.y;
-  }
+  };
   public dragged = d => {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
-  }
+  };
   public dragended = d => {
     if (!d3.event.active) {
       this.forceSimulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
-  }
+  };
 
   ngOnInit() {}
 
@@ -174,9 +195,10 @@ export class VizComponent implements OnInit, AfterContentInit {
       // SELECT THE CLUSTER VARIABLE 1/2
       const clusterSelector = 'industry';
       // convert each unique value to a cluster number
-      this.uniqueClusterValues = this.data$.map(d => d[clusterSelector])
+      this.uniqueClusterValues = this.data$
+        .map(d => d[clusterSelector])
         // filter uniqueOnly
-        .filter((value, index, self) => self.indexOf(value) === index );
+        .filter((value, index, self) => self.indexOf(value) === index);
 
       // define the nodes
       this.nodes = this.data$.map(d => {
@@ -184,7 +206,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         const scaledRadius = this.radiusScale(+d[this.radiusSelector]),
           // SELECT THE CLUSTER VARIABLE 2/2
           forcedCluster =
-          this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+            this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
 
         // define the nodes
         d = {
