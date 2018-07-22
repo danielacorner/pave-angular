@@ -31,7 +31,6 @@ import * as d3 from 'd3';
         line-height: 0.5em;
       }
       button {
-        width: 100px;
         border-radius: 4px;
         position: fixed;
         opacity: 1;

@@ -16,7 +16,6 @@ import { DataService } from '../data.service';
       </mat-slide-toggle>
     </button>
 
-
 <mat-form-field class="y-axis-dropdown">
   <mat-select [(value)]="ySelector">
       <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
