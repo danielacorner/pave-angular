@@ -30,6 +30,7 @@ import {
   MatDialogTitle,
   MatDividerModule,
   MatSlideToggleModule,
+  MatSelectModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './details/details.component';
@@ -62,6 +63,7 @@ import { GraphModeComponent } from './graph-mode/graph-mode.component';
     MatTabsModule,
     MatDividerModule,
     MatSlideToggleModule,
+    MatSelectModule,
     FormsModule
   ],
   entryComponents: [DetailsComponent],

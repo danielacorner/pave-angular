@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 
@@ -14,6 +15,29 @@ import { DataService } from '../data.service';
       <span class="white-text">GRAPH VIEW</span>
       </mat-slide-toggle>
     </button>
+
+
+<mat-form-field class="y-axis-dropdown">
+  <mat-select [(value)]="ySelector">
+      <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
+                    >
+        <mat-option *ngFor="let item of group" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field class="y-axis-dropdown">
+  <mat-select [(value)]="ySelector">
+      <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
+                    >
+        <mat-option *ngFor="let item of group" [value]="item.value">
+          {{item.viewValue}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-select>
+</mat-form-field>
   `,
   styles: [
     `
@@ -41,6 +65,30 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   @Input() public radiusRange;
   public data$;
 
+  public axisSelectorGroups = [
+    {
+      name: 'Statistics',
+      value: [
+        {
+          value: 'automationRisk',
+          viewValue: 'Risk of machines replacing this job'
+        },
+        { value: 'workers', viewValue: 'Numer of Jobs' },
+        { value: 'wage', viewValue: 'Wage ($ / hr)' },
+        { value: 'salaryMed', viewValue: 'Salary ($ / yr)' }
+      ]
+    },
+    {
+      name: 'Statistics',
+      value: [
+        { value: 'skillsComp', viewValue: 'Computer and Information Skills' },
+        { value: 'skillsLogi', viewValue: 'Logic and Reasoning Skills' },
+        { value: 'skillsMath', viewValue: 'Math and Spatial Skills' },
+        { value: 'skillsLang', viewValue: 'Language and Communication Skills' }
+      ]
+    }
+  ];
+
   public btnHeight = 50;
   public btnStyles = {
     height: this.btnHeight + 'px',
@@ -58,7 +106,7 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   constructor(private _dataService: DataService) {}
   public transitionDuration = 300;
 
-  public graphDimensions = {x: 0.5, y: 0.5};
+  public graphDimensions = { x: 0.8, y: 0.7 };
 
   ngOnInit() {}
 
@@ -83,14 +131,18 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
     const scaleX = d3
       .scaleLinear()
       .domain(d3.extent(that.data$.map(d => d[that.xSelector])))
-      .range([that.graphDimensions.x * (-that.width / 2),
-              that.graphDimensions.x * (that.width / 2)]);
+      .range([
+        that.graphDimensions.x * (-that.width / 2),
+        that.graphDimensions.x * (that.width / 2)
+      ]);
 
     const scaleY = d3
       .scaleLinear()
       .domain(d3.extent(that.data$.map(d => d[that.ySelector])))
-      .range([that.graphDimensions.y * (-that.height / 2),
-              that.graphDimensions.y * (that.height / 2)]);
+      .range([
+        that.graphDimensions.y * (-that.height / 2),
+        that.graphDimensions.y * (that.height / 2)
+      ]);
 
     this.forceSimulation.alpha(0);
 
