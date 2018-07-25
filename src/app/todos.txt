@@ -1,11 +1,9 @@
 todos
 -----
 next
-- when closed, if bottom style not null,
-  transition back to top position
-big
 - details modal component
   - 3 tabs: can i, should i, how do i
+big
 - graph mode toggle
 - fill tooltip component
   - material card top
@@ -17,8 +15,10 @@ big
 - settimeout 0 for each step of apply draghandler to new nodes
 - fine-tune the colour, size legend buttons
 - fine-tune the force simulation
+  - transition in the circles delayed by cluster
 - extract simulation component?
 small
+- optional: transition bottom-to-bottom tooltip position
 - calculate numClusters from dataset
 - bring in the colorScale
 - favourites material checkbox

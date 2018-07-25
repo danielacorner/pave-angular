@@ -35,6 +35,8 @@ export class ColourLegendButtonComponent implements OnInit {
   @Input() public vizWidth: number;
   @Input() public vizHeight: number;
   @Input() public navbarHeight: number;
+  @Input() public uniqueClusterValues;
+  @Input() public clusterSelector;
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px'
@@ -87,6 +89,22 @@ export class ColourLegendButtonComponent implements OnInit {
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();
+
+      this.createAnnotations();
+
+      setTimeout(function () {
+
+        d3.selectAll('.annotation-note-bg')
+          .style('fill', 'white')
+          .style('fill-opacity', 0.7);
+
+        d3.selectAll('.annotation-group')
+          // .style('font-size','20px')
+          .style('font-weight', 'bold')
+          .style('fill', 'black');
+        d3.selectAll('.annotation-note-label')
+          .style('background', 'white').style('opacity', 1);
+      }, 3000);
     } else {
       this.forceSimulation
         .force('x', that.forceXCombine)
@@ -95,5 +113,29 @@ export class ColourLegendButtonComponent implements OnInit {
         .alphaTarget(0.001)
         .restart();
     }
+  }
+
+  createAnnotations() {
+    // for each cluster
+    const that = this;
+    const clusterCenters = [];
+
+    this.uniqueClusterValues.map((cluster, index) => {
+      // get average cluster centers of mass
+      clusterCenters[index] = 0;
+      // select cluster circles
+      const clusterCircles = d3.selectAll('circle').data().filter(d =>  d.clusterValue === cluster);
+      // reduce the average x, y positions per cluster
+      const avgX = clusterCircles.reduce((acc, currValue) => {
+          return acc.x + currValue;
+        }, 0);
+      const avgY = clusterCircles.reduce((acc, currValue) => {
+          return acc.y + currValue;
+        }, 0);
+      // append cluster title to the canvas at avg x, y
+      // d3.select('.circlesG').data(d.clusterValue)
+        // .append()
+
+    });
   }
 }

@@ -27,6 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [vizWidth]="width"
       [vizHeight]="height"
       [navbarHeight]="navbarHeight"
+      [uniqueClusterValues]="uniqueClusterValues"
+      [clusterSelector]="clusterSelector"
       ></app-colour-legend-button>
 
       <app-size-legend-button
@@ -171,6 +173,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           // circle attributes
           r: scaledRadius,
           cluster: forcedCluster,
+          clusterValue: d[clusterSelector],
           // skills
           math: d.skillsMath,
           logic: d.skillsLogi,
