@@ -1,7 +1,15 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
-import { trigger, state, style, animate, transition, query, animateChild } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  query,
+  animateChild
+} from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -19,27 +27,48 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [filterVariable]="'language'"
       ></app-filter-slider>
 
-      <app-colour-legend-button
-      [forceSimulation]="simulation"
+      <app-graph-mode
+      [nodes]="nodes"
+      [buttonData]="buttonData"
+      [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
+      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
-      [vizWidth]="width"
-      [vizHeight]="height"
+      [width]="width"
+      [height]="height"
+      [navbarHeight]="navbarHeight"
+      [radiusRange]="radiusRange"
+      ></app-graph-mode>
+
+      <app-colour-legend-button
+      [buttonData]="buttonData"
+      [forceSimulation]="forceSimulation"
+      [forceXCombine]="forceXCombine"
+      [forceYCombine]="forceYCombine"
+      [forceCluster]="forceCluster"
+      [nClusters]="numClusters"
+      [width]="width"
+      [height]="height"
       [navbarHeight]="navbarHeight"
       [uniqueClusterValues]="uniqueClusterValues"
       [clusterSelector]="clusterSelector"
+      [radiusRange]="radiusRange"
       ></app-colour-legend-button>
 
       <app-size-legend-button
-      [forceSimulation]="simulation"
+      [buttonData]="buttonData"
+      [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
+      [forceYCombine]="forceYCombine"
+      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
-      [vizWidth]="width"
-      [vizHeight]="height"
+      [width]="width"
+      [height]="height"
       [navbarHeight]="navbarHeight"
       [radiusRange]="radiusRange"
       ></app-size-legend-button>
+
     </div>
 
     <div *ngIf="tooltipData" @ngIfAnimation
@@ -105,16 +134,26 @@ export class VizComponent implements OnInit, AfterContentInit {
     'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
   // data
   public data$ = [];
-  // simulation
-  public simulation;
-  // simulation forces
+  // simulation & forces
+  public forceSimulation;
   public forceXCombine = d3.forceX().strength(0.4);
   public forceYCombine = d3.forceY().strength(0.4);
   public forceGravity = d3.forceManyBody().strength(this.height * -0.08);
   public forceCollide = d3.forceCollide(this.height * 0.009);
-  public clustering;
+  public forceCluster;
   public collide;
   public ticked;
+  public buttonData = {
+    forceSimulation: this.forceSimulation,
+    forceXCombine: this.forceXCombine,
+    forceYCombine: this.forceYCombine,
+    numClusters: this.numClusters,
+    width: this.width,
+    height: this.height,
+    navbarHeight: this.navbarHeight,
+    forceCluster: this.forceCluster,
+    radiusRange: this.radiusRange
+  };
   // tooltip
   public tooltipData;
   public tooltipExpanded = false;
@@ -124,7 +163,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   // Drag functions used for interactivity
   public dragstarted = d => {
     if (!d3.event.active) {
-      this.simulation.alphaTarget(0.3);
+      this.forceSimulation.alphaTarget(0.3);
     }
     d.fx = d.x;
     d.fy = d.y;
@@ -135,7 +174,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   public dragended = d => {
     if (!d3.event.active) {
-      this.simulation.alphaTarget(0);
+      this.forceSimulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
@@ -158,7 +197,10 @@ export class VizComponent implements OnInit, AfterContentInit {
       // SELECT THE CLUSTER VARIABLE 1/2
       const clusterSelector = 'industry';
       // convert each unique value to a cluster number
-      this.uniqueClusterValues = this.data$.map(d => d[clusterSelector]);
+      this.uniqueClusterValues = this.data$
+        .map(d => d[clusterSelector])
+        // filter uniqueOnly
+        .filter((value, index, self) => self.indexOf(value) === index);
 
       // define the nodes
       this.nodes = this.data$.map(d => {
@@ -167,6 +209,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           // SELECT THE CLUSTER VARIABLE 2/2
           forcedCluster =
             this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+
         // define the nodes
         d = {
           id: d.id,
@@ -254,7 +297,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       };
 
       // These are implementations of the custom forces.
-      this.clustering = alpha => {
+      this.forceCluster = alpha => {
         that.nodes.forEach(d => {
           const cluster = that.clusters[d.cluster];
           if (cluster === d) {
@@ -312,15 +355,15 @@ export class VizComponent implements OnInit, AfterContentInit {
         });
       };
 
-      // create the clustering/collision force simulation
-      this.simulation = d3
+      // create the forceCluster/collision force simulation
+      this.forceSimulation = d3
         .forceSimulation(this.nodes)
-        .velocityDecay(0.9)
+        .velocityDecay(0.3)
         .force('x', that.forceXCombine)
         .force('y', that.forceYCombine)
         .force('collide', that.collide)
         .force('gravity', that.forceGravity)
-        .force('cluster', that.clustering)
+        .force('cluster', that.forceCluster)
         .on('tick', that.ticked);
     });
   } // end ngAfterContentinit
@@ -389,7 +432,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
     }, 2000);
     // Update nodes and restart the simulation.
-    this.simulation
+    this.forceSimulation
       .nodes(filteredNodes)
       .alpha(0.3)
       .restart();

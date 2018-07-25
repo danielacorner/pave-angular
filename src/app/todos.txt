@@ -20,5 +20,14 @@ big
 small
 - optional: transition bottom-to-bottom tooltip position
 - calculate numClusters from dataset
+- when tooltip closed, if bottom style not null,
+  transition back to top position
 - bring in the colorScale
 - favourites material checkbox
+simulation
+forceXCombine
+forceYCombine
+numClusters
+width
+height
+navbarHeight

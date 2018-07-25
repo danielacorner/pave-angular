@@ -6,11 +6,22 @@ import * as d3 from 'd3';
   template: `
   <button class='sizeBtn btn waves-effect z-depth-3'
     [ngStyle]='btnStyles'
-    [style.top]="((vizHeight / 2) + navbarHeight - btnHeight) + 'px'"
+    [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
     [style.right]="'5%'"
     (click)="handleClick()">
-    <p>Size</p>
-    <p>Legend</p>
+  <div class='grid-container'>
+    <div class="sort-icon valign-wrapper">
+      <mat-icon
+      [style.transform]="(active ? 'rotate(90deg)' : null)"
+      >filter_list</mat-icon>
+    </div>
+    <div class="btn-text">
+      <span>
+      <p>Sort by</p>
+      <p>sizes</p>
+      </span>
+    </div>
+  </div>
   </button>
   `,
   styles: [
@@ -19,25 +30,46 @@ import * as d3 from 'd3';
         line-height: 0.5em;
       }
       button {
-        width: 100px;
         border-radius: 4px;
         position: fixed;
         opacity: 1;
+      }
+      .grid-container {
+        display: grid;
+        grid-gap: 10px;
+        grid-columns: auto auto;
+      }
+      .sort-icon {
+        text-align: center;
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .btn-text {
+        text-align: center;
+        grid-column: 2;
+        grid-row: 1;
+      }
+      mat-icon {
+        transition: transform 0.2s;
       }
     `
   ]
 })
 export class SizeLegendButtonComponent implements OnInit {
+  @Input() public buttonData;
   @Input() public forceSimulation;
   @Input() public forceXCombine;
-  @Input() public nClusters: number;
-  @Input() public vizWidth: number;
-  @Input() public vizHeight: number;
-  @Input() public navbarHeight: number;
-  @Input() public radiusRange: number[];
+  @Input() public forceYCombine;
+  @Input() public forceCluster;
+  @Input() public nClusters;
+  @Input() public width;
+  @Input() public height;
+  @Input() public navbarHeight;
+  @Input() public radiusRange;
   public btnHeight = 70;
   public btnStyles = {
-    height: this.btnHeight + 'px'
+    height: this.btnHeight + 'px',
+    width: '130px'
   };
   public data$ = [];
   public active = false;
@@ -63,11 +95,11 @@ export class SizeLegendButtonComponent implements OnInit {
     const forceXSeparate = d3
       .forceX(function(d) {
         return (
-          // 70% screen width
-          0.85 *
+          // 40% screen width
+          0.3 *
           // split the width into the range (min, max radius)
-          (((that.vizWidth / (that.radiusRange[1] - that.radiusRange[0])) * d.r)
-          - (that.vizWidth / 2 / 0.85))
+          ((that.width / (that.radiusRange[1] - that.radiusRange[0])) * d.r -
+            that.width / 2)
         );
       })
       .strength(0.3);
@@ -75,12 +107,16 @@ export class SizeLegendButtonComponent implements OnInit {
     if (this.active) {
       this.forceSimulation
         .force('x', forceXSeparate)
+        // .force('y', that.forceYCombine)
+        .force('cluster', null)
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();
     } else {
       this.forceSimulation
         .force('x', that.forceXCombine)
+        .force('cluster', that.forceCluster)
+        // .force('y', that.forceYCombine)
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();

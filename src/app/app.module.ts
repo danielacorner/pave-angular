@@ -25,8 +25,16 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatCardModule,
+  MatDialogModule,
+  MatTabsModule,
+  MatDialogTitle,
+  MatDividerModule,
+  MatSlideToggleModule,
+  MatSelectModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetailsComponent } from './details/details.component';
+import { GraphModeComponent } from './graph-mode/graph-mode.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +44,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ColourLegendButtonComponent,
     SizeLegendButtonComponent,
     FilterSliderComponent,
-    TooltipComponent
+    TooltipComponent,
+    DetailsComponent,
+    GraphModeComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +59,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     MatIconModule,
     MatCardModule,
-    FormsModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    FormsModule
   ],
-  providers: [DataService],
+  entryComponents: [DetailsComponent],
+  providers: [DataService, MatDialogTitle],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
