@@ -174,7 +174,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   public dragended = d => {
     if (!d3.event.active) {
-      this.forceSimulation.alphaTarget(0);
+      // alphaTarget > 0 to prevent simulation from stopping
+      this.forceSimulation.alphaTarget(0.0000001);
     }
     d.fx = null;
     d.fy = null;
@@ -372,6 +373,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   closeTooltip($event) {
     if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
       this.tooltipExpanded = false;
+      d3.select('app-tooltip').transition().duration(300).style('opacity', 0)
     }
   }
 

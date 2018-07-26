@@ -53,6 +53,9 @@ import * as d3 from 'd3';
       mat-icon {
         transition: transform 0.2s;
       }
+      .annotation {
+
+      }
     `
   ]
 })
@@ -77,10 +80,12 @@ export class ColourLegendButtonComponent implements OnInit {
     width: '130px'
   };
   public active = false;
+  public clusterCenters = [];
+  public refreshInterval;
+
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   handleClick() {
     this.active = !this.active;
@@ -88,13 +93,6 @@ export class ColourLegendButtonComponent implements OnInit {
     // split the clusters horizontally
     const forceXSeparate = d3
       .forceX(function(d) {
-        if (d.id === 1) {
-          console.log(that.width);
-          console.log(window.innerWidth);
-          console.log(that.nClusters);
-          console.log(d);
-          console.log(d.cluster);
-        }
         return (
           // 40% (screen width / number of clusters)
           0.4 * ((that.width / that.nClusters) * d.cluster) -
@@ -125,8 +123,7 @@ export class ColourLegendButtonComponent implements OnInit {
 
       this.createAnnotations();
 
-      setTimeout(function () {
-
+      setTimeout(function() {
         d3.selectAll('.annotation-note-bg')
           .style('fill', 'white')
           .style('fill-opacity', 0.7);
@@ -136,7 +133,8 @@ export class ColourLegendButtonComponent implements OnInit {
           .style('font-weight', 'bold')
           .style('fill', 'black');
         d3.selectAll('.annotation-note-label')
-          .style('background', 'white').style('opacity', 1);
+          .style('background', 'white')
+          .style('opacity', 1);
       }, 3000);
     } else {
       this.forceSimulation
@@ -145,30 +143,85 @@ export class ColourLegendButtonComponent implements OnInit {
         .alpha(0.3)
         .alphaTarget(0.001)
         .restart();
+
+      this.clearAnnotations();
     }
   }
 
   createAnnotations() {
-    // for each cluster
     const that = this;
-    const clusterCenters = [];
 
-    this.uniqueClusterValues.map((cluster, index) => {
-      // get average cluster centers of mass
-      clusterCenters[index] = 0;
-      // select cluster circles
-      const clusterCircles = d3.selectAll('circle').data().filter(d =>  d.clusterValue === cluster);
-      // reduce the average x, y positions per cluster
-      const avgX = clusterCircles.reduce((acc, currValue) => {
-          return acc.x + currValue;
-        }, 0);
-      const avgY = clusterCircles.reduce((acc, currValue) => {
-          return acc.y + currValue;
-        }, 0);
-      // append cluster title to the canvas at avg x, y
-      // d3.select('.circlesG').data(d.clusterValue)
-        // .append()
+    // get average cluster 'center of mass'
+    const calculateClusterCenters = () => {
+      that.uniqueClusterValues.map((cluster, index) => {
+        // select cluster-specific circles
+        const clusterCircles = d3
+          .selectAll('circle')
+          .data()
+          .filter(d => d.clusterValue === cluster);
+        // average x, y positions per cluster
+        const clusterX = clusterCircles.map(c => c.x);
+        const clusterY = clusterCircles.map(c => c.y);
 
+        const avgX =
+          clusterX.reduce((acc, currValue) => {
+            return acc + currValue;
+          }, 0) /
+            clusterCircles.length +
+          window.innerWidth / 2;
+
+        const avgY =
+          clusterY.reduce((acc, currValue) => {
+            return acc + currValue;
+          }, 0) /
+            clusterCircles.length +
+          window.innerHeight / 2;
+
+        that.clusterCenters[index] = [avgX, avgY];
+      });
+    };
+    calculateClusterCenters();
+
+    // append cluster title to the canvas at avg x, y
+    that.uniqueClusterValues.map((cluster, index) => {
+      d3.select('body')
+        .append('div')
+        .attr('class', 'annotation')
+        .style('position', 'fixed')
+        .style('max-width', '200px')
+        .style('opacity', 0)
+        .style('color', '#272d2d')
+        .style('padding', '0 5px')
+        .style('background', 'rgba(246, 248, 255, 0.7)')
+        .style('font-family', 'Helvetica')
+        .style('left', that.clusterCenters[index][0] - 100 + 'px')
+        .style('top', that.clusterCenters[index][1] + 'px')
+        .html(cluster)
+        .attr('id', cluster)
+        .transition()
+        .duration(500)
+        .style('opacity', 1);
+      // console.log(that.clusterCenters)
     });
+    // re-center every .5s
+    this.refreshInterval = setInterval(() => {
+      calculateClusterCenters();
+      d3.selectAll('.annotation')
+        .transition()
+        .ease(d3.easeSin)
+        .duration(500)
+        .style('left', (d, i) => {
+          return that.clusterCenters[i][0] - 100 + 'px';
+        })
+        .style('top', (d, i) => {
+          return that.clusterCenters[i][1] + 'px';
+        });
+    }, 500);
+  }
+
+  clearAnnotations() {
+    clearInterval(this.refreshInterval);
+    d3.selectAll('.annotation').transition.duration(500)
+      .style('opacity', 0).remove();
   }
 }

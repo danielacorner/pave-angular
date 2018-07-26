@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'app-graph-mode',
@@ -16,22 +17,34 @@ import { DataService } from '../data.service';
       </mat-slide-toggle>
     </button>
 
-<mat-form-field class="y-axis-dropdown">
-  <mat-select [(value)]="ySelector">
+<mat-form-field class="y-axis-dropdown"
+[style.display]="(active ? 'inline' : 'none')"
+>
+  <mat-select
+  placeholder="Y-axis"
+  [(value)]="ySelector"
+  (selectionChange)="changeSelection($event, 'y')"
+  >
       <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
                     >
-        <mat-option *ngFor="let item of group" [value]="item.value">
+        <mat-option *ngFor="let item of group.contents" [value]="item.value">
           {{item.viewValue}}
         </mat-option>
       </mat-optgroup>
     </mat-select>
 </mat-form-field>
 
-<mat-form-field class="y-axis-dropdown">
-  <mat-select [(value)]="ySelector">
+<mat-form-field class="x-axis-dropdown"
+[style.display]="(active ? 'inline' : 'none')"
+>
+  <mat-select
+  placeholder="X-axis"
+  [(value)]="xSelector"
+  (selectionChange)="changeSelection($event, 'x')"
+  >
       <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
                     >
-        <mat-option *ngFor="let item of group" [value]="item.value">
+        <mat-option *ngFor="let item of group.contents" [value]="item.value">
           {{item.viewValue}}
         </mat-option>
       </mat-optgroup>
@@ -46,6 +59,19 @@ import { DataService } from '../data.service';
         opacity: 1;
         display: flex;
         margin: 40px auto;
+      }
+      .x-axis-dropdown {
+        position: fixed;
+        bottom: 100px;
+        left: 100px;
+      }
+      mat-select-placeholder {
+        color: black;
+      }
+      .y-axis-dropdown {
+        position: fixed;
+        bottom: 100px;
+        right: 100px;
       }
     `
   ]
@@ -67,7 +93,7 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public axisSelectorGroups = [
     {
       name: 'Statistics',
-      value: [
+      contents: [
         {
           value: 'automationRisk',
           viewValue: 'Risk of machines replacing this job'
@@ -79,7 +105,7 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
     },
     {
       name: 'Statistics',
-      value: [
+      contents: [
         { value: 'skillsComp', viewValue: 'Computer and Information Skills' },
         { value: 'skillsLogi', viewValue: 'Logic and Reasoning Skills' },
         { value: 'skillsMath', viewValue: 'Math and Spatial Skills' },
@@ -97,6 +123,9 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
 
   public xSelector = 'automationRisk';
   public ySelector = 'workers';
+
+  public scaleX;
+  public scaleY;
 
   public oldXPositions = [];
   public oldYPositions = [];
@@ -127,24 +156,10 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
     that.data$.map(d => (that.newXPositions = d[that.xSelector]));
     that.data$.map(d => (that.newYPositions = d[that.ySelector]));
 
-    const scaleX = d3
-      .scaleLinear()
-      .domain(d3.extent(that.data$.map(d => d[that.xSelector])))
-      .range([
-        that.graphDimensions.x * (-that.width / 2),
-        that.graphDimensions.x * (that.width / 2)
-      ]);
-
-    const scaleY = d3
-      .scaleLinear()
-      .domain(d3.extent(that.data$.map(d => d[that.ySelector])))
-      .range([
-        that.graphDimensions.y * (-that.height / 2),
-        that.graphDimensions.y * (that.height / 2)
-      ]);
+    this.setScales(that);
 
     this.forceSimulation.alpha(0);
-
+    // transition circles using x, y for initial simulation positions
     d3.selectAll('circle')
       .transition()
       .duration(that.transitionDuration)
@@ -153,13 +168,30 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
         that.oldYPositions[d.id] = d.y;
       })
       .attrTween('cx', function(d) {
-        const i = d3.interpolate(d.x, scaleX(+d.all[that.xSelector]));
+        const i = d3.interpolate(d.x, that.scaleX(+d.all[that.xSelector]));
         return t => (d.cx = i(t));
       })
       .attrTween('cy', function(d) {
-        const i = d3.interpolate(d.y, scaleY(+d.all[that.ySelector]));
+        const i = d3.interpolate(d.y, that.scaleY(+d.all[that.ySelector]));
         return t => (d.cy = i(t));
       });
+  }
+
+  private setScales(that: this) {
+    this.scaleX = d3
+      .scaleLinear()
+      .domain(d3.extent(that.data$.map(d => d[that.xSelector])))
+      .range([
+        that.graphDimensions.x * (-that.width / 2),
+        that.graphDimensions.x * (that.width / 2)
+      ]);
+    this.scaleY = d3
+      .scaleLinear()
+      .domain(d3.extent(that.data$.map(d => d[that.ySelector])))
+      .range([
+        that.graphDimensions.y * (-that.height / 2),
+        that.graphDimensions.y * (that.height / 2)
+      ]);
   }
 
   graphModeOff() {
@@ -182,5 +214,29 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
         .alphaTarget(0.001)
         .restart();
     }, that.transitionDuration);
+  }
+
+  changeSelection($event, axis) {
+    const that = this;
+    console.log($event);
+    console.log(axis);
+    // change the axis selectors
+    axis === 'x'
+      ? (that.xSelector = $event.value)
+      : (that.ySelector = $event.value);
+    // recalculate the axis scales
+    this.setScales(that);
+    // transition the circles using cx, cy for current positions
+    d3.selectAll('circle')
+      .transition()
+      .duration(500)
+      .attrTween('cx', function(d) {
+        const i = d3.interpolate(d.cx, that.scaleX(+d.all[that.xSelector]));
+        return t => (d.cx = i(t));
+      })
+      .attrTween('cy', function(d) {
+        const i = d3.interpolate(d.cy, that.scaleY(+d.all[that.ySelector]));
+        return t => (d.cy = i(t));
+      });
   }
 }
