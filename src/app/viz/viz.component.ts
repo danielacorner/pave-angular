@@ -29,7 +29,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
       <app-graph-mode
       [nodes]="nodes"
-      [buttonData]="buttonData"
       [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
@@ -42,7 +41,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ></app-graph-mode>
 
       <app-colour-legend-button
-      [buttonData]="buttonData"
       [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
@@ -57,7 +55,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ></app-colour-legend-button>
 
       <app-size-legend-button
-      [buttonData]="buttonData"
       [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
@@ -68,6 +65,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [navbarHeight]="navbarHeight"
       [radiusRange]="radiusRange"
       ></app-size-legend-button>
+
+      <app-change-sizes-dropdown
+      [radiusSelector]="radiusSelector"
+      [radiusRange]="radiusRange"
+      [radiusScale]="radiusScale"
+      [forceSimulation]="forceSimulation"
+      [nodeAttraction]="nodeAttraction"
+      [nodePadding]="nodePadding"
+      [defaultCircleRadius]="defaultCircleRadius"
+      [defaultNodeAttraction]="defaultNodeAttraction"
+      ></app-change-sizes-dropdown>
+
+      <app-change-colours-dropdown
+      [clusterSelector]="clusterSelector"
+      [colourScale]="colourScale"
+      [uniqueClusterValues]="uniqueClusterValues"
+      [clusterCenters]="clusterCenters"
+      [nodes]="nodes"
+      [forceSimulation]="forceSimulation"
+      [forceCluster]="forceCluster"
+      ></app-change-colours-dropdown>
 
     </div>
 
@@ -105,23 +123,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
   public width = window.innerWidth;
-  // circle properties
-  public padding = 1.5; // separation between same-color circles
-  public clusterPadding = 6; // separation between different-color circles
-  public minRadius = 4;
-  public maxRadius = this.width * 0.03;
-  public radiusRange = [this.minRadius, this.maxRadius];
-  public radiusScale;
-  // custom circle sizes and colours/clusters
-  public radiusSelector = 'workers';
-  public clusterSelector = 'industry';
-  public uniqueClusterValues;
-  // circles and clusters
-  public nodes = [];
-  public circles;
-  public numClusters = 10; // number of distinct clusters
-  public colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-  public clusters = new Array(this.numClusters);
   // the graphing canvas
   public canvasStyles = {
     position: 'absolute',
@@ -134,26 +135,49 @@ export class VizComponent implements OnInit, AfterContentInit {
     'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
   // data
   public data$ = [];
-  // simulation & forces
+
+  // ----- CIRCLE PROPERTIES ----- //
+  public padding = 1.5; // separation between same-color circles
+  public clusterPadding = 6; // separation between different-color circles
+  // radius range: [ highest of (4 or 0.0017 width) , highest of (10 or 0.019 width) ]
+  public minRadius = window.innerWidth * 0.004;
+  // public minRadius = (window.innerWidth * 0.0017 > 5 ? window.innerWidth * 0.0017 : 5);
+  public maxRadius = window.innerWidth * 0.025;
+  // public maxRadius = (window.innerWidth * 0.019 > 10 ? window.innerWidth * 0.019 : 10);
+  public radiusRange = [this.minRadius, this.maxRadius];
+  public radiusScale;
+  // custom circle sizes and colours/clusters
+  // ----- STARTING RADIUS & CLUSTERS ----- //
+  public radiusSelector = 'none';
+  public defaultCircleRadius = window.innerWidth * 0.0083;
+  public clusterSelector = 'industry';
+  public uniqueClusterValues;
+  // circles and clusters
+  public nodes = [];
+  public circles;
+  public numClusters = 10; // number of distinct clusters
+  public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
+  public clusterCenters = new Array(this.numClusters);
+
+  // ----- SIMULATION & FORCES ----- //
+  public defaultNodeAttraction = window.innerWidth * -0.23; // negative = repel
+  public nodeAttraction = -3.14; // negative = repel
+  public nodePadding = 1;
+  public centerGravity = 1.75;
   public forceSimulation;
-  public forceXCombine = d3.forceX().strength(0.4);
-  public forceYCombine = d3.forceY().strength(0.4);
-  public forceGravity = d3.forceManyBody().strength(this.height * -0.08);
-  public forceCollide = d3.forceCollide(this.height * 0.009);
+  public forceXCombine = d3.forceX().strength(this.centerGravity);
+  public forceYCombine = d3.forceY().strength(this.centerGravity);
+  public forceGravity = d3
+    .forceManyBody()
+    .strength(
+      this.radiusSelector === 'none'
+        ? this.defaultNodeAttraction
+        : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
+    );
+  public forceCollide = null;
+  // public forceCollide = d3.forceCollide().radius(d => d.r + this.nodePadding);
   public forceCluster;
-  public collide;
   public ticked;
-  public buttonData = {
-    forceSimulation: this.forceSimulation,
-    forceXCombine: this.forceXCombine,
-    forceYCombine: this.forceYCombine,
-    numClusters: this.numClusters,
-    width: this.width,
-    height: this.height,
-    navbarHeight: this.navbarHeight,
-    forceCluster: this.forceCluster,
-    radiusRange: this.radiusRange
-  };
   // tooltip
   public tooltipData;
   public tooltipExpanded = false;
@@ -163,7 +187,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   // Drag functions used for interactivity
   public dragstarted = d => {
     if (!d3.event.active) {
-      this.forceSimulation.alphaTarget(0.3);
+      this.forceSimulation.alphaTarget(0.3).restart();
     }
     d.fx = d.x;
     d.fy = d.y;
@@ -174,8 +198,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   public dragended = d => {
     if (!d3.event.active) {
-      // alphaTarget > 0 to prevent simulation from stopping
-      this.forceSimulation.alphaTarget(0.0000001);
+      this.forceSimulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
@@ -190,26 +213,34 @@ export class VizComponent implements OnInit, AfterContentInit {
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
       // SELECT THE RADIUS VARIABLE
-      this.radiusSelector = 'workers';
+      this.radiusSelector = 'none';
       this.radiusScale = d3
         .scaleSqrt() // sqrt because circle areas
-        .domain(d3.extent(this.data$, d => +d[that.radiusSelector]))
-        .range([this.minRadius, this.maxRadius]);
-      // SELECT THE CLUSTER VARIABLE 1/2
-      const clusterSelector = 'industry';
+        .domain(
+          this.radiusSelector === 'none'
+            ? [1, 1]
+            : d3.extent(this.data$, d => +d[that.radiusSelector])
+        )
+        .range(
+          this.radiusSelector === 'none'
+            ? Array(2).fill(this.defaultCircleRadius)
+            : [this.minRadius, this.maxRadius]
+        );
+
       // convert each unique value to a cluster number
       this.uniqueClusterValues = this.data$
-        .map(d => d[clusterSelector])
+        .map(d => d[that.clusterSelector])
         // filter uniqueOnly
         .filter((value, index, self) => self.indexOf(value) === index);
 
       // define the nodes
       this.nodes = this.data$.map(d => {
         // scale radius to fit on the screen
-        const scaledRadius = this.radiusScale(+d[this.radiusSelector]),
-          // SELECT THE CLUSTER VARIABLE 2/2
-          forcedCluster =
-            this.uniqueClusterValues.indexOf(d[clusterSelector]) + 1;
+        const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
+
+        // SELECT THE CLUSTER VARIABLE 2/2
+        const forcedCluster =
+          this.uniqueClusterValues.indexOf(d[that.clusterSelector]) + 1;
 
         // define the nodes
         d = {
@@ -217,7 +248,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           // circle attributes
           r: scaledRadius,
           cluster: forcedCluster,
-          clusterValue: d[clusterSelector],
+          clusterValue: d[that.clusterSelector],
           // skills
           math: d.skillsMath,
           logic: d.skillsLogi,
@@ -228,10 +259,10 @@ export class VizComponent implements OnInit, AfterContentInit {
         };
         // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
         if (
-          !this.clusters[forcedCluster] ||
-          scaledRadius > this.clusters[forcedCluster].r
+          !this.clusterCenters[forcedCluster] ||
+          scaledRadius > this.clusterCenters[forcedCluster].r
         ) {
-          this.clusters[forcedCluster] = d;
+          this.clusterCenters[forcedCluster] = d;
         }
         return d;
       });
@@ -244,8 +275,10 @@ export class VizComponent implements OnInit, AfterContentInit {
         .data(that.nodes)
         .enter()
         .append('circle')
+        .style('opacity', 0)
+        .attr('id', d => 'circle_' + d.id)
         .attr('r', d => d.r)
-        .attr('fill', d => this.colorScale(d.cluster))
+        .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
             .drag()
@@ -293,6 +326,14 @@ export class VizComponent implements OnInit, AfterContentInit {
           }
         });
 
+      setTimeout(() => {
+        this.circles
+          .transition()
+          .duration(1500)
+          .style('opacity', 1)
+          .delay((d, i) => i * 3);
+      }, 1000);
+
       this.ticked = () => {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
@@ -300,7 +341,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       // These are implementations of the custom forces.
       this.forceCluster = alpha => {
         that.nodes.forEach(d => {
-          const cluster = that.clusters[d.cluster];
+          const cluster = that.clusterCenters[d.cluster];
           if (cluster === d) {
             return;
           }
@@ -318,51 +359,13 @@ export class VizComponent implements OnInit, AfterContentInit {
         });
       };
 
-      this.collide = alpha => {
-        const quadtree = d3
-          .quadtree()
-          .x(d => d.x)
-          .y(d => d.y)
-          .addAll(that.nodes);
-
-        that.nodes.map(d => {
-          let r =
-            d.r + that.maxRadius + Math.max(that.padding, that.clusterPadding);
-          const nx1 = d.x - r,
-            nx2 = d.x + r,
-            ny1 = d.y - r,
-            ny2 = d.y + r;
-          quadtree.visit((quad, x1, y1, x2, y2) => {
-            if (quad.data && quad.data !== d) {
-              let x = d.x - quad.data.x,
-                y = d.y - quad.data.y,
-                l = Math.sqrt(x * x + y * y);
-              r =
-                d.r +
-                quad.data.r +
-                (d.cluster === quad.data.cluster
-                  ? that.padding
-                  : that.clusterPadding);
-              if (l < r) {
-                l = ((l - r) / l) * alpha;
-                d.x -= x *= l;
-                d.y -= y *= l;
-                quad.data.x += x;
-                quad.data.y += y;
-              }
-            }
-            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-          });
-        });
-      };
-
       // create the forceCluster/collision force simulation
       this.forceSimulation = d3
         .forceSimulation(this.nodes)
-        .velocityDecay(0.3)
+        // .velocityDecay(0.3)
         .force('x', that.forceXCombine)
         .force('y', that.forceYCombine)
-        .force('collide', that.collide)
+        .force('collide', that.forceCollide)
         .force('gravity', that.forceGravity)
         .force('cluster', that.forceCluster)
         .on('tick', that.ticked);
@@ -373,7 +376,10 @@ export class VizComponent implements OnInit, AfterContentInit {
   closeTooltip($event) {
     if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
       this.tooltipExpanded = false;
-      d3.select('app-tooltip').transition().duration(300).style('opacity', 0)
+      d3.select('app-tooltip')
+        .transition()
+        .duration(300)
+        .style('opacity', 0);
     }
   }
 
@@ -404,7 +410,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .enter()
       .append('circle')
       .attr('r', d => d.r)
-      .attr('fill', d => that.colorScale(d.cluster))
+      .attr('fill', d => that.colourScale(d.cluster))
       // add tooltips to each circle
       // TODO: extract tooltips
       .on('mouseover', d => {

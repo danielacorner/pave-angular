@@ -60,7 +60,6 @@ import * as d3 from 'd3';
   ]
 })
 export class ColourLegendButtonComponent implements OnInit {
-  @Input() public buttonData;
   @Input() public forceSimulation;
   @Input() public forceXCombine;
   @Input() public forceYCombine;
@@ -182,6 +181,10 @@ export class ColourLegendButtonComponent implements OnInit {
     };
     calculateClusterCenters();
 
+    const transitionTime = 350;
+    // todo: calculate marginLeft = 1/2 annotation width
+    const marginLeft = 110;
+
     // append cluster title to the canvas at avg x, y
     that.uniqueClusterValues.map((cluster, index) => {
       d3.select('body')
@@ -194,12 +197,12 @@ export class ColourLegendButtonComponent implements OnInit {
         .style('padding', '0 5px')
         .style('background', 'rgba(246, 248, 255, 0.7)')
         .style('font-family', 'Helvetica')
-        .style('left', that.clusterCenters[index][0] - 100 + 'px')
+        .style('left', that.clusterCenters[index][0] - marginLeft + 'px')
         .style('top', that.clusterCenters[index][1] + 'px')
         .html(cluster)
         .attr('id', cluster)
         .transition()
-        .duration(500)
+        .duration(transitionTime)
         .style('opacity', 1);
       // console.log(that.clusterCenters)
     });
@@ -208,20 +211,20 @@ export class ColourLegendButtonComponent implements OnInit {
       calculateClusterCenters();
       d3.selectAll('.annotation')
         .transition()
-        .ease(d3.easeSin)
-        .duration(500)
+        .ease(d3.easeLinear)
+        .duration(transitionTime)
         .style('left', (d, i) => {
-          return that.clusterCenters[i][0] - 100 + 'px';
+          return that.clusterCenters[i][0] - marginLeft + 'px';
         })
         .style('top', (d, i) => {
           return that.clusterCenters[i][1] + 'px';
         });
-    }, 500);
+    }, transitionTime);
   }
 
   clearAnnotations() {
     clearInterval(this.refreshInterval);
-    d3.selectAll('.annotation').transition.duration(500)
+    d3.selectAll('.annotation').transition().duration(500)
       .style('opacity', 0).remove();
   }
 }

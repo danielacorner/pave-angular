@@ -1,8 +1,6 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
-import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'app-graph-mode',
@@ -27,7 +25,7 @@ import { MatSelectChange } from '@angular/material';
   >
       <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
                     >
-        <mat-option *ngFor="let item of group.contents" [value]="item.value">
+        <mat-option *ngFor="let item of group.members" [value]="item.value">
           {{item.viewValue}}
         </mat-option>
       </mat-optgroup>
@@ -44,7 +42,7 @@ import { MatSelectChange } from '@angular/material';
   >
       <mat-optgroup *ngFor="let group of axisSelectorGroups" [label]="group.name"
                     >
-        <mat-option *ngFor="let item of group.contents" [value]="item.value">
+        <mat-option *ngFor="let item of group.members" [value]="item.value">
           {{item.viewValue}}
         </mat-option>
       </mat-optgroup>
@@ -93,7 +91,7 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public axisSelectorGroups = [
     {
       name: 'Statistics',
-      contents: [
+      members: [
         {
           value: 'automationRisk',
           viewValue: 'Risk of machines replacing this job'
@@ -104,8 +102,8 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
       ]
     },
     {
-      name: 'Statistics',
-      contents: [
+      name: 'Skills',
+      members: [
         { value: 'skillsComp', viewValue: 'Computer and Information Skills' },
         { value: 'skillsLogi', viewValue: 'Logic and Reasoning Skills' },
         { value: 'skillsMath', viewValue: 'Math and Spatial Skills' },
@@ -218,8 +216,6 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
 
   changeSelection($event, axis) {
     const that = this;
-    console.log($event);
-    console.log(axis);
     // change the axis selectors
     axis === 'x'
       ? (that.xSelector = $event.value)

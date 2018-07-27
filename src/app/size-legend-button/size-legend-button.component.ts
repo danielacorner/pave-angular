@@ -56,7 +56,6 @@ import * as d3 from 'd3';
   ]
 })
 export class SizeLegendButtonComponent implements OnInit {
-  @Input() public buttonData;
   @Input() public forceSimulation;
   @Input() public forceXCombine;
   @Input() public forceYCombine;

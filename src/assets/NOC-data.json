@@ -72,7 +72,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 2,
@@ -148,7 +149,8 @@
     "d16Therapy&Rehabilitation": 245,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 930,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 3,
@@ -224,7 +226,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 70,
     "d18Business&Commerce": 8545,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 4,
@@ -300,7 +303,8 @@
     "d16Therapy&Rehabilitation": 490,
     "d17Health,Nursing&ClinicalLaboratory": 455,
     "d18Business&Commerce": 1810,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 5,
@@ -376,7 +380,8 @@
     "d16Therapy&Rehabilitation": 20,
     "d17Health,Nursing&ClinicalLaboratory": 75,
     "d18Business&Commerce": 4745,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 6,
@@ -452,7 +457,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 4310,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 7,
@@ -528,7 +534,8 @@
     "d16Therapy&Rehabilitation": 155,
     "d17Health,Nursing&ClinicalLaboratory": 255,
     "d18Business&Commerce": 19490,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 8,
@@ -604,7 +611,8 @@
     "d16Therapy&Rehabilitation": 215,
     "d17Health,Nursing&ClinicalLaboratory": 475,
     "d18Business&Commerce": 8125,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 9,
@@ -680,7 +688,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 2055,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 10,
@@ -756,7 +765,8 @@
     "d16Therapy&Rehabilitation": 75,
     "d17Health,Nursing&ClinicalLaboratory": 150,
     "d18Business&Commerce": 2480,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 11,
@@ -832,7 +842,8 @@
     "d16Therapy&Rehabilitation": 15,
     "d17Health,Nursing&ClinicalLaboratory": 170,
     "d18Business&Commerce": 6205,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 12,
@@ -908,7 +919,8 @@
     "d16Therapy&Rehabilitation": 45,
     "d17Health,Nursing&ClinicalLaboratory": 250,
     "d18Business&Commerce": 15675,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 13,
@@ -984,7 +996,8 @@
     "d16Therapy&Rehabilitation": 30,
     "d17Health,Nursing&ClinicalLaboratory": 120,
     "d18Business&Commerce": 8750,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 14,
@@ -1060,7 +1073,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 1085,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 15,
@@ -1136,7 +1150,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 1140,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 16,
@@ -1212,7 +1227,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 285,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 17,
@@ -1288,7 +1304,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 475,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 18,
@@ -1364,7 +1381,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 12.5,
     "d18Business&Commerce": 2397.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 19,
@@ -1440,7 +1458,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 4320,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 20,
@@ -1516,7 +1535,8 @@
     "d16Therapy&Rehabilitation": 305,
     "d17Health,Nursing&ClinicalLaboratory": 4305,
     "d18Business&Commerce": 750,
-    "d19Medical,Dental&Veterinary": 75
+    "d19Medical,Dental&Veterinary": 75,
+    "equalRadius": 10
   },
   {
     "id": 21,
@@ -1592,7 +1612,8 @@
     "d16Therapy&Rehabilitation": 105,
     "d17Health,Nursing&ClinicalLaboratory": 70,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 22,
@@ -1668,7 +1689,8 @@
     "d16Therapy&Rehabilitation": 60,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 595,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 23,
@@ -1744,7 +1766,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 24,
@@ -1820,7 +1843,8 @@
     "d16Therapy&Rehabilitation": 165,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 360,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 25,
@@ -1896,7 +1920,8 @@
     "d16Therapy&Rehabilitation": 440,
     "d17Health,Nursing&ClinicalLaboratory": 107.5,
     "d18Business&Commerce": 527.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 26,
@@ -1972,7 +1997,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 350,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 27,
@@ -2048,7 +2074,8 @@
     "d16Therapy&Rehabilitation": 880,
     "d17Health,Nursing&ClinicalLaboratory": 215,
     "d18Business&Commerce": 705,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 28,
@@ -2124,7 +2151,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 10,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 29,
@@ -2200,7 +2228,8 @@
     "d16Therapy&Rehabilitation": 20,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 30,
@@ -2276,7 +2305,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 715,
-    "d19Medical,Dental&Veterinary": 20
+    "d19Medical,Dental&Veterinary": 20,
+    "equalRadius": 10
   },
   {
     "id": 31,
@@ -2352,7 +2382,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 32,
@@ -2428,7 +2459,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 275,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 33,
@@ -2504,7 +2536,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 325,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 34,
@@ -2580,7 +2613,8 @@
     "d16Therapy&Rehabilitation": 56.66666667,
     "d17Health,Nursing&ClinicalLaboratory": 310,
     "d18Business&Commerce": 3673.333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 35,
@@ -2656,7 +2690,8 @@
     "d16Therapy&Rehabilitation": 56.66666667,
     "d17Health,Nursing&ClinicalLaboratory": 310,
     "d18Business&Commerce": 3673.333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 36,
@@ -2732,7 +2767,8 @@
     "d16Therapy&Rehabilitation": 155,
     "d17Health,Nursing&ClinicalLaboratory": 785,
     "d18Business&Commerce": 8565,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 37,
@@ -2808,7 +2844,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 45,
     "d18Business&Commerce": 1350,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 38,
@@ -2884,7 +2921,8 @@
     "d16Therapy&Rehabilitation": 15,
     "d17Health,Nursing&ClinicalLaboratory": 100,
     "d18Business&Commerce": 1105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 39,
@@ -2960,7 +2998,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 10,
     "d18Business&Commerce": 2075,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 40,
@@ -3036,7 +3075,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 670,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 41,
@@ -3112,7 +3152,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 5,
     "d18Business&Commerce": 1372.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 42,
@@ -3188,7 +3229,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 40,
     "d18Business&Commerce": 1975,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 43,
@@ -3264,7 +3306,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 44,
@@ -3340,7 +3383,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 45,
@@ -3416,7 +3460,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 46,
@@ -3492,7 +3537,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 47,
@@ -3568,7 +3614,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 4780,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 48,
@@ -3644,7 +3691,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 525,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 49,
@@ -3720,7 +3768,8 @@
     "d16Therapy&Rehabilitation": 8.333333333,
     "d17Health,Nursing&ClinicalLaboratory": 76.66666667,
     "d18Business&Commerce": 11513.33333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 50,
@@ -3796,7 +3845,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 60,
     "d18Business&Commerce": 12305,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 51,
@@ -3872,7 +3922,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 3060,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 52,
@@ -3948,7 +3999,8 @@
     "d16Therapy&Rehabilitation": 25,
     "d17Health,Nursing&ClinicalLaboratory": 170,
     "d18Business&Commerce": 19175,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 53,
@@ -4024,7 +4076,8 @@
     "d16Therapy&Rehabilitation": 310,
     "d17Health,Nursing&ClinicalLaboratory": 380,
     "d18Business&Commerce": 8765,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 54,
@@ -4100,7 +4153,8 @@
     "d16Therapy&Rehabilitation": 130,
     "d17Health,Nursing&ClinicalLaboratory": 110,
     "d18Business&Commerce": 11240,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 55,
@@ -4176,7 +4230,8 @@
     "d16Therapy&Rehabilitation": 220,
     "d17Health,Nursing&ClinicalLaboratory": 245,
     "d18Business&Commerce": 10002.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 56,
@@ -4252,7 +4307,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 40,
     "d18Business&Commerce": 450,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 57,
@@ -4328,7 +4384,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 2240,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 58,
@@ -4404,7 +4461,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 59,
@@ -4480,7 +4538,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 110,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 60,
@@ -4556,7 +4615,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 1800,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 61,
@@ -4632,7 +4692,8 @@
     "d16Therapy&Rehabilitation": 34.16666667,
     "d17Health,Nursing&ClinicalLaboratory": 167.5,
     "d18Business&Commerce": 2855,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 62,
@@ -4708,7 +4769,8 @@
     "d16Therapy&Rehabilitation": 80,
     "d17Health,Nursing&ClinicalLaboratory": 430,
     "d18Business&Commerce": 4130,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 63,
@@ -4784,7 +4846,8 @@
     "d16Therapy&Rehabilitation": 35,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 4090,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 64,
@@ -4860,7 +4923,8 @@
     "d16Therapy&Rehabilitation": 50,
     "d17Health,Nursing&ClinicalLaboratory": 345,
     "d18Business&Commerce": 4040,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 65,
@@ -4936,7 +5000,8 @@
     "d16Therapy&Rehabilitation": 34.16666667,
     "d17Health,Nursing&ClinicalLaboratory": 167.5,
     "d18Business&Commerce": 2855,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 66,
@@ -5012,7 +5077,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 1975,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 67,
@@ -5088,7 +5154,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 68,
@@ -5164,7 +5231,8 @@
     "d16Therapy&Rehabilitation": 40,
     "d17Health,Nursing&ClinicalLaboratory": 170,
     "d18Business&Commerce": 2855,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 69,
@@ -5240,7 +5308,8 @@
     "d16Therapy&Rehabilitation": 17.5,
     "d17Health,Nursing&ClinicalLaboratory": 1515,
     "d18Business&Commerce": 960,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 70,
@@ -5316,7 +5385,8 @@
     "d16Therapy&Rehabilitation": 35,
     "d17Health,Nursing&ClinicalLaboratory": 265,
     "d18Business&Commerce": 1515,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 71,
@@ -5392,7 +5462,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 2765,
     "d18Business&Commerce": 405,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 72,
@@ -5468,7 +5539,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1355,
     "d18Business&Commerce": 165,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 73,
@@ -5544,7 +5616,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 650,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 74,
@@ -5620,7 +5693,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 165,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 75,
@@ -5696,7 +5770,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 210,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 76,
@@ -5772,7 +5847,8 @@
     "d16Therapy&Rehabilitation": 95,
     "d17Health,Nursing&ClinicalLaboratory": 1430,
     "d18Business&Commerce": 19335,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 77,
@@ -5848,7 +5924,8 @@
     "d16Therapy&Rehabilitation": 40,
     "d17Health,Nursing&ClinicalLaboratory": 210,
     "d18Business&Commerce": 2640,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 78,
@@ -5924,7 +6001,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 90,
     "d18Business&Commerce": 2350,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 79,
@@ -6000,7 +6078,8 @@
     "d16Therapy&Rehabilitation": 33.75,
     "d17Health,Nursing&ClinicalLaboratory": 432.5,
     "d18Business&Commerce": 6165,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 80,
@@ -6076,7 +6155,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 335,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 81,
@@ -6152,7 +6232,8 @@
     "d16Therapy&Rehabilitation": 640,
     "d17Health,Nursing&ClinicalLaboratory": 7130,
     "d18Business&Commerce": 18895,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 82,
@@ -6228,7 +6309,8 @@
     "d16Therapy&Rehabilitation": 425,
     "d17Health,Nursing&ClinicalLaboratory": 9285,
     "d18Business&Commerce": 8530,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 83,
@@ -6304,7 +6386,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 1465,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 84,
@@ -6380,7 +6463,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 85,
@@ -6456,7 +6540,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 855,
     "d18Business&Commerce": 3430,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 86,
@@ -6532,7 +6617,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 87,
@@ -6608,7 +6694,8 @@
     "d16Therapy&Rehabilitation": 5,
     "d17Health,Nursing&ClinicalLaboratory": 191.6666667,
     "d18Business&Commerce": 3128.333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 88,
@@ -6684,7 +6771,8 @@
     "d16Therapy&Rehabilitation": 15,
     "d17Health,Nursing&ClinicalLaboratory": 295,
     "d18Business&Commerce": 4805,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 89,
@@ -6760,7 +6848,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 195,
     "d18Business&Commerce": 3505,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 90,
@@ -6836,7 +6925,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 85,
     "d18Business&Commerce": 1075,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 91,
@@ -6912,7 +7002,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 185,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 92,
@@ -6988,7 +7079,8 @@
     "d16Therapy&Rehabilitation": 40,
     "d17Health,Nursing&ClinicalLaboratory": 285,
     "d18Business&Commerce": 1535,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 93,
@@ -7064,7 +7156,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 335,
     "d18Business&Commerce": 1120,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 94,
@@ -7140,7 +7233,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 200,
     "d18Business&Commerce": 1030,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 95,
@@ -7216,7 +7310,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 130,
     "d18Business&Commerce": 645,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 96,
@@ -7292,7 +7387,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 165,
     "d18Business&Commerce": 837.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 97,
@@ -7368,7 +7464,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 111,
     "d18Business&Commerce": 1080,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 98,
@@ -7444,7 +7541,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 355,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 99,
@@ -7520,7 +7618,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 1360,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 100,
@@ -7596,7 +7695,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 115,
     "d18Business&Commerce": 2225,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 101,
@@ -7672,7 +7772,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 360,
     "d18Business&Commerce": 1335,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 102,
@@ -7748,7 +7849,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 125,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 103,
@@ -7824,7 +7926,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 75,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 104,
@@ -7900,7 +8003,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 185,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 105,
@@ -7976,7 +8080,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 106,
@@ -8052,7 +8157,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 107,
@@ -8128,7 +8234,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 108,
@@ -8204,7 +8311,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 120,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 109,
@@ -8280,7 +8388,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 110,
@@ -8356,7 +8465,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 111,
@@ -8432,7 +8542,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 395,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 112,
@@ -8508,7 +8619,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 635,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 113,
@@ -8584,7 +8696,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 285,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 114,
@@ -8660,7 +8773,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 10,
     "d18Business&Commerce": 438.3333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 115,
@@ -8736,7 +8850,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 180,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 116,
@@ -8812,7 +8927,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 117,
@@ -8888,7 +9004,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 118,
@@ -8964,7 +9081,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 119,
@@ -9040,7 +9158,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 120,
@@ -9116,7 +9235,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 121,
@@ -9192,7 +9312,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 400,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 122,
@@ -9268,7 +9389,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 123,
@@ -9344,7 +9466,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 16.66666667,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 124,
@@ -9420,7 +9543,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 125,
@@ -9496,7 +9620,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 50,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 126,
@@ -9572,7 +9697,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 127,
@@ -9648,7 +9774,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 50,
     "d18Business&Commerce": 1670,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 128,
@@ -9724,7 +9851,8 @@
     "d16Therapy&Rehabilitation": 70,
     "d17Health,Nursing&ClinicalLaboratory": 445,
     "d18Business&Commerce": 10735,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 129,
@@ -9800,7 +9928,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 395,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 130,
@@ -9876,7 +10005,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 40,
     "d18Business&Commerce": 780,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 131,
@@ -9952,7 +10082,8 @@
     "d16Therapy&Rehabilitation": 30,
     "d17Health,Nursing&ClinicalLaboratory": 100,
     "d18Business&Commerce": 2185,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 132,
@@ -10028,7 +10159,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 545,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 133,
@@ -10104,7 +10236,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 315,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 134,
@@ -10180,7 +10313,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 135,
@@ -10256,7 +10390,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 136,
@@ -10332,7 +10467,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 137,
@@ -10408,7 +10544,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 138,
@@ -10484,7 +10621,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 139,
@@ -10560,7 +10698,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 140,
@@ -10636,7 +10775,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 141,
@@ -10712,7 +10852,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 142,
@@ -10788,7 +10929,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 143,
@@ -10864,7 +11006,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 140,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 144,
@@ -10940,7 +11083,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 10,
     "d18Business&Commerce": 145,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 145,
@@ -11016,7 +11160,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 330,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 146,
@@ -11092,7 +11237,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 147,
@@ -11168,7 +11314,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 148,
@@ -11244,7 +11391,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 149,
@@ -11320,7 +11468,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 150,
@@ -11396,7 +11545,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 151,
@@ -11472,7 +11622,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 152,
@@ -11548,7 +11699,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 153,
@@ -11624,7 +11776,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 154,
@@ -11700,7 +11853,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1190,
     "d18Business&Commerce": 390,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 155,
@@ -11776,7 +11930,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 156,
@@ -11852,7 +12007,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 157,
@@ -11928,7 +12084,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 158,
@@ -12004,7 +12161,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 159,
@@ -12080,7 +12238,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 160,
@@ -12156,7 +12315,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 161,
@@ -12232,7 +12392,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 1760,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 162,
@@ -12308,7 +12469,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 110,
     "d18Business&Commerce": 1790,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 163,
@@ -12384,7 +12546,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 245,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 164,
@@ -12460,7 +12623,8 @@
     "d16Therapy&Rehabilitation": 80,
     "d17Health,Nursing&ClinicalLaboratory": 2525,
     "d18Business&Commerce": 45,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 165,
@@ -12536,7 +12700,8 @@
     "d16Therapy&Rehabilitation": 165,
     "d17Health,Nursing&ClinicalLaboratory": 100555,
     "d18Business&Commerce": 1495,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 166,
@@ -12612,7 +12777,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 9460,
     "d18Business&Commerce": 30,
-    "d19Medical,Dental&Veterinary": 3280
+    "d19Medical,Dental&Veterinary": 3280,
+    "equalRadius": 10
   },
   {
     "id": 167,
@@ -12688,7 +12854,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 14910,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 1505
+    "d19Medical,Dental&Veterinary": 1505,
+    "equalRadius": 10
   },
   {
     "id": 168,
@@ -12764,7 +12931,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 6830,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 455
+    "d19Medical,Dental&Veterinary": 455,
+    "equalRadius": 10
   },
   {
     "id": 169,
@@ -12840,7 +13008,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3185,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 170,
@@ -12916,7 +13085,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1685,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 171,
@@ -12992,7 +13162,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 2990,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 172,
@@ -13068,7 +13239,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1860,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 173,
@@ -13144,7 +13316,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 990,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 174,
@@ -13220,7 +13393,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 9215,
     "d18Business&Commerce": 145,
-    "d19Medical,Dental&Veterinary": 515
+    "d19Medical,Dental&Veterinary": 515,
+    "equalRadius": 10
   },
   {
     "id": 175,
@@ -13296,7 +13470,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1030,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 176,
@@ -13372,7 +13547,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 2550,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 177,
@@ -13448,7 +13624,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 6400,
     "d18Business&Commerce": 45,
-    "d19Medical,Dental&Veterinary": 50
+    "d19Medical,Dental&Veterinary": 50,
+    "equalRadius": 10
   },
   {
     "id": 178,
@@ -13524,7 +13701,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 4110,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 179,
@@ -13600,7 +13778,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 680,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 180,
@@ -13676,7 +13855,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 4215,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 25
+    "d19Medical,Dental&Veterinary": 25,
+    "equalRadius": 10
   },
   {
     "id": 181,
@@ -13752,7 +13932,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3985,
     "d18Business&Commerce": 50,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 182,
@@ -13828,7 +14009,8 @@
     "d16Therapy&Rehabilitation": 2.857142857,
     "d17Health,Nursing&ClinicalLaboratory": 3216.428571,
     "d18Business&Commerce": 89.28571429,
-    "d19Medical,Dental&Veterinary": 30.71428571
+    "d19Medical,Dental&Veterinary": 30.71428571,
+    "equalRadius": 10
   },
   {
     "id": 183,
@@ -13904,7 +14086,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1595,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 184,
@@ -13980,7 +14163,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3825,
     "d18Business&Commerce": 50,
-    "d19Medical,Dental&Veterinary": 45
+    "d19Medical,Dental&Veterinary": 45,
+    "equalRadius": 10
   },
   {
     "id": 185,
@@ -14056,7 +14240,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1585,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 25
+    "d19Medical,Dental&Veterinary": 25,
+    "equalRadius": 10
   },
   {
     "id": 186,
@@ -14132,7 +14317,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 340,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 187,
@@ -14208,7 +14394,8 @@
     "d16Therapy&Rehabilitation": 20,
     "d17Health,Nursing&ClinicalLaboratory": 6970,
     "d18Business&Commerce": 525,
-    "d19Medical,Dental&Veterinary": 120
+    "d19Medical,Dental&Veterinary": 120,
+    "equalRadius": 10
   },
   {
     "id": 188,
@@ -14284,7 +14471,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 380,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 189,
@@ -14360,7 +14548,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 8590,
     "d18Business&Commerce": 45,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 190,
@@ -14436,7 +14625,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1165,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 191,
@@ -14512,7 +14702,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1860,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 192,
@@ -14588,7 +14779,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 1045,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 193,
@@ -14664,7 +14856,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 14050,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 194,
@@ -14740,7 +14933,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 6405,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 195,
@@ -14816,7 +15010,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 5905,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 196,
@@ -14892,7 +15087,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 710,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 197,
@@ -14968,7 +15164,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 9685,
     "d18Business&Commerce": 175,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 198,
@@ -15044,7 +15241,8 @@
     "d16Therapy&Rehabilitation": 865,
     "d17Health,Nursing&ClinicalLaboratory": 36930,
     "d18Business&Commerce": 2415,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 199,
@@ -15120,7 +15318,8 @@
     "d16Therapy&Rehabilitation": 140,
     "d17Health,Nursing&ClinicalLaboratory": 3435,
     "d18Business&Commerce": 145,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 200,
@@ -15196,7 +15395,8 @@
     "d16Therapy&Rehabilitation": 245,
     "d17Health,Nursing&ClinicalLaboratory": 1540,
     "d18Business&Commerce": 1685,
-    "d19Medical,Dental&Veterinary": 70
+    "d19Medical,Dental&Veterinary": 70,
+    "equalRadius": 10
   },
   {
     "id": 201,
@@ -15272,7 +15472,8 @@
     "d16Therapy&Rehabilitation": 165,
     "d17Health,Nursing&ClinicalLaboratory": 1635,
     "d18Business&Commerce": 1045,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 202,
@@ -15348,7 +15549,8 @@
     "d16Therapy&Rehabilitation": 540,
     "d17Health,Nursing&ClinicalLaboratory": 2245,
     "d18Business&Commerce": 3505,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 203,
@@ -15424,7 +15626,8 @@
     "d16Therapy&Rehabilitation": 95,
     "d17Health,Nursing&ClinicalLaboratory": 270,
     "d18Business&Commerce": 1515,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 204,
@@ -15500,7 +15703,8 @@
     "d16Therapy&Rehabilitation": 375,
     "d17Health,Nursing&ClinicalLaboratory": 1060,
     "d18Business&Commerce": 1980,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 205,
@@ -15576,7 +15780,8 @@
     "d16Therapy&Rehabilitation": 390,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 150,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 206,
@@ -15652,7 +15857,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 207,
@@ -15728,7 +15934,8 @@
     "d16Therapy&Rehabilitation": 135,
     "d17Health,Nursing&ClinicalLaboratory": 50,
     "d18Business&Commerce": 960,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 208,
@@ -15804,7 +16011,8 @@
     "d16Therapy&Rehabilitation": 250,
     "d17Health,Nursing&ClinicalLaboratory": 150,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 209,
@@ -15880,7 +16088,8 @@
     "d16Therapy&Rehabilitation": 14390,
     "d17Health,Nursing&ClinicalLaboratory": 580,
     "d18Business&Commerce": 450,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 210,
@@ -15956,7 +16165,8 @@
     "d16Therapy&Rehabilitation": 1915,
     "d17Health,Nursing&ClinicalLaboratory": 1160,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 211,
@@ -16032,7 +16242,8 @@
     "d16Therapy&Rehabilitation": 55,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 165,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 212,
@@ -16108,7 +16319,8 @@
     "d16Therapy&Rehabilitation": 180,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 213,
@@ -16184,7 +16396,8 @@
     "d16Therapy&Rehabilitation": 650,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 750,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 214,
@@ -16260,7 +16473,8 @@
     "d16Therapy&Rehabilitation": 175,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 540,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 215,
@@ -16336,7 +16550,8 @@
     "d16Therapy&Rehabilitation": 215,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 1510,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 216,
@@ -16412,7 +16627,8 @@
     "d16Therapy&Rehabilitation": 282.5,
     "d17Health,Nursing&ClinicalLaboratory": 442.5,
     "d18Business&Commerce": 654.375,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 217,
@@ -16488,7 +16704,8 @@
     "d16Therapy&Rehabilitation": 1050,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 970,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 218,
@@ -16564,7 +16781,8 @@
     "d16Therapy&Rehabilitation": 500,
     "d17Health,Nursing&ClinicalLaboratory": 3190,
     "d18Business&Commerce": 850,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 219,
@@ -16640,7 +16858,8 @@
     "d16Therapy&Rehabilitation": 80,
     "d17Health,Nursing&ClinicalLaboratory": 55,
     "d18Business&Commerce": 405,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 220,
@@ -16716,7 +16935,8 @@
     "d16Therapy&Rehabilitation": 85,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 55,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 221,
@@ -16792,7 +17012,8 @@
     "d16Therapy&Rehabilitation": 155,
     "d17Health,Nursing&ClinicalLaboratory": 120,
     "d18Business&Commerce": 895,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 222,
@@ -16868,7 +17089,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 10,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 223,
@@ -16944,7 +17166,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 60,
     "d18Business&Commerce": 845,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 224,
@@ -17020,7 +17243,8 @@
     "d16Therapy&Rehabilitation": 12630,
     "d17Health,Nursing&ClinicalLaboratory": 4020,
     "d18Business&Commerce": 2500,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 225,
@@ -17096,7 +17320,8 @@
     "d16Therapy&Rehabilitation": 1220,
     "d17Health,Nursing&ClinicalLaboratory": 2185,
     "d18Business&Commerce": 2830,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 226,
@@ -17172,7 +17397,8 @@
     "d16Therapy&Rehabilitation": 85,
     "d17Health,Nursing&ClinicalLaboratory": 60,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 227,
@@ -17248,7 +17474,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 145,
     "d18Business&Commerce": 155,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 228,
@@ -17324,7 +17551,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 229,
@@ -17400,7 +17628,8 @@
     "d16Therapy&Rehabilitation": 150,
     "d17Health,Nursing&ClinicalLaboratory": 330,
     "d18Business&Commerce": 1910,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 230,
@@ -17476,7 +17705,8 @@
     "d16Therapy&Rehabilitation": 20,
     "d17Health,Nursing&ClinicalLaboratory": 380,
     "d18Business&Commerce": 235,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 231,
@@ -17552,7 +17782,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 175,
     "d18Business&Commerce": 365,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 232,
@@ -17628,7 +17859,8 @@
     "d16Therapy&Rehabilitation": 1080,
     "d17Health,Nursing&ClinicalLaboratory": 16895,
     "d18Business&Commerce": 1855,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 233,
@@ -17704,7 +17936,8 @@
     "d16Therapy&Rehabilitation": 2540,
     "d17Health,Nursing&ClinicalLaboratory": 2345,
     "d18Business&Commerce": 1755,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 234,
@@ -17780,7 +18013,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 235,
@@ -17856,7 +18090,8 @@
     "d16Therapy&Rehabilitation": 65,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 150,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 236,
@@ -17932,7 +18167,8 @@
     "d16Therapy&Rehabilitation": 32.5,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 75,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 237,
@@ -18008,7 +18244,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 35,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 238,
@@ -18084,7 +18321,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 239,
@@ -18160,7 +18398,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 240,
@@ -18236,7 +18475,8 @@
     "d16Therapy&Rehabilitation": 5,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 103.3333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 241,
@@ -18312,7 +18552,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 115,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 242,
@@ -18388,7 +18629,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 243,
@@ -18464,7 +18706,8 @@
     "d16Therapy&Rehabilitation": 15,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 135,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 244,
@@ -18540,7 +18783,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 245,
@@ -18616,7 +18860,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 246,
@@ -18692,7 +18937,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 65,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 247,
@@ -18768,7 +19014,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 248,
@@ -18844,7 +19091,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 249,
@@ -18920,7 +19168,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 250,
@@ -18996,7 +19245,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 251,
@@ -19072,7 +19322,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 252,
@@ -19148,7 +19399,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 253,
@@ -19224,7 +19476,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 254,
@@ -19300,7 +19553,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 255,
@@ -19376,7 +19630,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 256,
@@ -19452,7 +19707,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 257,
@@ -19528,7 +19784,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 258,
@@ -19604,7 +19861,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 259,
@@ -19680,7 +19938,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 260,
@@ -19756,7 +20015,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 705,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 261,
@@ -19832,7 +20092,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 270,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 262,
@@ -19908,7 +20169,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 130,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 263,
@@ -19984,7 +20246,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 55,
     "d18Business&Commerce": 10,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 264,
@@ -20060,7 +20323,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 278.75,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 265,
@@ -20136,7 +20400,8 @@
     "d16Therapy&Rehabilitation": 135,
     "d17Health,Nursing&ClinicalLaboratory": 460,
     "d18Business&Commerce": 862.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 266,
@@ -20212,7 +20477,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 115,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 267,
@@ -20288,7 +20554,8 @@
     "d16Therapy&Rehabilitation": 135,
     "d17Health,Nursing&ClinicalLaboratory": 460,
     "d18Business&Commerce": 862.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 268,
@@ -20364,7 +20631,8 @@
     "d16Therapy&Rehabilitation": 270,
     "d17Health,Nursing&ClinicalLaboratory": 920,
     "d18Business&Commerce": 1610,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 269,
@@ -20440,7 +20708,8 @@
     "d16Therapy&Rehabilitation": 45,
     "d17Health,Nursing&ClinicalLaboratory": 275,
     "d18Business&Commerce": 2180,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 270,
@@ -20516,7 +20785,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 425,
     "d18Business&Commerce": 6160,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 271,
@@ -20592,7 +20862,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 130,
     "d18Business&Commerce": 2380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 272,
@@ -20668,7 +20939,8 @@
     "d16Therapy&Rehabilitation": 25,
     "d17Health,Nursing&ClinicalLaboratory": 230,
     "d18Business&Commerce": 10340,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 273,
@@ -20744,7 +21016,8 @@
     "d16Therapy&Rehabilitation": 70,
     "d17Health,Nursing&ClinicalLaboratory": 170,
     "d18Business&Commerce": 9732.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 274,
@@ -20820,7 +21093,8 @@
     "d16Therapy&Rehabilitation": 115,
     "d17Health,Nursing&ClinicalLaboratory": 110,
     "d18Business&Commerce": 9125,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 275,
@@ -20896,7 +21170,8 @@
     "d16Therapy&Rehabilitation": 35,
     "d17Health,Nursing&ClinicalLaboratory": 215,
     "d18Business&Commerce": 805,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 276,
@@ -20972,7 +21247,8 @@
     "d16Therapy&Rehabilitation": 7,
     "d17Health,Nursing&ClinicalLaboratory": 43,
     "d18Business&Commerce": 453,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 277,
@@ -21048,7 +21324,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 255,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 278,
@@ -21124,7 +21401,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 875,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 279,
@@ -21200,7 +21478,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 50,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 280,
@@ -21276,7 +21555,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 280,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 281,
@@ -21352,7 +21632,8 @@
     "d16Therapy&Rehabilitation": 100,
     "d17Health,Nursing&ClinicalLaboratory": 980,
     "d18Business&Commerce": 2245,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 282,
@@ -21428,7 +21709,8 @@
     "d16Therapy&Rehabilitation": 100,
     "d17Health,Nursing&ClinicalLaboratory": 980,
     "d18Business&Commerce": 2245,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 283,
@@ -21504,7 +21786,8 @@
     "d16Therapy&Rehabilitation": 10,
     "d17Health,Nursing&ClinicalLaboratory": 250,
     "d18Business&Commerce": 480,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 284,
@@ -21580,7 +21863,8 @@
     "d16Therapy&Rehabilitation": 10,
     "d17Health,Nursing&ClinicalLaboratory": 250,
     "d18Business&Commerce": 480,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 285,
@@ -21656,7 +21940,8 @@
     "d16Therapy&Rehabilitation": 15,
     "d17Health,Nursing&ClinicalLaboratory": 460,
     "d18Business&Commerce": 675,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 286,
@@ -21732,7 +22017,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 70,
     "d18Business&Commerce": 30,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 287,
@@ -21808,7 +22094,8 @@
     "d16Therapy&Rehabilitation": 3,
     "d17Health,Nursing&ClinicalLaboratory": 106,
     "d18Business&Commerce": 141,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 288,
@@ -21884,7 +22171,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 289,
@@ -21960,7 +22248,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 290,
@@ -22036,7 +22325,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 291,
@@ -22112,7 +22402,8 @@
     "d16Therapy&Rehabilitation": 1615,
     "d17Health,Nursing&ClinicalLaboratory": 10090,
     "d18Business&Commerce": 31535,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 292,
@@ -22188,7 +22479,8 @@
     "d16Therapy&Rehabilitation": 1615,
     "d17Health,Nursing&ClinicalLaboratory": 10090,
     "d18Business&Commerce": 31535,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 293,
@@ -22264,7 +22556,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 100,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 294,
@@ -22340,7 +22633,8 @@
     "d16Therapy&Rehabilitation": 180,
     "d17Health,Nursing&ClinicalLaboratory": 1205,
     "d18Business&Commerce": 2530,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 295,
@@ -22416,7 +22710,8 @@
     "d16Therapy&Rehabilitation": 360,
     "d17Health,Nursing&ClinicalLaboratory": 2380,
     "d18Business&Commerce": 4960,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 296,
@@ -22492,7 +22787,8 @@
     "d16Therapy&Rehabilitation": 10,
     "d17Health,Nursing&ClinicalLaboratory": 60,
     "d18Business&Commerce": 5055,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 297,
@@ -22568,7 +22864,8 @@
     "d16Therapy&Rehabilitation": 30,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 540,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 298,
@@ -22644,7 +22941,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 675,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 299,
@@ -22720,7 +23018,8 @@
     "d16Therapy&Rehabilitation": 16.25,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 1926.25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 300,
@@ -22796,7 +23095,8 @@
     "d16Therapy&Rehabilitation": 25,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 1435,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 301,
@@ -22872,7 +23172,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 10,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 302,
@@ -22948,7 +23249,8 @@
     "d16Therapy&Rehabilitation": 22.5,
     "d17Health,Nursing&ClinicalLaboratory": 5,
     "d18Business&Commerce": 132.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 303,
@@ -23024,7 +23326,8 @@
     "d16Therapy&Rehabilitation": 45,
     "d17Health,Nursing&ClinicalLaboratory": 10,
     "d18Business&Commerce": 255,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 304,
@@ -23100,7 +23403,8 @@
     "d16Therapy&Rehabilitation": 130,
     "d17Health,Nursing&ClinicalLaboratory": 540,
     "d18Business&Commerce": 3260,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 305,
@@ -23176,7 +23480,8 @@
     "d16Therapy&Rehabilitation": 295,
     "d17Health,Nursing&ClinicalLaboratory": 745,
     "d18Business&Commerce": 9615,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 306,
@@ -23252,7 +23557,8 @@
     "d16Therapy&Rehabilitation": 770,
     "d17Health,Nursing&ClinicalLaboratory": 3280,
     "d18Business&Commerce": 15270,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 307,
@@ -23328,7 +23634,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 308,
@@ -23404,7 +23711,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 445,
     "d18Business&Commerce": 620,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 309,
@@ -23480,7 +23788,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 310,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 310,
@@ -23556,7 +23865,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 251.6666667,
     "d18Business&Commerce": 211.6666667,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 311,
@@ -23632,7 +23942,8 @@
     "d16Therapy&Rehabilitation": 870,
     "d17Health,Nursing&ClinicalLaboratory": 5150,
     "d18Business&Commerce": 8690,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 312,
@@ -23708,7 +24019,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 313,
@@ -23784,7 +24096,8 @@
     "d16Therapy&Rehabilitation": 115,
     "d17Health,Nursing&ClinicalLaboratory": 910,
     "d18Business&Commerce": 2940,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 314,
@@ -23860,7 +24173,8 @@
     "d16Therapy&Rehabilitation": 25,
     "d17Health,Nursing&ClinicalLaboratory": 365,
     "d18Business&Commerce": 1530,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 315,
@@ -23936,7 +24250,8 @@
     "d16Therapy&Rehabilitation": 495,
     "d17Health,Nursing&ClinicalLaboratory": 5290,
     "d18Business&Commerce": 7360,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 316,
@@ -24012,7 +24327,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 317,
@@ -24088,7 +24404,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 60,
     "d18Business&Commerce": 375,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 318,
@@ -24164,7 +24481,8 @@
     "d16Therapy&Rehabilitation": 330,
     "d17Health,Nursing&ClinicalLaboratory": 4150,
     "d18Business&Commerce": 5305,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 319,
@@ -24240,7 +24558,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 85,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 320,
@@ -24316,7 +24635,8 @@
     "d16Therapy&Rehabilitation": 140,
     "d17Health,Nursing&ClinicalLaboratory": 1095,
     "d18Business&Commerce": 3750,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 321,
@@ -24392,7 +24712,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 385,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 322,
@@ -24468,7 +24789,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 70,
     "d18Business&Commerce": 295,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 323,
@@ -24544,7 +24866,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 50,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 324,
@@ -24620,7 +24943,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 105,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 325,
@@ -24696,7 +25020,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 326,
@@ -24772,7 +25097,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 327,
@@ -24848,7 +25174,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 270,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 328,
@@ -24924,7 +25251,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 329,
@@ -25000,7 +25328,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 330,
@@ -25076,7 +25405,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 331,
@@ -25152,7 +25482,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 332,
@@ -25228,7 +25559,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 333,
@@ -25304,7 +25636,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 334,
@@ -25380,7 +25713,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 335,
@@ -25456,7 +25790,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 230,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 336,
@@ -25532,7 +25867,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 337,
@@ -25608,7 +25944,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 338,
@@ -25684,7 +26021,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 339,
@@ -25760,7 +26098,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 340,
@@ -25836,7 +26175,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 270,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 341,
@@ -25912,7 +26252,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 83.33333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 342,
@@ -25988,7 +26329,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 200,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 343,
@@ -26064,7 +26406,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 344,
@@ -26140,7 +26483,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 345,
@@ -26216,7 +26560,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 346,
@@ -26292,7 +26637,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 347,
@@ -26368,7 +26714,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 348,
@@ -26444,7 +26791,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 349,
@@ -26520,7 +26868,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 350,
@@ -26596,7 +26945,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 351,
@@ -26672,7 +27022,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 352,
@@ -26748,7 +27099,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 353,
@@ -26824,7 +27176,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 354,
@@ -26900,7 +27253,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 290,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 355,
@@ -26976,7 +27330,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 356,
@@ -27052,7 +27407,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 30,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 357,
@@ -27128,7 +27484,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 65,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 358,
@@ -27204,7 +27561,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 359,
@@ -27280,7 +27638,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 62.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 360,
@@ -27356,7 +27715,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 140,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 361,
@@ -27432,7 +27792,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 100,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 362,
@@ -27508,7 +27869,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 363,
@@ -27584,7 +27946,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 364,
@@ -27660,7 +28023,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 365,
@@ -27736,7 +28100,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 366,
@@ -27812,7 +28177,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 367,
@@ -27888,7 +28254,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 368,
@@ -27964,7 +28331,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 369,
@@ -28040,7 +28408,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 370,
@@ -28116,7 +28485,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 371,
@@ -28192,7 +28562,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 372,
@@ -28268,7 +28639,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 373,
@@ -28344,7 +28716,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 374,
@@ -28420,7 +28793,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 375,
@@ -28496,7 +28870,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 376,
@@ -28572,7 +28947,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 377,
@@ -28648,7 +29024,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 378,
@@ -28724,7 +29101,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 379,
@@ -28800,7 +29178,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 380,
@@ -28876,7 +29255,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 381,
@@ -28952,7 +29332,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 382,
@@ -29028,7 +29409,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 335,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 383,
@@ -29104,7 +29486,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 384,
@@ -29180,7 +29563,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 385,
@@ -29256,7 +29640,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 386,
@@ -29332,7 +29717,8 @@
     "d16Therapy&Rehabilitation": 65,
     "d17Health,Nursing&ClinicalLaboratory": 495,
     "d18Business&Commerce": 3405,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 387,
@@ -29408,7 +29794,8 @@
     "d16Therapy&Rehabilitation": 65,
     "d17Health,Nursing&ClinicalLaboratory": 495,
     "d18Business&Commerce": 3405,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 388,
@@ -29484,7 +29871,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 260,
     "d18Business&Commerce": 2665,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 389,
@@ -29560,7 +29948,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 170,
     "d18Business&Commerce": 1698.333333,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 390,
@@ -29636,7 +30025,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 35,
     "d18Business&Commerce": 1180,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 391,
@@ -29712,7 +30102,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 215,
     "d18Business&Commerce": 1250,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 392,
@@ -29788,7 +30179,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 70,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 393,
@@ -29864,7 +30256,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 394,
@@ -29940,7 +30333,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 395,
@@ -30016,7 +30410,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 396,
@@ -30092,7 +30487,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 6.25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 397,
@@ -30168,7 +30564,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 398,
@@ -30244,7 +30641,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 399,
@@ -30320,7 +30718,8 @@
     "d16Therapy&Rehabilitation": 40,
     "d17Health,Nursing&ClinicalLaboratory": 155,
     "d18Business&Commerce": 1025,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 400,
@@ -30396,7 +30795,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 401,
@@ -30472,7 +30872,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 100,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 402,
@@ -30548,7 +30949,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 100,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 403,
@@ -30624,7 +31026,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 404,
@@ -30700,7 +31103,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 405,
@@ -30776,7 +31180,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 406,
@@ -30852,7 +31257,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 407,
@@ -30928,7 +31334,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 408,
@@ -31004,7 +31411,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 409,
@@ -31080,7 +31488,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 410,
@@ -31156,7 +31565,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 411,
@@ -31232,7 +31642,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3.75,
     "d18Business&Commerce": 13.125,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 412,
@@ -31308,7 +31719,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3.75,
     "d18Business&Commerce": 13.125,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 413,
@@ -31384,7 +31796,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 414,
@@ -31460,7 +31873,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 415,
@@ -31536,7 +31950,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 416,
@@ -31612,7 +32027,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 255,
     "d18Business&Commerce": 155,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 417,
@@ -31688,7 +32104,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 418,
@@ -31764,7 +32181,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 54,
     "d18Business&Commerce": 34,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 419,
@@ -31840,7 +32258,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 54,
     "d18Business&Commerce": 34,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 420,
@@ -31916,7 +32335,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 160,
     "d18Business&Commerce": 1425,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 421,
@@ -31992,7 +32412,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 712.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 422,
@@ -32068,7 +32489,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 712.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 423,
@@ -32144,7 +32566,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 80,
     "d18Business&Commerce": 712.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 424,
@@ -32220,7 +32643,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 425,
@@ -32296,7 +32720,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 426,
@@ -32372,7 +32797,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 75,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 427,
@@ -32448,7 +32874,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 275,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 428,
@@ -32524,7 +32951,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 429,
@@ -32600,7 +33028,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 430,
@@ -32676,7 +33105,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 75,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 431,
@@ -32752,7 +33182,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 230,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 432,
@@ -32828,7 +33259,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 25,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 433,
@@ -32904,7 +33336,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 434,
@@ -32980,7 +33413,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 435,
@@ -33056,7 +33490,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 436,
@@ -33132,7 +33567,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 85,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 437,
@@ -33208,7 +33644,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 438,
@@ -33284,7 +33721,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 15,
     "d18Business&Commerce": 20,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 439,
@@ -33360,7 +33798,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 80,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 440,
@@ -33436,7 +33875,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 45,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 441,
@@ -33512,7 +33952,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 442,
@@ -33588,7 +34029,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3.333333333,
     "d18Business&Commerce": 2.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 443,
@@ -33664,7 +34106,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 444,
@@ -33740,7 +34183,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 445,
@@ -33816,7 +34260,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 446,
@@ -33892,7 +34337,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 3.333333333,
     "d18Business&Commerce": 2.5,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 447,
@@ -33968,7 +34414,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 448,
@@ -34044,7 +34491,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 15,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 449,
@@ -34120,7 +34568,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 35,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 450,
@@ -34196,7 +34645,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 20,
     "d18Business&Commerce": 195,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 451,
@@ -34272,7 +34722,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 452,
@@ -34348,7 +34799,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 453,
@@ -34424,7 +34876,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 454,
@@ -34500,7 +34953,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 455,
@@ -34576,7 +35030,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 456,
@@ -34652,7 +35107,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 457,
@@ -34728,7 +35184,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 458,
@@ -34804,7 +35261,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 459,
@@ -34880,7 +35338,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 460,
@@ -34956,7 +35415,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 461,
@@ -35032,7 +35492,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 462,
@@ -35108,7 +35569,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 463,
@@ -35184,7 +35646,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 65,
     "d18Business&Commerce": 60,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 464,
@@ -35260,7 +35723,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 280,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 465,
@@ -35336,7 +35800,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 12.5,
     "d18Business&Commerce": 140,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 466,
@@ -35412,7 +35877,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 12.5,
     "d18Business&Commerce": 140,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 467,
@@ -35488,7 +35954,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 468,
@@ -35564,7 +36031,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 70,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 469,
@@ -35640,7 +36108,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 36.66666667,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 470,
@@ -35716,7 +36185,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 471,
@@ -35792,7 +36262,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 472,
@@ -35868,7 +36339,8 @@
     "d16Therapy&Rehabilitation": 82.5,
     "d17Health,Nursing&ClinicalLaboratory": 392.5,
     "d18Business&Commerce": 1380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 473,
@@ -35944,7 +36416,8 @@
     "d16Therapy&Rehabilitation": 165,
     "d17Health,Nursing&ClinicalLaboratory": 785,
     "d18Business&Commerce": 2730,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 474,
@@ -36020,7 +36493,8 @@
     "d16Therapy&Rehabilitation": 82.5,
     "d17Health,Nursing&ClinicalLaboratory": 392.5,
     "d18Business&Commerce": 1380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 475,
@@ -36096,7 +36570,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 30,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 476,
@@ -36172,7 +36647,8 @@
     "d16Therapy&Rehabilitation": 82.5,
     "d17Health,Nursing&ClinicalLaboratory": 392.5,
     "d18Business&Commerce": 1380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 477,
@@ -36248,7 +36724,8 @@
     "d16Therapy&Rehabilitation": 82.5,
     "d17Health,Nursing&ClinicalLaboratory": 392.5,
     "d18Business&Commerce": 1380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 478,
@@ -36324,7 +36801,8 @@
     "d16Therapy&Rehabilitation": 82.5,
     "d17Health,Nursing&ClinicalLaboratory": 392.5,
     "d18Business&Commerce": 1380,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 479,
@@ -36400,7 +36878,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 480,
@@ -36476,7 +36955,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 481,
@@ -36552,7 +37032,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 482,
@@ -36628,7 +37109,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 483,
@@ -36704,7 +37186,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 30,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 484,
@@ -36780,7 +37263,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 25,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 485,
@@ -36856,7 +37340,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 45,
     "d18Business&Commerce": 120,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 486,
@@ -36932,7 +37417,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 0,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 487,
@@ -37008,7 +37494,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 40,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 488,
@@ -37084,7 +37571,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 70,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 489,
@@ -37160,7 +37648,8 @@
     "d16Therapy&Rehabilitation": 0,
     "d17Health,Nursing&ClinicalLaboratory": 0,
     "d18Business&Commerce": 30,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 490,
@@ -37236,7 +37725,8 @@
     "d16Therapy&Rehabilitation": 9,
     "d17Health,Nursing&ClinicalLaboratory": 108,
     "d18Business&Commerce": 439,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 491,
@@ -37312,7 +37802,8 @@
     "d16Therapy&Rehabilitation": 9,
     "d17Health,Nursing&ClinicalLaboratory": 108,
     "d18Business&Commerce": 439,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 492,
@@ -37388,7 +37879,8 @@
     "d16Therapy&Rehabilitation": 9,
     "d17Health,Nursing&ClinicalLaboratory": 108,
     "d18Business&Commerce": 439,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 493,
@@ -37464,7 +37956,8 @@
     "d16Therapy&Rehabilitation": 9,
     "d17Health,Nursing&ClinicalLaboratory": 108,
     "d18Business&Commerce": 439,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   },
   {
     "id": 494,
@@ -37540,6 +38033,7 @@
     "d16Therapy&Rehabilitation": 45,
     "d17Health,Nursing&ClinicalLaboratory": 540,
     "d18Business&Commerce": 2055,
-    "d19Medical,Dental&Veterinary": 0
+    "d19Medical,Dental&Veterinary": 0,
+    "equalRadius": 10
   }
 ]

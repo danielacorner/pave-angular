@@ -35,6 +35,8 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './details/details.component';
 import { GraphModeComponent } from './graph-mode/graph-mode.component';
+import { ChangeSizesDropdownComponent } from './change-sizes-dropdown/change-sizes-dropdown.component';
+import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change-colours-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { GraphModeComponent } from './graph-mode/graph-mode.component';
     FilterSliderComponent,
     TooltipComponent,
     DetailsComponent,
-    GraphModeComponent
+    GraphModeComponent,
+    ChangeSizesDropdownComponent,
+    ChangeColoursDropdownComponent
   ],
   imports: [
     BrowserModule,
