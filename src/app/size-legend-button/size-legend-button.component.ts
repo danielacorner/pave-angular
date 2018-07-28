@@ -6,6 +6,7 @@ import { AppStatusService } from '../app-status.service';
   selector: 'app-size-legend-button',
   template: `
   <button class='sizeBtn btn waves-effect z-depth-3'
+    [class.green]="active"
     [disabled]="radiusSelector === 'none'"
     [ngStyle]='btnStyles'
     [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
@@ -71,6 +72,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
   public radiusSelector;
   public forceSimulation;
   public forceCluster;
+  public colourSortActive;
 
   public btnHeight = 70;
   public btnStyles = {
@@ -86,6 +88,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
     this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
     this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
     this._statusService.currentRadiusRange.subscribe(v => (this.radiusRange = v));
+    this._statusService.currentColourSortActive.subscribe(v => (this.colourSortActive = v));
   }
   ngAfterContentInit() {
   }
@@ -97,26 +100,48 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
     // split the clusters horizontally by size
 
     this._statusService.changeForceSimulation(
-      this.forceSimulation
-      .force('x', !this.active
-        ? that.forceXCombine
-        : d3
-          .forceX(function (d) {
-            return (
-              // % screen width
-              0.4 *
-              // split the width into the range (min, max radius)
-              ((that.width / (that.radiusRange[1] - that.radiusRange[0])) // width / radius range
-                * d3.select('#circle_' + d.id).attr('r') - // x circle radius
-                (that.width / 2)) // - half width (move to center)
-            );
-            }).strength(0.3)
-      )
-      // .force('y', that.forceYCombine)
-      .force('cluster', this.active ? null : that.forceCluster)
-      .alpha(this.active ? 0.4 : 0.3)
-      .alphaTarget(this.active ? 0.1 : 0.001)
-      .restart()
+      this.colourSortActive
+      ? // if colour sort is active, only modify the x force
+        this.forceSimulation
+        .force('x', !this.active
+          ? d3.forceX(function (d) {
+            return (0.4 * ((that.width / that.nClusters) * d.cluster)
+                  - (0.4 * that.width) / 2);
+            }).strength(1.2)
+          : d3.forceX(function (d) {
+              return (
+                (
+                  // move to cluster x position
+                  0.4 * ((that.width / that.nClusters) * d.cluster)
+                  - (0.4 * that.width) / 2
+                  // move larger radii to right (normalized by radius range)
+                  + 30 * ( d3.select('#circle_' + d.id).attr('r') - (that.radiusRange[0]) )
+                  / (that.radiusRange[1] - that.radiusRange[0]) - 15
+                )
+              );
+              }).strength(1.2)
+        )
+        .force('cluster', this.active ? null : that.forceCluster)
+        .alpha(this.active ? 0.4 : 0.3)
+        .alphaTarget(this.active ? 0.1 : 0.001)
+        .restart()
+      : // if colour sort inactive, modify x force and turn off cluster force
+        this.forceSimulation
+        .force('x', !this.active
+          ? that.forceXCombine
+          : d3.forceX(function (d) {
+              return (
+                (
+                  100 * ( d3.select('#circle_' + d.id).attr('r') - (that.radiusRange[0]) )
+                  / (that.radiusRange[1] - that.radiusRange[0]) - 50
+                )
+              );
+              }).strength(2)
+        )
+        .force('cluster', this.active ? null : that.forceCluster)
+        .alpha(this.active ? 0.4 : 0.3)
+        .alphaTarget(this.active ? 0.1 : 0.001)
+        .restart()
     );
   }
 }

@@ -24,9 +24,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     </svg>
 
     <div class='container'>
+
       <app-filter-slider class="sliderLang"
       (childEvent)="handleSliderUpdate($event, 'language')"
       [filterVariable]="'language'"
+      [title1]="'Language and'"
+      [title2]="'Communication skills'"
+      ></app-filter-slider>
+
+      <app-filter-slider class="sliderLogi"
+      (childEvent)="handleSliderUpdate($event, 'logic')"
+      [filterVariable]="'logic'"
+      [title1]="'Logic and'"
+      [title2]="'Reasoning skills'"
+      ></app-filter-slider>
+
+      <app-filter-slider class="sliderMath"
+      (childEvent)="handleSliderUpdate($event, 'math')"
+      [filterVariable]="'math'"
+      [title1]="'Math and'"
+      [title2]="'Spatial skills'"
+      ></app-filter-slider>
+
+      <app-filter-slider class="sliderComp"
+      (childEvent)="handleSliderUpdate($event, 'computer')"
+      [filterVariable]="'computer'"
+      [title1]="'Computer and'"
+      [title2]="'Information skills'"
       ></app-filter-slider>
 
       <app-graph-mode
@@ -60,6 +84,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       <app-change-sizes-dropdown
       [nodeAttraction]="nodeAttraction"
       [nodePadding]="nodePadding"
+      [minRadius]="minRadius"
+      [width]="width"
+      [maxCircleScreenFraction]="maxCircleScreenFraction"
       [defaultCircleRadius]="defaultCircleRadius"
       [defaultNodeAttraction]="defaultNodeAttraction"
       ></app-change-sizes-dropdown>
@@ -83,7 +110,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   </div>
   `,
-  styles: [``],
+  styles: [
+    `
+      .sliderLang{
+        position: fixed;
+        top: 100px;
+        left: 20px;
+      }
+      .sliderLogi{
+        position: fixed;
+        top: 100px;
+        right: 20px;
+      }
+      .sliderMath{
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+      }
+      .sliderComp{
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+      }
+
+    `
+  ],
   animations: [
     trigger('ngIfAnimation', [
       transition(':enter, :leave', [query('@*', animateChild())])
@@ -102,7 +153,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ]
 })
 export class VizComponent implements OnInit, AfterContentInit {
-  constructor(private _dataService: DataService, private _statusService: AppStatusService) {}
+  constructor(
+    private _dataService: DataService,
+    private _statusService: AppStatusService
+  ) {}
   // positioning
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
@@ -125,6 +179,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public clusterPadding = 6; // separation between different-color circles
   // radius range
   public minRadius = window.innerWidth * 0.004;
+  public maxCircleScreenFraction = window.innerWidth * 0.03;
   // public maxRadius = window.innerWidth * 0.025;
   public radiusRange; // subscription
   public radiusScale;
@@ -188,13 +243,27 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit() {
-    this._statusService.currentRadiusSelector.subscribe(v => (this.radiusSelector = v));
-    this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
-    this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
-    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
-    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
-    this._statusService.currentRadiusRange.subscribe(v => (this.radiusRange = v));
-    this._statusService.currentRadiusScale.subscribe(v => (this.radiusScale = v));
+    this._statusService.currentRadiusSelector.subscribe(
+      v => (this.radiusSelector = v)
+    );
+    this._statusService.currentClusterSelector.subscribe(
+      v => (this.clusterSelector = v)
+    );
+    this._statusService.currentUniqueClusterValues.subscribe(
+      v => (this.uniqueClusterValues = v)
+    );
+    this._statusService.currentForceCluster.subscribe(
+      v => (this.forceCluster = v)
+    );
+    this._statusService.currentForceSimulation.subscribe(
+      v => (this.forceSimulation = v)
+    );
+    this._statusService.currentRadiusRange.subscribe(
+      v => (this.radiusRange = v)
+    );
+    this._statusService.currentRadiusScale.subscribe(
+      v => (this.radiusScale = v)
+    );
   }
 
   ngAfterContentInit() {
@@ -206,23 +275,23 @@ export class VizComponent implements OnInit, AfterContentInit {
       // set the circle radii based on window width
       this._statusService.changeRadiusRange([
         this.minRadius,
-        // max radius = (max value / window width) * window width / output window fraction
-        d3.max(this.data$, d => +d[that.radiusSelector]) / that.width / 0.5
+        // max radius = output * normalized maximum
+        this.maxCircleScreenFraction
       ]);
 
       this._statusService.changeRadiusScale(
         d3
-        .scaleSqrt() // sqrt because circle areas
-        .domain(
-          this.radiusSelector === 'none'
-            ? [1, 1]
-            : d3.extent(this.data$, d => +d[that.radiusSelector])
-        )
-        .range(
-          this.radiusSelector === 'none'
-            ? Array(2).fill(this.defaultCircleRadius)
-            : this.radiusRange
-        )
+          .scaleSqrt() // sqrt because circle areas
+          .domain(
+            this.radiusSelector === 'none'
+              ? [1, 1]
+              : d3.extent(this.data$, d => +d[that.radiusSelector])
+          )
+          .range(
+            this.radiusSelector === 'none'
+              ? Array(2).fill(this.defaultCircleRadius)
+              : this.radiusRange
+          )
       );
 
       // convert each unique value to a cluster number
@@ -448,9 +517,9 @@ export class VizComponent implements OnInit, AfterContentInit {
     // Update nodes and restart the simulation.
     this._statusService.changeForceSimulation(
       this.forceSimulation
-      .nodes(filteredNodes)
-      .alpha(0.3)
-      .restart()
+        .nodes(filteredNodes)
+        .alpha(0.3)
+        .restart()
     );
   }
 }

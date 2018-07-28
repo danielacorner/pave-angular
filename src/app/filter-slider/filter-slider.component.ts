@@ -5,22 +5,36 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-filter-slider',
   template: `
+    <div class="slider-container">
+    <div class="title">
+    <p>{{title1}}</p>
+    <p>{{title2}}</p>
+    </div>
     <mat-slider thumbLabel [min]="min" [max]="max" step="1"
     [(ngModel)]="sliderValue"
     tickInterval="10"
     (change)="fireEvent()"
     ></mat-slider>
+    </div>
   `,
   styles: [
     `
+      .slider-container {
+
+      }
       mat-slider {
-        width: 35%;
+        width: 80%;
+      }
+      .title p {
+        line-height: 0.5rem;
       }
     `
   ]
 })
 export class FilterSliderComponent implements OnInit {
   public sliderValue;
+  @Input() public title1;
+  @Input() public title2;
   @Input() public filterVariable;
   @Output() public childEvent = new EventEmitter();
   public min;

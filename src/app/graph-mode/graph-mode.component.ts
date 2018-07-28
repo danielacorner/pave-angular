@@ -7,6 +7,7 @@ import { AppStatusService } from '../app-status.service';
   selector: 'app-graph-mode',
   template: `
     <button class="center btn waves-effect z-depth-3"
+    [class.green]="active"
     [ngStyle]='btnStyles'
     (click)="handleClick()">
       <mat-slide-toggle
@@ -76,7 +77,10 @@ import { AppStatusService } from '../app-status.service';
   ]
 })
 export class GraphModeComponent implements OnInit, AfterContentInit {
-  constructor(private _dataService: DataService, private _statusService: AppStatusService) { }
+  constructor(
+    private _dataService: DataService,
+    private _statusService: AppStatusService
+  ) {}
   // static inputs
   @Input() public nodes;
   @Input() public buttonData;
@@ -137,9 +141,12 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public graphDimensions = { x: 0.8, y: 0.7 };
 
   ngOnInit() {
-    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
-    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
-
+    this._statusService.currentForceCluster.subscribe(
+      v => (this.forceCluster = v)
+    );
+    this._statusService.currentForceSimulation.subscribe(
+      v => (this.forceSimulation = v)
+    );
   }
 
   ngAfterContentInit() {

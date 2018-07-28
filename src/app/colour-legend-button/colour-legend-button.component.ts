@@ -6,6 +6,7 @@ import * as d3 from 'd3';
   selector: 'app-colour-legend-button',
   template: `
   <button class='btn waves-effect z-depth-3'
+    [class.green]="colourSortActive"
     [ngStyle]='btnStyles'
     [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
     [style.left]="'5%'"
@@ -13,7 +14,7 @@ import * as d3 from 'd3';
   <div class='grid-container'>
     <div class="sort-icon valign-wrapper">
       <mat-icon
-      [style.transform]="(active ? 'rotate(-90deg)' : null)"
+      [style.transform]="(colourSortActive ? 'rotate(-90deg)' : null)"
       >filter_list</mat-icon>
     </div>
     <div class="btn-text">
@@ -73,13 +74,13 @@ export class ColourLegendButtonComponent implements OnInit {
   public forceCluster;
   public uniqueClusterValues;
   public clusterSelector;
+  public colourSortActive;
 
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
     width: '130px'
   };
-  public active = false;
   public clusterCenters = [];
   public refreshInterval;
 
@@ -90,10 +91,11 @@ export class ColourLegendButtonComponent implements OnInit {
     this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
     this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
     this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+    this._statusService.currentColourSortActive.subscribe(v => (this.colourSortActive = v));
   }
 
   handleClick() {
-    this.active = !this.active;
+    this._statusService.changeColourSortActive(!this.colourSortActive);
     const that = this;
     // split the clusters horizontally
     const forceXSeparate = d3
@@ -104,7 +106,7 @@ export class ColourLegendButtonComponent implements OnInit {
           (0.4 * that.width) / 2
         );
       })
-      .strength(0.3);
+      .strength(1.2);
     // split the clusters vertically
     const forceYSeparate = d3
       .forceY(function(d) {
@@ -116,17 +118,15 @@ export class ColourLegendButtonComponent implements OnInit {
           return that.height / 12;
         }
       })
-      .strength(0.3);
+      .strength(1.2);
 
-    if (this.active) {
-      this._statusService.changeForceSimulation(
-        this.forceSimulation
+    if (this.colourSortActive) {
+      this._statusService.changeForceSimulation(this.forceSimulation
           .force('x', forceXSeparate)
           .force('y', forceYSeparate)
           .alpha(0.3)
           .alphaTarget(0.001)
-          .restart()
-      );
+          .restart());
 
       this.createAnnotations();
 
@@ -144,14 +144,12 @@ export class ColourLegendButtonComponent implements OnInit {
           .style('opacity', 1);
       }, 3000);
     } else {
-      this._statusService.changeForceSimulation(
-        this.forceSimulation
+      this._statusService.changeForceSimulation(this.forceSimulation
           .force('x', that.forceXCombine)
           .force('y', that.forceYCombine)
           .alpha(0.3)
           .alphaTarget(0.001)
-          .restart()
-      );
+          .restart());
 
       this.clearAnnotations();
     }

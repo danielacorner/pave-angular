@@ -29,7 +29,10 @@ export class AppStatusService {
   private _radiusScaleSource = new BehaviorSubject<any>(null);
   public currentRadiusScale = this._radiusScaleSource.asObservable();
 
-  // todo: subscribe to nodes
+  private _colourSortActiveSource = new BehaviorSubject<any>(false);
+  public currentColourSortActive = this._colourSortActiveSource.asObservable();
+
+  // todo: subscribe to nodes?
 
   public changeRadiusSelector(v) {
     this._radiusSelectorSource.next(v);
@@ -61,6 +64,10 @@ export class AppStatusService {
 
   public changeRadiusScale(v) {
     this._radiusScaleSource.next(v);
+  }
+
+  public changeColourSortActive(v) {
+    this._colourSortActiveSource.next(v);
   }
 
   constructor() {}

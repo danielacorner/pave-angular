@@ -1,8 +1,9 @@
 todos
 -----
 next
-- details modal component
-  - 3 tabs: can i, should i, how do i
+
+store nodes in behaviorsubject
+
 big
 - graph mode toggle
 - fill tooltip component
