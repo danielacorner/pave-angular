@@ -16,6 +16,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 
 // Services
 import { DataService } from './data.service';
+import { AppStatusService } from './app-status.service';
 
 // Material
 import {
@@ -71,7 +72,7 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     FormsModule
   ],
   entryComponents: [DetailsComponent],
-  providers: [DataService, MatDialogTitle],
+  providers: [DataService, MatDialogTitle, AppStatusService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

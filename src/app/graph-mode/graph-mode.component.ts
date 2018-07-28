@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
+import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-graph-mode',
@@ -75,17 +76,19 @@ import { DataService } from '../data.service';
   ]
 })
 export class GraphModeComponent implements OnInit, AfterContentInit {
+  constructor(private _dataService: DataService, private _statusService: AppStatusService) { }
+  // static inputs
   @Input() public nodes;
   @Input() public buttonData;
-  @Input() public forceSimulation;
   @Input() public forceXCombine;
   @Input() public forceYCombine;
-  @Input() public forceCluster;
   @Input() public nClusters;
   @Input() public width;
   @Input() public height;
   @Input() public navbarHeight;
-  @Input() public radiusRange;
+  // subscriptions
+  public forceCluster;
+  public forceSimulation;
   public data$;
 
   public axisSelectorGroups = [
@@ -129,12 +132,15 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public oldYPositions = [];
   public newXPositions = [];
   public newYPositions = [];
-  constructor(private _dataService: DataService) {}
-  public transitionDuration = 300;
+  public transitionDuration = 500;
 
   public graphDimensions = { x: 0.8, y: 0.7 };
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
+    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+
+  }
 
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope
@@ -156,7 +162,7 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
 
     this.setScales(that);
 
-    this.forceSimulation.alpha(0);
+    this._statusService.changeForceSimulation(this.forceSimulation.alpha(0));
     // transition circles using x, y for initial simulation positions
     d3.selectAll('circle')
       .transition()

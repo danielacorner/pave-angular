@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
+import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-change-sizes-dropdown',
@@ -37,14 +38,16 @@ import { DataService } from '../data.service';
   ]
 })
 export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
-  @Input() radiusSelector;
-  @Input() radiusScale;
-  @Input() radiusRange;
-  @Input() forceSimulation;
-  @Input() nodeAttraction;
-  @Input() nodePadding;
-  @Input() defaultNodeAttraction;
-  @Input() defaultCircleRadius;
+  // static inputs
+  @Input() public nodeAttraction;
+  @Input() public nodePadding;
+  @Input() public defaultNodeAttraction;
+  @Input() public defaultCircleRadius;
+  // subscriptions
+  public radiusRange;
+  public radiusScale;
+  public radiusSelector;
+  public forceSimulation;
   public active = true;
   public data$;
 
@@ -67,44 +70,57 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     }
   ];
 
-  constructor(private _dataService: DataService) {}
+  constructor(private _dataService: DataService, private _statusService: AppStatusService) {}
 
-  ngOnInit() {}
-
-  ngAfterContentInit() {
+  ngOnInit() {
+    this._statusService.currentRadiusSelector.subscribe(v => this.radiusSelector = v);
+    this._statusService.currentForceSimulation.subscribe(v => this.forceSimulation = v);
+    this._statusService.currentRadiusRange.subscribe(v => this.radiusRange = v);
+    this._statusService.currentRadiusScale.subscribe(v => this.radiusScale = v);
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
     });
   }
 
+  ngAfterContentInit() {
+  }
+
   changeSelection($event) {
-    const that = this;
-    // change the axis selectors
-    that.radiusSelector = $event.value;
-
-    this.radiusScale = d3
+    // change the radius selector (it auto-updates because of the subscription)
+    this._statusService.changeRadiusSelector($event.value);
+    // recalculate the radius range
+    this._statusService.changeRadiusRange([
+     d3.min()
+    ])
+    // recalculate the radius scale
+    this._statusService.changeRadiusScale(
+    d3
       .scaleSqrt() // sqrt because circle areas
-      .domain(d3.extent(this.data$, d => +d[that.radiusSelector]))
-      .range([this.radiusRange[0], this.radiusRange[1]]);
+      .domain(d3.extent(this.data$, d => +d[this.radiusSelector]))
+      .range([this.radiusRange[0], this.radiusRange[1]])
+    );
 
-    // recalculate the axis scales
     // transition the circles using cx, cy for current positions
-    d3 .selectAll('circle') .transition()
-      .attr('r', that.radiusSelector === 'none' ? this.defaultCircleRadius :
-        d => that.radiusScale(+d.all[that.radiusSelector]))
+    d3.selectAll('circle').transition()
+      .attr('r', this.radiusSelector === 'none' ? this.defaultCircleRadius :
+        d => this.radiusScale(+d.all[this.radiusSelector]))
           .delay((d, i) => i * 0.8);
 
     setTimeout(() => {
-      this.forceSimulation
-        .force( 'gravity',
-          d3 .forceManyBody()
-            .strength(that.radiusSelector === 'none' ? this.defaultNodeAttraction :
-              d =>
-                Math.pow(that.radiusScale(+d.all[that.radiusSelector]), 2) *
-                this.nodeAttraction)
-        )
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
+        .force('gravity', d3
+        .forceManyBody()
+        .strength(
+          this.radiusSelector === 'none'
+          ? this.defaultNodeAttraction
+          : d =>
+          Math.pow(this.radiusScale(+d.all[this.radiusSelector]), 2) *
+          this.nodeAttraction
+        ))
         .alpha(0.3)
-        .restart();
+        .restart()
+      );
     }, 500);
   }
 }

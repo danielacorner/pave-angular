@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
+import { AppStatusService } from '../app-status.service';
+
 import {
   trigger,
   state,
@@ -29,48 +31,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
       <app-graph-mode
       [nodes]="nodes"
-      [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
-      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
       [width]="width"
       [height]="height"
       [navbarHeight]="navbarHeight"
-      [radiusRange]="radiusRange"
       ></app-graph-mode>
 
       <app-colour-legend-button
-      [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
-      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
       [width]="width"
       [height]="height"
       [navbarHeight]="navbarHeight"
-      [uniqueClusterValues]="uniqueClusterValues"
-      [clusterSelector]="clusterSelector"
-      [radiusRange]="radiusRange"
       ></app-colour-legend-button>
 
       <app-size-legend-button
-      [forceSimulation]="forceSimulation"
       [forceXCombine]="forceXCombine"
       [forceYCombine]="forceYCombine"
-      [forceCluster]="forceCluster"
       [nClusters]="numClusters"
       [width]="width"
       [height]="height"
       [navbarHeight]="navbarHeight"
-      [radiusRange]="radiusRange"
       ></app-size-legend-button>
 
       <app-change-sizes-dropdown
-      [radiusSelector]="radiusSelector"
-      [radiusRange]="radiusRange"
-      [radiusScale]="radiusScale"
-      [forceSimulation]="forceSimulation"
       [nodeAttraction]="nodeAttraction"
       [nodePadding]="nodePadding"
       [defaultCircleRadius]="defaultCircleRadius"
@@ -78,13 +65,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ></app-change-sizes-dropdown>
 
       <app-change-colours-dropdown
-      [clusterSelector]="clusterSelector"
       [colourScale]="colourScale"
       [uniqueClusterValues]="uniqueClusterValues"
       [clusterCenters]="clusterCenters"
       [nodes]="nodes"
-      [forceSimulation]="forceSimulation"
-      [forceCluster]="forceCluster"
       ></app-change-colours-dropdown>
 
     </div>
@@ -118,7 +102,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ]
 })
 export class VizComponent implements OnInit, AfterContentInit {
-  constructor(private _dataService: DataService) {}
+  constructor(private _dataService: DataService, private _statusService: AppStatusService) {}
   // positioning
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
@@ -139,19 +123,20 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- CIRCLE PROPERTIES ----- //
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
-  // radius range: [ highest of (4 or 0.0017 width) , highest of (10 or 0.019 width) ]
+  // radius range
   public minRadius = window.innerWidth * 0.004;
-  // public minRadius = (window.innerWidth * 0.0017 > 5 ? window.innerWidth * 0.0017 : 5);
-  public maxRadius = window.innerWidth * 0.025;
-  // public maxRadius = (window.innerWidth * 0.019 > 10 ? window.innerWidth * 0.019 : 10);
-  public radiusRange = [this.minRadius, this.maxRadius];
+  // public maxRadius = window.innerWidth * 0.025;
+  public radiusRange; // subscription
   public radiusScale;
+
   // custom circle sizes and colours/clusters
   // ----- STARTING RADIUS & CLUSTERS ----- //
-  public radiusSelector = 'none';
+  public radiusSelector; // subscription
   public defaultCircleRadius = window.innerWidth * 0.0083;
-  public clusterSelector = 'industry';
-  public uniqueClusterValues;
+  public clusterSelector; // subscription
+  public uniqueClusterValues; // subscription
+  public forceCluster; // subscription
+  public forceSimulation; // subscription
   // circles and clusters
   public nodes = [];
   public circles;
@@ -164,7 +149,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   public nodeAttraction = -3.14; // negative = repel
   public nodePadding = 1;
   public centerGravity = 1.75;
-  public forceSimulation;
   public forceXCombine = d3.forceX().strength(this.centerGravity);
   public forceYCombine = d3.forceY().strength(this.centerGravity);
   public forceGravity = d3
@@ -176,7 +160,6 @@ export class VizComponent implements OnInit, AfterContentInit {
     );
   public forceCollide = null;
   // public forceCollide = d3.forceCollide().radius(d => d.r + this.nodePadding);
-  public forceCluster;
   public ticked;
   // tooltip
   public tooltipData;
@@ -204,7 +187,15 @@ export class VizComponent implements OnInit, AfterContentInit {
     d.fy = null;
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._statusService.currentRadiusSelector.subscribe(v => (this.radiusSelector = v));
+    this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
+    this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
+    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
+    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+    this._statusService.currentRadiusRange.subscribe(v => (this.radiusRange = v));
+    this._statusService.currentRadiusScale.subscribe(v => (this.radiusScale = v));
+  }
 
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope
@@ -212,9 +203,15 @@ export class VizComponent implements OnInit, AfterContentInit {
     // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
-      // SELECT THE RADIUS VARIABLE
-      this.radiusSelector = 'none';
-      this.radiusScale = d3
+      // set the circle radii based on window width
+      this._statusService.changeRadiusRange([
+        this.minRadius,
+        // max radius = (max value / window width) * window width / output window fraction
+        d3.max(this.data$, d => +d[that.radiusSelector]) / that.width / 0.5
+      ]);
+
+      this._statusService.changeRadiusScale(
+        d3
         .scaleSqrt() // sqrt because circle areas
         .domain(
           this.radiusSelector === 'none'
@@ -224,16 +221,20 @@ export class VizComponent implements OnInit, AfterContentInit {
         .range(
           this.radiusSelector === 'none'
             ? Array(2).fill(this.defaultCircleRadius)
-            : [this.minRadius, this.maxRadius]
-        );
+            : this.radiusRange
+        )
+      );
 
       // convert each unique value to a cluster number
-      this.uniqueClusterValues = this.data$
-        .map(d => d[that.clusterSelector])
-        // filter uniqueOnly
-        .filter((value, index, self) => self.indexOf(value) === index);
+      this._statusService.changeUniqueClusterValues(
+        this.data$
+          .map(d => d[that.clusterSelector])
+          // filter uniqueOnly
+          .filter((value, index, self) => self.indexOf(value) === index)
+      );
 
       // define the nodes
+      // todo: subscribe to nodes?
       this.nodes = this.data$.map(d => {
         // scale radius to fit on the screen
         const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
@@ -332,14 +333,14 @@ export class VizComponent implements OnInit, AfterContentInit {
           .duration(1500)
           .style('opacity', 1)
           .delay((d, i) => i * 3);
-      }, 1000);
+      }, 500);
 
       this.ticked = () => {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
       // These are implementations of the custom forces.
-      this.forceCluster = alpha => {
+      const newForceCluster = alpha => {
         that.nodes.forEach(d => {
           const cluster = that.clusterCenters[d.cluster];
           if (cluster === d) {
@@ -359,8 +360,10 @@ export class VizComponent implements OnInit, AfterContentInit {
         });
       };
 
+      this._statusService.changeForceCluster(newForceCluster);
+
       // create the forceCluster/collision force simulation
-      this.forceSimulation = d3
+      const newForceSimulation = d3
         .forceSimulation(this.nodes)
         // .velocityDecay(0.3)
         .force('x', that.forceXCombine)
@@ -369,6 +372,8 @@ export class VizComponent implements OnInit, AfterContentInit {
         .force('gravity', that.forceGravity)
         .force('cluster', that.forceCluster)
         .on('tick', that.ticked);
+
+      this._statusService.changeForceSimulation(newForceSimulation);
     });
   } // end ngAfterContentinit
 
@@ -429,7 +434,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       })
       .merge(this.circles);
 
-    // todo: modify to eliminate "freeze twitch" on drag-call
+    // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
+    // todo: fix by settimeout 0 for each individual circle?
     setTimeout(() => {
       that.circles.call(
         d3
@@ -440,9 +446,11 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
     }, 2000);
     // Update nodes and restart the simulation.
-    this.forceSimulation
+    this._statusService.changeForceSimulation(
+      this.forceSimulation
       .nodes(filteredNodes)
       .alpha(0.3)
-      .restart();
+      .restart()
+    );
   }
 }

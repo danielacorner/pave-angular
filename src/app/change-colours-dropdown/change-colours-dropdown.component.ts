@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
+import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-change-colours-dropdown',
@@ -37,18 +38,20 @@ import { DataService } from '../data.service';
   ]
 })
 export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit {
-  @Input() clusterSelector;
+  // static inputs
   @Input() colourScale;
-  @Input() uniqueClusterValues;
   @Input() nodes;
-  @Input() clusterCenters;
-  @Input() forceSimulation;
   @Input() nodeAttraction;
   @Input() nodePadding;
-  @Input() forceCluster;
   public active = true;
   public data$;
   public newClusters;
+  // subscriptions
+  @Input() clusterCenters;
+  @Input() uniqueClusterValues;
+  public forceSimulation;
+  public clusterSelector;
+  public forceCluster;
 
   public clusterSelectorGroups = [
     {
@@ -67,9 +70,13 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     }
   ];
 
-  constructor(private _dataService: DataService) { }
+  constructor(private _dataService: DataService, private _statusService: AppStatusService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
+    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
+    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+   }
 
   ngAfterContentInit() {
     this._dataService.getData().subscribe(receivedData => {
@@ -79,17 +86,18 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
 
   changeSelection($event) {
     const that = this;
-    // change the axis selectors
-    that.clusterSelector = $event.value;
+    // change the cluster selector
+    this._statusService.changeClusterSelector($event.value);
 
     // convert each unique value to a cluster number
+    // todo: update via service subscription
     this.uniqueClusterValues = this.data$
       .map(d => d[that.clusterSelector])
       // filter uniqueOnly
       .filter((value, index, self) => self.indexOf(value) === index);
 
     // reset the clusters
-    this.clusterCenters = new Array;
+    this.clusterCenters = [];
 
     // define the nodes
     this.nodes = this.data$.map(d => {
@@ -134,7 +142,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
       //   d => that.colourScale(+d.all[that.clusterSelector]))
 
     this.forceCluster = alpha => {
-      that.nodes.forEach((d, i) => {
+      that.nodes.forEach(d => {
         const cluster = that.clusterCenters[d.cluster];
         // if (d.id === 200) { console.log(cluster); }
         // if (d.id === 200) { console.log(d); }
@@ -157,6 +165,8 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
 
 
     setTimeout(() => {
+      console.log(this.clusterSelector)
+      console.log(this.forceCluster)
       this.forceSimulation
         .force('cluster', (this.clusterSelector === 'none' ? null : this.forceCluster))
         .alpha(0.3)

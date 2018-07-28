@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppStatusService } from '../app-status.service';
 import * as d3 from 'd3';
 
 @Component({
@@ -60,19 +61,19 @@ import * as d3 from 'd3';
   ]
 })
 export class ColourLegendButtonComponent implements OnInit {
-  @Input() public forceSimulation;
+  // static inputs
   @Input() public forceXCombine;
   @Input() public forceYCombine;
-  @Input() public nClusters: number;
-  @Input() public vizWidth: number;
-  @Input() public vizHeight: number;
-  @Input() public navbarHeight: number;
-  @Input() public uniqueClusterValues;
-  @Input() public clusterSelector;
-  @Input() public forceCluster;
+  @Input() public nClusters;
+  @Input() public navbarHeight;
   @Input() public width;
   @Input() public height;
-  @Input() public radiusRange;
+  // subscriptions
+  public forceSimulation;
+  public forceCluster;
+  public uniqueClusterValues;
+  public clusterSelector;
+
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
@@ -82,9 +83,14 @@ export class ColourLegendButtonComponent implements OnInit {
   public clusterCenters = [];
   public refreshInterval;
 
-  constructor() {}
+  constructor(private _statusService: AppStatusService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
+    this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
+    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
+    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+  }
 
   handleClick() {
     this.active = !this.active;
@@ -113,12 +119,14 @@ export class ColourLegendButtonComponent implements OnInit {
       .strength(0.3);
 
     if (this.active) {
-      this.forceSimulation
-        .force('x', forceXSeparate)
-        .force('y', forceYSeparate)
-        .alpha(0.3)
-        .alphaTarget(0.001)
-        .restart();
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
+          .force('x', forceXSeparate)
+          .force('y', forceYSeparate)
+          .alpha(0.3)
+          .alphaTarget(0.001)
+          .restart()
+      );
 
       this.createAnnotations();
 
@@ -136,12 +144,14 @@ export class ColourLegendButtonComponent implements OnInit {
           .style('opacity', 1);
       }, 3000);
     } else {
-      this.forceSimulation
-        .force('x', that.forceXCombine)
-        .force('y', that.forceYCombine)
-        .alpha(0.3)
-        .alphaTarget(0.001)
-        .restart();
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
+          .force('x', that.forceXCombine)
+          .force('y', that.forceYCombine)
+          .alpha(0.3)
+          .alphaTarget(0.001)
+          .restart()
+      );
 
       this.clearAnnotations();
     }
