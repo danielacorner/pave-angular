@@ -193,7 +193,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   public forceCluster; // subscription
   public forceSimulation; // subscription
   // circles and clusters
-  public nodes = [];
+  public nodes;
+  public filteredNodes;
   public circles;
   public numClusters = 10; // number of distinct clusters
   public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -221,6 +222,11 @@ export class VizComponent implements OnInit, AfterContentInit {
   public tooltipExpanded = false;
   public autoExpand;
   public justClosed = false;
+
+  // filter slider positions
+  public sliderPositions = {language: 0, logic: 0, math: 0, computer: 0};
+
+
 
   // Drag functions used for interactivity
   public dragstarted = d => {
@@ -264,6 +270,9 @@ export class VizComponent implements OnInit, AfterContentInit {
     this._statusService.currentRadiusScale.subscribe(
       v => (this.radiusScale = v)
     );
+    this._statusService.currentNodes.subscribe(
+      v => (this.filteredNodes = v)
+    );
   }
 
   ngAfterContentInit() {
@@ -272,13 +281,14 @@ export class VizComponent implements OnInit, AfterContentInit {
     // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
-      // set the circle radii based on window width
+
+      // set the circle radius range to fit in the window
       this._statusService.changeRadiusRange([
         this.minRadius,
         // max radius = output * normalized maximum
         this.maxCircleScreenFraction
       ]);
-
+      // set the radius scale based on the min, max values in the data
       this._statusService.changeRadiusScale(
         d3
           .scaleSqrt() // sqrt because circle areas
@@ -303,8 +313,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
 
       // define the nodes
-      // todo: subscribe to nodes?
-      this.nodes = this.data$.map(d => {
+      this.nodes =
+        this.data$.map(d => {
         // scale radius to fit on the screen
         const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
 
@@ -323,7 +333,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           math: d.skillsMath,
           logic: d.skillsLogi,
           language: d.skillsLang,
-          computer: d.skillsComputer,
+          computer: d.skillsComp,
           // tooltip info
           all: d
         };
@@ -356,7 +366,6 @@ export class VizComponent implements OnInit, AfterContentInit {
             .on('drag', that.dragged)
             .on('end', that.dragended)
         )
-        // TODO: extract tooltips - add tooltips to each circle
         .on('mouseover', d => {
           // initialize the tooltip
           that.tooltipData = {
@@ -457,16 +466,23 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
   }
 
-  // Filter slider function
+  // Filter slider function: $event = skill level, filterVariable = skill name
   handleSliderUpdate($event, filterVariable) {
     const that = this;
+    this.sliderPositions[filterVariable] = $event;
     // update the viz with the slider value, $event
     // update the nodes from the data
-    // TODO: faster = include skills values in the nodes initially and ONLY filter the nodes
-    const filteredNodes = this.nodes.filter(d => d[filterVariable] >= $event);
-
+    this._statusService.changeNodes(this.nodes.filter(d => {
+      for (const key in this.sliderPositions) {
+        // filter out any nodes below the slider thresholds
+        if (d[key] < this.sliderPositions[key]) {
+          return false;
+        }
+      }
+      return true;
+    }));
     // UPDATE the viz data
-    this.circles = this.circles.data(filteredNodes, d => d.id);
+    this.circles = this.circles.data(this.filteredNodes, d => d.id);
     // EXIT
     this.circles
       .exit()
@@ -517,7 +533,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     // Update nodes and restart the simulation.
     this._statusService.changeForceSimulation(
       this.forceSimulation
-        .nodes(filteredNodes)
+        .nodes(this.filteredNodes)
         .alpha(0.3)
         .restart()
     );

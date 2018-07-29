@@ -37,19 +37,22 @@ import { DetailsComponent } from '../details/details.component';
                 </p>
       </mat-expansion-panel-header>
 
-              <img mat-card-image src="../../assets/img/NOC_images/{{data.noc}}.jpg" alt="Photo of a Shiba Inu">
-                <p>
-                  Here is a longer job description; it could be roughly 250 characters.
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                </p>
+      <img mat-card-image [src]="wdw.location.href.includes('localhost')
+      ? '../../assets/img/NOC_images/' + data.noc + '.jpg'
+      : '../../pave-angular/assets/img/NOC_images/' + data.noc + '.jpg'"
+      alt="Photo of {{data.job}}">
+        <p>
+          Here is a longer job description; it could be roughly 250 characters.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+        </p>
 
-              <mat-action-row class="btn-row">
-                <button (click)="openDetails(data)" mat-button> <mat-icon class="btn-icon blue-icon">info</mat-icon>
-                LEARN MORE</button>
-                <button mat-button> <mat-icon class="btn-icon orange-icon">star</mat-icon>
-                FAVOURITE</button>
-              </mat-action-row>
+      <mat-action-row class="btn-row">
+        <button (click)="openDetails(data)" mat-button> <mat-icon class="btn-icon blue-icon">info</mat-icon>
+        LEARN MORE</button>
+        <button mat-button> <mat-icon class="btn-icon orange-icon">star</mat-icon>
+        FAVOURITE</button>
+      </mat-action-row>
 
     </mat-expansion-panel>
     <!-- PANEL 2 -->
@@ -127,6 +130,7 @@ import { DetailsComponent } from '../details/details.component';
 export class TooltipComponent implements OnInit, OnDestroy {
   @Input() public tooltipData;
   @Input() public expanded = false;
+  public wdw = window;
   public data; // shortcut to access tooltipData.d.all
   public tooltipHeight;
   public tooltipX;
@@ -163,7 +167,9 @@ export class TooltipComponent implements OnInit, OnDestroy {
     // set avatar image
     d3.select('.header-image').style(
       'background-image',
-      'url("../../assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
+      window.location.href.includes('localhost')
+        ? 'url("../../assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
+        : 'url("../../pave-angular/assets/img/NOC_images/' + this.tooltipData.d.all.noc + '.jpg"'
     );
   }
 

@@ -76,6 +76,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
     this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
     this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
+    this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
    }
 
   ngAfterContentInit() {
@@ -90,11 +91,12 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     this._statusService.changeClusterSelector($event.value);
 
     // convert each unique value to a cluster number
-    // todo: update via service subscription
-    this.uniqueClusterValues = this.data$
+    this._statusService.changeUniqueClusterValues(
+      this.data$
       .map(d => d[that.clusterSelector])
       // filter uniqueOnly
-      .filter((value, index, self) => self.indexOf(value) === index);
+      .filter((value, index, self) => self.indexOf(value) === index)
+    );
 
     // reset the clusters
     this.clusterCenters = [];
@@ -117,7 +119,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
         math: d.skillsMath,
         logic: d.skillsLogi,
         language: d.skillsLang,
-        computer: d.skillsComputer,
+        computer: d.skillsComp,
         // tooltip info
         all: d
       };
