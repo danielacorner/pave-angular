@@ -23,7 +23,11 @@ import {
       <div mat-dialog-content>
 
         <div class="header-img-div">
-          <img class="header-image" src="../../assets/img/NOC_images/{{data.noc}}.jpg" style="object-fit: cover">
+          <img class="header-image"
+          [src]="(wdw.location.href.includes('localhost')
+          ? '../../assets/img/NOC_images/' + data.noc + '.jpg'
+          : '../../pave-angular/assets/img/NOC_images/' + data.noc + '.jpg')"
+          style="object-fit: cover">
         </div>
 
         <mat-tab-group mat-stretch-tabs>
@@ -102,14 +106,15 @@ import {
     `
   ]
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
+  public wdw = window;
 
   ngOnInit() {
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   onNoClick(): void {

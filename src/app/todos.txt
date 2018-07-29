@@ -3,6 +3,7 @@ todos
 next
 
 store nodes in behaviorsubject
+update behaviorsubject from filter sliders
 
 big
 - graph mode toggle
