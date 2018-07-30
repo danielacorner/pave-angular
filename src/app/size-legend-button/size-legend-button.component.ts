@@ -115,7 +115,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
                   0.4 * ((that.width / that.nClusters) * d.cluster)
                   - (0.4 * that.width) / 2
                   // move larger radii to right (normalized by radius range)
-                  + 30 * ( d3.select('#circle_' + d.id).attr('r') - (that.radiusRange[0]) )
+                  + 30 * ( d.r - (that.radiusRange[0]) )
                   / (that.radiusRange[1] - that.radiusRange[0]) - 15
                 )
               );
@@ -132,7 +132,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
           : d3.forceX(function (d) {
               return (
                 (
-                  100 * ( d3.select('#circle_' + d.id).attr('r') - (that.radiusRange[0]) )
+                  100 * ( d.r - (that.radiusRange[0]) )
                   / (that.radiusRange[1] - that.radiusRange[0]) - 50
                 )
               );

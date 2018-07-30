@@ -39,16 +39,16 @@ import { AppStatusService } from '../app-status.service';
 })
 export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit {
   // static inputs
-  @Input() colourScale;
-  @Input() nodes;
-  @Input() nodeAttraction;
-  @Input() nodePadding;
+  @Input() public colourScale;
+  @Input() public nodeAttraction;
+  @Input() public nodePadding;
   public active = true;
   public data$;
   public newClusters;
   // subscriptions
-  @Input() clusterCenters;
-  @Input() uniqueClusterValues;
+  public clusterCenters;
+  public uniqueClusterValues;
+  public nodes;
   public forceSimulation;
   public clusterSelector;
   public forceCluster;
@@ -77,6 +77,8 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
     this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
     this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
+    this._statusService.currentClusterCenters.subscribe(v => (this.clusterCenters = v));
+    this._statusService.currentNodes.subscribe(v => (this.nodes = v));
    }
 
   ngAfterContentInit() {
@@ -98,42 +100,29 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
       .filter((value, index, self) => self.indexOf(value) === index)
     );
 
-    // reset the clusters
+    // reset the (local) cluster centers
     this.clusterCenters = [];
 
-    // define the nodes
-    this.nodes = this.data$.map(d => {
-      // SELECT THE CLUSTER VARIABLE 2/2
-      const forcedCluster = this.uniqueClusterValues.indexOf(d[that.clusterSelector]) + 1;
-
-      // redefine the nodes
-      d = {
-        id: d.id,
-        // circle attributes
-        r: d3.select('#circle_' + d.id).attr('r'),
-        x: d3.select('#circle_' + d.id).attr('cx'),
-        y: d3.select('#circle_' + d.id).attr('cy'),
-        cluster: forcedCluster,
-        clusterValue: d[that.clusterSelector],
-        // skills
-        math: d.skillsMath,
-        logic: d.skillsLogi,
-        language: d.skillsLang,
-        computer: d.skillsComp,
-        // tooltip info
-        all: d
-      };
-      if (d.id === 200) { console.log(this.clusterCenters); }
-      if (d.id === 494) { console.log(this.clusterCenters); }
-      // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
-      if (
-        !this.clusterCenters[forcedCluster] ||
-        d.r > this.clusterCenters[forcedCluster].r
-      ) {
-        this.clusterCenters[forcedCluster] = d;
-      }
-      return d;
-    });
+    // redefine the nodes
+    this._statusService.changeNodes(
+      // todo: map from the data? or map from the nodes?
+      this.nodes.map(d => {
+        // detect the cluster center
+        const forcedCluster = this.uniqueClusterValues.indexOf(d.all[that.clusterSelector]) + 1;
+        // change the node's cluster
+        d.cluster = forcedCluster;
+        // if (d.id === 200) { console.log(this.clusterCenters); }
+        // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
+        if (
+          !this.clusterCenters[forcedCluster] ||
+          d.r > this.clusterCenters[forcedCluster].r
+        ) {
+          this.clusterCenters[forcedCluster] = d; // local
+          this._statusService.changeClusterCenters(this.clusterCenters); // global
+        }
+        return d;
+      })
+    );
 
     // transition the circle colours
     d3.selectAll('circle').transition()
@@ -143,7 +132,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
       // .attr('r', that.clusterSelector === 'none' ? window.innerWidth * 0.009 :
       //   d => that.colourScale(+d.all[that.clusterSelector]))
 
-    this.forceCluster = alpha => {
+    this._statusService.changeForceCluster(alpha => {
       that.nodes.forEach(d => {
         const cluster = that.clusterCenters[d.cluster];
         // if (d.id === 200) { console.log(cluster); }
@@ -163,7 +152,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
           cluster.y += y;
         }
       });
-    };
+    });
 
 
     setTimeout(() => {

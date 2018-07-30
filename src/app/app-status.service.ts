@@ -20,7 +20,13 @@ export class AppStatusService {
   private _uniqueClusterValuesSource = new BehaviorSubject<any>(null);
   public currentUniqueClusterValues = this._uniqueClusterValuesSource.asObservable();
 
-  private _clusterCentersSource = new BehaviorSubject<any>(null);
+  private _numClustersSource = new BehaviorSubject<any>(10);
+  public currentNumClusters = this._numClustersSource.asObservable();
+
+  private _clusterCentersSource = new BehaviorSubject<any>(
+    new Array(this.currentNumClusters)
+  );
+
   public currentClusterCenters = this._clusterCentersSource.asObservable();
 
   private _radiusRangeSource = new BehaviorSubject<any>(null);
@@ -34,6 +40,12 @@ export class AppStatusService {
 
   private _nodesSource = new BehaviorSubject<any>(null);
   public currentNodes = this._nodesSource.asObservable();
+
+  private _filteredNodesSource = new BehaviorSubject<any>(null);
+  public currentFilteredNodes = this._filteredNodesSource.asObservable();
+
+  // private _circlesSource = new BehaviorSubject<any>(null);
+  // public currentCircles = this._circlesSource.asObservable();
 
   // todo: subscribe to nodes?
 
@@ -75,6 +87,18 @@ export class AppStatusService {
 
   public changeNodes(v) {
     this._nodesSource.next(v);
+  }
+
+  public changeFilteredNodes(v) {
+    this._filteredNodesSource.next(v);
+  }
+
+  // public changeCircles(v) {
+  //   this._circlesSource.next(v);
+  // }
+
+  public changeNumClusters(v) {
+    this._numClustersSource.next(v);
   }
 
   constructor() {}
