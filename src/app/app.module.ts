@@ -13,6 +13,7 @@ import { ColourLegendButtonComponent } from './colour-legend-button/colour-legen
 import { SizeLegendButtonComponent } from './size-legend-button/size-legend-button.component';
 import { FilterSliderComponent } from './filter-slider/filter-slider.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
+import { BottomSheetMobileTooltipComponent } from './tooltip/tooltip.component';
 
 // Services
 import { DataService } from './data.service';
@@ -31,7 +32,8 @@ import {
   MatDialogTitle,
   MatDividerModule,
   MatSlideToggleModule,
-  MatSelectModule
+  MatSelectModule,
+  MatBottomSheetModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './details/details.component';
@@ -51,7 +53,8 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     DetailsComponent,
     GraphModeComponent,
     ChangeSizesDropdownComponent,
-    ChangeColoursDropdownComponent
+    ChangeColoursDropdownComponent,
+    BottomSheetMobileTooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -69,9 +72,10 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     MatDividerModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatBottomSheetModule,
     FormsModule
   ],
-  entryComponents: [DetailsComponent],
+  entryComponents: [DetailsComponent, BottomSheetMobileTooltipComponent],
   providers: [DataService, MatDialogTitle, AppStatusService],
   bootstrap: [AppComponent]
 })

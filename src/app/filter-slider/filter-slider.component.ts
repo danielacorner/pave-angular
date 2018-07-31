@@ -20,7 +20,6 @@ import * as d3 from 'd3';
   styles: [
     `
       .slider-container {
-        max-width: 20vw;
       }
       mat-slider {
       }

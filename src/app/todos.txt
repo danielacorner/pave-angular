@@ -5,10 +5,10 @@ potential next steps:
 
 1. ----- Style the App -----
   MOBILE (minimal) setup & responsive design
-   - size circles based on screen width
-   - size graph view based on screen width
+  - set bottom sliders to be fully responsive
    - viz setup (tooltip details bottom card,
     tap to open? small-expand with button? other functionality)
+   - size graph view based on screen width
   Graph view:
    - axes
 

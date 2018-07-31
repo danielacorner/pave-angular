@@ -77,36 +77,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
         <mat-divider></mat-divider>
 
-        <app-filter-slider class="slider sliderLang"
-        (childEvent)="handleSliderUpdate($event, 'language')"
-        [filterVariable]="'language'"
-        [title1]="'Language and'"
-        [title2]="'Communication skills'"
+        <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+
+        <div class="slider-container" *ngFor="let filter of filterSliders">
+        <app-filter-slider class="slider"
+        (childEvent)="handleSliderUpdate($event, filter.variable)"
+        [filterVariable]="filter.variable"
+        [title1]="filter.title_1"
+        [title2]="filter.title_2"
         ></app-filter-slider>
           <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+        </div>
 
-        <app-filter-slider class="slider sliderLogi"
-        (childEvent)="handleSliderUpdate($event, 'logic')"
-        [filterVariable]="'logic'"
-        [title1]="'Logic and'"
-        [title2]="'Reasoning skills'"
-        ></app-filter-slider>
-          <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
-
-        <app-filter-slider class="slider sliderMath"
-        (childEvent)="handleSliderUpdate($event, 'math')"
-        [filterVariable]="'math'"
-        [title1]="'Math and'"
-        [title2]="'Spatial skills'"
-        ></app-filter-slider>
-          <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
-
-        <app-filter-slider class="slider sliderComp"
-        (childEvent)="handleSliderUpdate($event, 'computer')"
-        [filterVariable]="'computer'"
-        [title1]="'Computer and'"
-        [title2]="'Information skills'"
-        ></app-filter-slider>
       </div>
 
     </div>
@@ -116,6 +98,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       <app-tooltip @easeInOut
       [tooltipData]="tooltipData"
       [expanded]="tooltipExpanded"
+      [mobileBreakPoint]="mobileBreakPoint"
       ></app-tooltip>
     </div>
 
@@ -133,11 +116,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         bottom: 0px;
         margin: auto;
       }
+      .slider-container {
+        display: inline-block;
+      }
       .slider {
         display: inline-block;
         height: inherit;
         width: 19.5vw;
-        margin: 0 0 0 2vw;
+        margin: 0 0 0 1vw;
       }
       .divider-inline {
         display: inline-block;
@@ -188,6 +174,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
   public width = window.innerWidth;
+  public mobileBreakPoint = 480;
   // the graphing canvas
   public canvasStyles = {
     position: 'absolute',
@@ -201,6 +188,21 @@ export class VizComponent implements OnInit, AfterContentInit {
   // data
   public data$ = [];
 
+  // ----- FILTER SLIDERS ----- //
+  public filterSliders = [
+    {
+      variable: 'language',
+      title_1: 'Language and',
+      title_2: 'Communication'
+    },
+    { variable: 'logic', title_1: 'Logic and', title_2: 'Reasoning' },
+    { variable: 'math', title_1: 'Math and', title_2: 'Spatial' },
+    {
+      variable: 'computer',
+      title_1: 'Computer and',
+      title_2: 'Information'
+    }
+  ];
   // ----- CIRCLE PROPERTIES ----- //
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
