@@ -8,7 +8,6 @@ import { AppStatusService } from '../app-status.service';
   template: `
 
 <mat-form-field class="sizes-select"
-[style.display]="(active ? 'inline' : 'none')"
 >
   <mat-select
   placeholder="Circle size"
@@ -29,9 +28,7 @@ import { AppStatusService } from '../app-status.service';
   styles: [
     `
       .sizes-select {
-        position: fixed;
-        bottom: 300px;
-        right: 30px;
+        padding: 5px;
         background: rgba(246, 248, 255, 0.7);
       }
     `
@@ -41,12 +38,10 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
   // static inputs
   @Input() public nodeAttraction;
   @Input() public nodePadding;
-  @Input() public defaultNodeAttraction;
-  @Input() public defaultCircleRadius;
   @Input() public minRadius;
   @Input() public width;
-  @Input() public maxCircleScreenFraction;
   // subscriptions
+  public defaultCircleRadius;
   public radiusRange;
   public radiusScale;
   public radiusSelector;
@@ -102,21 +97,26 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     this._statusService.currentNodes.subscribe(
       v => (this.nodes = v)
     );
+    this._statusService.currentDefaultCircleRadius.subscribe(
+      v => (this.defaultCircleRadius = v)
+    );
 
   }
 
   ngAfterContentInit() {}
 
   changeSelection($event) {
-    // change the radius selector (it auto-updates because of the subscription)
+
+    // change the radius selector
     this._statusService.changeRadiusSelector($event.value);
+
     // recalculate the radius range
     this._statusService.changeRadiusRange(
       [ this.minRadius,
       // max radius
         ['skillsComp', 'skillsLogi', 'skillsMath', 'skillsLang'].includes($event.value)
-        ? this.maxCircleScreenFraction / 2
-        : this.maxCircleScreenFraction ]
+        ? this.defaultCircleRadius * 2.8 * 0.55
+        : this.defaultCircleRadius * 2.8]
     );
     // recalculate the radius scale
     this._statusService.changeRadiusScale(
@@ -131,8 +131,8 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     d3.selectAll('circle').transition().attr(
       'r',
       this.radiusSelector === 'none'
-        ? this.defaultCircleRadius
-        : d => this.radiusScale(+d.all[this.radiusSelector])
+        ? this.defaultCircleRadius + 'vw'
+        : d => this.radiusScale(+d.all[this.radiusSelector]) + 'vw'
     ).delay((d, i) => i * 0.8);
 
     setTimeout(() => {
@@ -155,7 +155,7 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
               .forceManyBody()
               .strength(
                 this.radiusSelector === 'none'
-                  ? this.defaultNodeAttraction
+                  ? this.nodeAttraction
                   : d =>
                       Math.pow(
                         this.radiusScale(+d.all[this.radiusSelector]),

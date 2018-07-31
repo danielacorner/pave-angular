@@ -1,26 +1,64 @@
 todos
 -----
-next
 
-store nodes in behaviorsubject
-update behaviorsubject from filter sliders
+potential next steps:
 
-big
-- graph mode toggle
-- fill tooltip component
-  - material card top
-  - material expansion panel bottom
-  - material tabs in expansion panel
-  - expand tooltip avatar to img on expand?
-- search function with material autocomplete
-- filter function with material autocomplete
-- settimeout 0 for each step of apply draghandler to new nodes
-- fine-tune the colour, size legend buttons
-- fine-tune the force simulation
+1. ----- Style the App -----
+  MOBILE (minimal) setup & responsive design
+   - size circles based on screen width
+   - size graph view based on screen width
+   - viz setup (tooltip details bottom card,
+    tap to open? small-expand with button? other functionality)
+  Graph view:
+   - axes
+
+2. ----- Build the Features -----
+  Implement 'sub-levels' of the viz
+   - like 'expand filtered results into schools offering these programs'
+  Save favourites feature
+   - optional: user profiles & user database
+  Search jobs by keyword (w/ material autocomplete)
+   - output data table
+  Filter viz by keyword (w/ material autocomplete)
+   - output filtered viz
+  Change clustering:
+    -new colour scale w/ unique colour per cluster
+    -floating annotation/indicator per cluster
+    -bugfix/modularize different-category clustering
+  Legends & filtering by the legend (change opacity of groups)
+  Hook filters together (output minimum levels)
+
+
+3. ----- Refactor the Code -----
+  improve app speed/performance
+          (note to self: use EventEmitter on ticked function)
+  clean/organize code for flexibility & extensibility
+    - for future developers using this code
+
+
+4. ----- study automated scraping -----
+5. ----- pause, work on own stuff -----
+
+
+----- from JE research -----
+change clustering to "browse by..."
+tooltip:
+- browse by discipline (cards, icons)
+  - browse by program (15 top-level categories)
+    - program name
+    - tuition
+    - type of degree
+    - duration, start date
+    - view course details
+    - link to specific scholarships
+
+- bugfix: settimeout 0 for each step of apply draghandler to new nodes
+- force simulation customization
   - transition in the circles delayed by cluster
 - extract simulation component?
-small
+
 - optional: transition bottom-to-bottom tooltip position
+- expand tooltip avatar to img on expand?
 - calculate numClusters from dataset
 - when tooltip closed, if bottom style not null,
   transition back to top position

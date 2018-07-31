@@ -9,8 +9,6 @@ import { AppStatusService } from '../app-status.service';
     [class.green]="active"
     [disabled]="radiusSelector === 'none'"
     [ngStyle]='btnStyles'
-    [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
-    [style.right]="'5%'"
     (click)="handleClick()">
   <div class='grid-container'>
     <div class="sort-icon valign-wrapper">
@@ -34,7 +32,6 @@ import { AppStatusService } from '../app-status.service';
       }
       button {
         border-radius: 4px;
-        position: fixed;
         opacity: 1;
       }
       .grid-container {

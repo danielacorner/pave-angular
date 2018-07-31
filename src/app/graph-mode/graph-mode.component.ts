@@ -58,7 +58,7 @@ import { AppStatusService } from '../app-status.service';
         border-radius: 4px;
         opacity: 1;
         display: flex;
-        margin: 40px auto;
+        margin: auto;
       }
       .x-axis-dropdown {
         position: fixed;

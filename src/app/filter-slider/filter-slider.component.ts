@@ -6,24 +6,23 @@ import * as d3 from 'd3';
   selector: 'app-filter-slider',
   template: `
     <div class="slider-container">
-    <div class="title">
-    <p>{{title1}}</p>
-    <p>{{title2}}</p>
-    </div>
-    <mat-slider thumbLabel [min]="min" [max]="max" step="1"
-    [(ngModel)]="sliderValue"
-    tickInterval="10"
-    (change)="fireEvent()"
-    ></mat-slider>
+      <div class="title">
+      <p>{{title1}}</p>
+      <p>{{title2}}</p>
+      </div>
+      <mat-slider thumbLabel [min]="min" [max]="max" step="1"
+      [(ngModel)]="sliderValue"
+      tickInterval="10"
+      (change)="fireEvent()"
+      ></mat-slider>
     </div>
   `,
   styles: [
     `
       .slider-container {
-
+        max-width: 20vw;
       }
       mat-slider {
-        width: 80%;
       }
       .title p {
         line-height: 0.5rem;

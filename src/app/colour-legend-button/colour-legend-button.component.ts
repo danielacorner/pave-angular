@@ -8,8 +8,6 @@ import * as d3 from 'd3';
   <button class='btn waves-effect z-depth-3'
     [class.green]="colourSortActive"
     [ngStyle]='btnStyles'
-    [style.top]="((height / 2) + navbarHeight - btnHeight) + 'px'"
-    [style.left]="'5%'"
     (click)="handleClick()">
   <div class='grid-container'>
     <div class="sort-icon valign-wrapper">
@@ -34,7 +32,6 @@ import * as d3 from 'd3';
       }
       button {
         border-radius: 4px;
-        position: fixed;
         opacity: 1;
       }
       .grid-container {

@@ -44,6 +44,9 @@ export class AppStatusService {
   private _filteredNodesSource = new BehaviorSubject<any>(null);
   public currentFilteredNodes = this._filteredNodesSource.asObservable();
 
+  private _defaultCircleRadiusSource = new BehaviorSubject<any>(1.0);
+  public currentDefaultCircleRadius = this._defaultCircleRadiusSource.asObservable();
+
   // private _circlesSource = new BehaviorSubject<any>(null);
   // public currentCircles = this._circlesSource.asObservable();
 
@@ -99,6 +102,10 @@ export class AppStatusService {
 
   public changeNumClusters(v) {
     this._numClustersSource.next(v);
+  }
+
+  public changeCircleRadius(v) {
+    this._defaultCircleRadiusSource.next(v);
   }
 
   constructor() {}

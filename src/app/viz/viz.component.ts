@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, AfterContentInit, HostListener } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 import { AppStatusService } from '../app-status.service';
@@ -25,75 +25,89 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
     <div class='container'>
 
-      <app-filter-slider class="sliderLang"
-      (childEvent)="handleSliderUpdate($event, 'language')"
-      [filterVariable]="'language'"
-      [title1]="'Language and'"
-      [title2]="'Communication skills'"
-      ></app-filter-slider>
+      <div class="buttons-container center">
+        <div class="grid-item-1">
+          <app-colour-legend-button
+          [forceXCombine]="forceXCombine"
+          [forceYCombine]="forceYCombine"
+          [nClusters]="numClusters"
+          [width]="width"
+          [height]="height"
+          [navbarHeight]="navbarHeight"
+          ></app-colour-legend-button>
 
-      <app-filter-slider class="sliderLogi"
-      (childEvent)="handleSliderUpdate($event, 'logic')"
-      [filterVariable]="'logic'"
-      [title1]="'Logic and'"
-      [title2]="'Reasoning skills'"
-      ></app-filter-slider>
+          <app-change-colours-dropdown
+          [colourScale]="colourScale"
+          ></app-change-colours-dropdown>
+        </div>
+        <div class="grid-item-2">
+          <app-graph-mode
+          [nodes]="nodes"
+          [forceXCombine]="forceXCombine"
+          [forceYCombine]="forceYCombine"
+          [nClusters]="numClusters"
+          [width]="width"
+          [height]="height"
+          [navbarHeight]="navbarHeight"
+          ></app-graph-mode>
+        </div>
 
-      <app-filter-slider class="sliderMath"
-      (childEvent)="handleSliderUpdate($event, 'math')"
-      [filterVariable]="'math'"
-      [title1]="'Math and'"
-      [title2]="'Spatial skills'"
-      ></app-filter-slider>
+        <div class="grid-item-3">
+          <app-size-legend-button
+          [forceXCombine]="forceXCombine"
+          [forceYCombine]="forceYCombine"
+          [nClusters]="numClusters"
+          [width]="width"
+          [height]="height"
+          [navbarHeight]="navbarHeight"
+          ></app-size-legend-button>
 
-      <app-filter-slider class="sliderComp"
-      (childEvent)="handleSliderUpdate($event, 'computer')"
-      [filterVariable]="'computer'"
-      [title1]="'Computer and'"
-      [title2]="'Information skills'"
-      ></app-filter-slider>
+          <app-change-sizes-dropdown
+          [nodeAttraction]="nodeAttraction"
+          [nodePadding]="nodePadding"
+          [minRadius]="minRadius"
+          [width]="width"
+          ></app-change-sizes-dropdown>
+        </div>
+      </div>
 
-      <app-graph-mode
-      [nodes]="nodes"
-      [forceXCombine]="forceXCombine"
-      [forceYCombine]="forceYCombine"
-      [nClusters]="numClusters"
-      [width]="width"
-      [height]="height"
-      [navbarHeight]="navbarHeight"
-      ></app-graph-mode>
+      <div class="sliders-container">
 
-      <app-colour-legend-button
-      [forceXCombine]="forceXCombine"
-      [forceYCombine]="forceYCombine"
-      [nClusters]="numClusters"
-      [width]="width"
-      [height]="height"
-      [navbarHeight]="navbarHeight"
-      ></app-colour-legend-button>
+        <p class="sliders-title">Skill filters</p>
 
-      <app-size-legend-button
-      [forceXCombine]="forceXCombine"
-      [forceYCombine]="forceYCombine"
-      [nClusters]="numClusters"
-      [width]="width"
-      [height]="height"
-      [navbarHeight]="navbarHeight"
-      ></app-size-legend-button>
+        <mat-divider></mat-divider>
 
-      <app-change-sizes-dropdown
-      [nodeAttraction]="nodeAttraction"
-      [nodePadding]="nodePadding"
-      [minRadius]="minRadius"
-      [width]="width"
-      [maxCircleScreenFraction]="maxCircleScreenFraction"
-      [defaultCircleRadius]="defaultCircleRadius"
-      [defaultNodeAttraction]="defaultNodeAttraction"
-      ></app-change-sizes-dropdown>
+        <app-filter-slider class="slider sliderLang"
+        (childEvent)="handleSliderUpdate($event, 'language')"
+        [filterVariable]="'language'"
+        [title1]="'Language and'"
+        [title2]="'Communication skills'"
+        ></app-filter-slider>
+          <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
 
-      <app-change-colours-dropdown
-      [colourScale]="colourScale"
-      ></app-change-colours-dropdown>
+        <app-filter-slider class="slider sliderLogi"
+        (childEvent)="handleSliderUpdate($event, 'logic')"
+        [filterVariable]="'logic'"
+        [title1]="'Logic and'"
+        [title2]="'Reasoning skills'"
+        ></app-filter-slider>
+          <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+
+        <app-filter-slider class="slider sliderMath"
+        (childEvent)="handleSliderUpdate($event, 'math')"
+        [filterVariable]="'math'"
+        [title1]="'Math and'"
+        [title2]="'Spatial skills'"
+        ></app-filter-slider>
+          <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+
+        <app-filter-slider class="slider sliderComp"
+        (childEvent)="handleSliderUpdate($event, 'computer')"
+        [filterVariable]="'computer'"
+        [title1]="'Computer and'"
+        [title2]="'Information skills'"
+        ></app-filter-slider>
+      </div>
 
     </div>
 
@@ -109,25 +123,42 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   `,
   styles: [
     `
-      .sliderLang{
-        position: fixed;
-        top: 100px;
-        left: 20px;
+      .sliders-title {
+        line-height: 0.2rem;
+        font-size: 16px;
       }
-      .sliderLogi{
-        position: fixed;
-        top: 100px;
-        right: 20px;
+      .sliders-container {
+        height: 160px;
+        position: absolute;
+        bottom: 0px;
+        margin: auto;
       }
-      .sliderMath{
-        position: fixed;
-        bottom: 100px;
-        left: 20px;
+      .slider {
+        display: inline-block;
+        height: inherit;
+        width: 19.5vw;
+        margin: 0 0 0 2vw;
       }
-      .sliderComp{
-        position: fixed;
-        bottom: 100px;
-        right: 20px;
+      .divider-inline {
+        display: inline-block;
+        height: 75px;
+      }
+
+      .buttons-container {
+        margin-top: 20px;
+        display: grid;
+        grid-gap: 5%;
+        grid-template-columns: auto auto auto;
+      }
+      .grid-item-1 {
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-gap: 10px;
+      }
+      .grid-item-3 {
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-gap: 10px;
       }
     `
   ],
@@ -174,16 +205,14 @@ export class VizComponent implements OnInit, AfterContentInit {
   public padding = 1.5; // separation between same-color circles
   public clusterPadding = 6; // separation between different-color circles
   // radius range
-  public minRadius = window.innerWidth * 0.004;
-  public maxCircleScreenFraction = window.innerWidth * 0.03;
+  public minRadius = 0.5; // % screen width
   // public maxRadius = window.innerWidth * 0.025;
   public radiusRange; // subscription
   public radiusScale;
 
   // custom circle sizes and colours/clusters
   // ----- STARTING RADIUS & CLUSTERS ----- //
-  public radiusSelector; // subscription
-  public defaultCircleRadius = window.innerWidth * 0.0083;
+  public radiusSelector = 'none'; // subscription
   public clusterSelector; // subscription
   public uniqueClusterValues; // subscription
   public forceCluster; // subscription
@@ -197,8 +226,10 @@ export class VizComponent implements OnInit, AfterContentInit {
   public clusterCenters;
 
   // ----- SIMULATION & FORCES ----- //
-  public defaultNodeAttraction = window.innerWidth * -0.23; // negative = repel
-  public nodeAttraction = -3.14; // negative = repel
+  public defaultCircleRadius = 1.0; // negative = repel
+  public nodeAttractionConstant = 0.25;
+  public nodeAttraction =
+    window.innerWidth * this.nodeAttractionConstant * -this.defaultCircleRadius; // negative = repel
   public nodePadding = 1;
   public centerGravity = 1.75;
   public forceXCombine = d3.forceX().strength(this.centerGravity);
@@ -207,7 +238,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     .forceManyBody()
     .strength(
       this.radiusSelector === 'none'
-        ? this.defaultNodeAttraction
+        ? this.nodeAttraction
         : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
     );
   public forceCollide = null;
@@ -220,9 +251,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public justClosed = false;
 
   // filter slider positions
-  public sliderPositions = {language: 0, logic: 0, math: 0, computer: 0};
-
-
+  public sliderPositions = { language: 0, logic: 0, math: 0, computer: 0 };
 
   // Drag functions used for interactivity
   public dragstarted = d => {
@@ -269,9 +298,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     this._statusService.currentFilteredNodes.subscribe(
       v => (this.filteredNodes = v)
     );
-    this._statusService.currentNodes.subscribe(
-      v => (this.nodes = v)
-    );
+    this._statusService.currentNodes.subscribe(v => (this.nodes = v));
     // this._statusService.currentCircles.subscribe(
     //   v => (this.circles = v)
     // );
@@ -281,6 +308,40 @@ export class VizComponent implements OnInit, AfterContentInit {
     this._statusService.currentNumClusters.subscribe(
       v => (this.numClusters = v)
     );
+    this._statusService.currentDefaultCircleRadius.subscribe(
+      v => (this.defaultCircleRadius = v)
+    );
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    // recalculate forces
+    this.nodeAttraction =
+      event.target.innerWidth *
+      this.nodeAttractionConstant *
+      -this.defaultCircleRadius;
+
+    this.forceGravity = d3
+      .forceManyBody()
+      .strength(
+        this.radiusSelector === 'none'
+          ? this.nodeAttraction
+          : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
+      );
+
+    this._statusService.changeForceSimulation(
+      this.forceSimulation
+        .force('gravity', this.forceGravity)
+        .alpha(0.3)
+        .restart()
+    );
+
+    this.gTransform =
+      'translate(' +
+      event.target.innerWidth / 2 +
+      'px,' +
+      (window.innerHeight / 2 - this.navbarHeight) +
+      'px)';
   }
 
   ngAfterContentInit() {
@@ -290,12 +351,6 @@ export class VizComponent implements OnInit, AfterContentInit {
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
 
-      // set the circle radius range to fit in the window
-      this._statusService.changeRadiusRange([
-        this.minRadius,
-        // max radius = output * normalized maximum
-        this.maxCircleScreenFraction
-      ]);
       // set the radius scale based on the min, max values in the data
       this._statusService.changeRadiusScale(
         d3
@@ -323,45 +378,44 @@ export class VizComponent implements OnInit, AfterContentInit {
       // define the nodes
       this._statusService.changeNodes(
         this.data$.map(d => {
-        // scale radius to fit on the screen
-        const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
+          // scale radius to fit on the screen
+          const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
 
-        // SELECT THE CLUSTER VARIABLE 2/2
-        const forcedCluster =
-          this.uniqueClusterValues.indexOf(d[that.clusterSelector]) + 1;
+          // SELECT THE CLUSTER VARIABLE 2/2
+          const forcedCluster =
+            this.uniqueClusterValues.indexOf(d[that.clusterSelector]) + 1;
 
-        // define the nodes
-        d = {
-          id: d.id,
-          // circle attributes
-          r: scaledRadius,
-          cluster: forcedCluster,
-          clusterValue: d[that.clusterSelector],
-          // skills
-          math: d.skillsMath,
-          logic: d.skillsLogi,
-          language: d.skillsLang,
-          computer: d.skillsComp,
-          // tooltip info
-          all: d
-        };
-        // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
-        if (
-          !this.clusterCenters[forcedCluster] ||
-          scaledRadius > this.clusterCenters[forcedCluster].r
-        ) {
-          this.clusterCenters[forcedCluster] = d;
-          this._statusService.changeClusterCenters(this.clusterCenters);
-        }
-        return d;
-      })
+          // define the nodes
+          d = {
+            id: d.id,
+            // circle attributes
+            r: scaledRadius,
+            cluster: forcedCluster,
+            clusterValue: d[that.clusterSelector],
+            // skills
+            math: d.skillsMath,
+            logic: d.skillsLogi,
+            language: d.skillsLang,
+            computer: d.skillsComp,
+            // tooltip info
+            all: d
+          };
+          // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
+          if (
+            !this.clusterCenters[forcedCluster] ||
+            scaledRadius > this.clusterCenters[forcedCluster].r
+          ) {
+            this.clusterCenters[forcedCluster] = d;
+            this._statusService.changeClusterCenters(this.clusterCenters);
+          }
+          return d;
+        })
       );
 
       // append the circles to svg then style
       // add functions for interaction
       // this._statusService.changeCircles(
-        this.circles =
-        d3
+      this.circles = d3
         .select('.circlesG')
         .selectAll('circle')
         .data(this.nodes)
@@ -369,7 +423,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .append('circle')
         .style('opacity', 0)
         .attr('id', d => 'circle_' + d.id)
-        .attr('r', d => d.r)
+        .attr('r', d => d.r + 'vw')
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
@@ -430,30 +484,28 @@ export class VizComponent implements OnInit, AfterContentInit {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
-
-
       this._statusService.changeForceCluster(
-         // These are implementations of the custom forces.
-      alpha => {
-        that.nodes.forEach(d => {
-          // if(d.id==1){console.log(d);}
-          const clusterCenter = that.clusterCenters[d.cluster];
-          if (clusterCenter === d) {
-            return;
-          }
-          let x = d.x - clusterCenter.x,
-            y = d.y - clusterCenter.y,
-            l = Math.sqrt(x * x + y * y);
-          const r = d.r + clusterCenter.r;
-          if (l !== r) {
-            l = ((l - r) / l) * alpha;
-            d.x -= x *= l;
-            d.y -= y *= l;
-            clusterCenter.x += x;
-            clusterCenter.y += y;
-          }
-        });
-      }
+        // These are implementations of the custom forces.
+        alpha => {
+          that.nodes.forEach(d => {
+            // if(d.id==1){console.log(d);}
+            const clusterCenter = that.clusterCenters[d.cluster];
+            if (clusterCenter === d) {
+              return;
+            }
+            let x = d.x - clusterCenter.x,
+              y = d.y - clusterCenter.y,
+              l = Math.sqrt(x * x + y * y);
+            const r = d.r + clusterCenter.r;
+            if (l !== r) {
+              l = ((l - r) / l) * alpha;
+              d.x -= x *= l;
+              d.y -= y *= l;
+              clusterCenter.x += x;
+              clusterCenter.y += y;
+            }
+          });
+        }
       );
 
       // create the forceCluster/collision force simulation
@@ -488,15 +540,17 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.sliderPositions[filterVariable] = $event;
     // update the viz with the slider value, $event
     // update the nodes from the data
-    this._statusService.changeFilteredNodes(this.nodes.filter(d => {
-      for (const key in this.sliderPositions) {
-        // filter out any nodes below the slider thresholds
-        if (d[key] < this.sliderPositions[key]) {
-          return false;
+    this._statusService.changeFilteredNodes(
+      this.nodes.filter(d => {
+        for (const key in this.sliderPositions) {
+          // filter out any nodes below the slider thresholds
+          if (d[key] < this.sliderPositions[key]) {
+            return false;
+          }
         }
-      }
-      return true;
-    }));
+        return true;
+      })
+    );
     // UPDATE the viz data
     this.circles = this.circles.data(this.filteredNodes, d => d.id);
     // EXIT
@@ -512,8 +566,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       })
       .remove();
     // ENTER and MERGE
-    this.circles =
-      this.circles.data(this.filteredNodes)
+    this.circles = this.circles
+      .data(this.filteredNodes)
       .enter()
       .append('circle')
       .attr('r', d => d.r)

@@ -8,7 +8,6 @@ import { AppStatusService } from '../app-status.service';
   template: `
 
 <mat-form-field class="colours-select"
-[style.display]="(active ? 'inline' : 'none')"
 >
   <mat-select
   placeholder="Circle colour"
@@ -29,9 +28,7 @@ import { AppStatusService } from '../app-status.service';
   styles: [
     `
       .colours-select {
-        position: fixed;
-        bottom: 300px;
-        left: 30px;
+        padding: 5px;
         background: rgba(246, 248, 255, 0.7);
       }
     `
@@ -156,8 +153,6 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
 
 
     setTimeout(() => {
-      console.log(this.clusterSelector)
-      console.log(this.forceCluster)
       this.forceSimulation
         .force('cluster', (this.clusterSelector === 'none' ? null : this.forceCluster))
         .alpha(0.3)

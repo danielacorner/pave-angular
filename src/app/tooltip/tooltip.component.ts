@@ -8,9 +8,10 @@ import { DetailsComponent } from '../details/details.component';
   template: `
 
 <div id="tooltip" class="tooltip z-depth-3"
-  [style.top]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? null : tooltipY - 170 + 'px')"
+  [style.top]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? null : tooltipY - 173 + 'px')"
   [style.bottom]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? '20px' : null)"
   [style.left]="(tooltipX > windowInnerWidth * 0.5 ? tooltipX - 360 - circleR + 'px' : tooltipX + circleR + 'px')"
+  [style.pointerEvents]="(expanded ? 'auto' : 'none')"
   >
     <mat-card>
           <mat-card-header>
