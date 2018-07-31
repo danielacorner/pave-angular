@@ -6,6 +6,8 @@ potential next steps:
 1. ----- Style the App -----
   MOBILE (minimal) setup & responsive design
   - set bottom sliders to be fully responsive
+  (push outside of container div)
+  - below breakpoint, size circles based on num circles (for clickability)
    - viz setup (tooltip details bottom card,
     tap to open? small-expand with button? other functionality)
    - size graph view based on screen width

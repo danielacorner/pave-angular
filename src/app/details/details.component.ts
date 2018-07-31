@@ -5,7 +5,6 @@ import {
   MAT_DIALOG_DATA,
   MatTabsModule,
   MatDialogTitle,
-  MatDividerModule
 } from '@angular/material';
 
 @Component({

@@ -446,7 +446,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             .filter(c => c.id === d.id)
             .attr('stroke', 'black')
             .style('stroke-width', '2px');
-          // start the clock for auto-expansion after 2 seconds unless click-closed
+          // start the clock for auto-expansion after 2 seconds unless clicked-closed
           if (!that.justClosed) {
             that.autoExpand = setTimeout(() => {
               that.tooltipExpanded = true;
