@@ -1,0 +1,51 @@
+<div>
+  <svg [ngStyle]="canvasStyles" (click)="closeTooltip($event)">
+    <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
+    </g>
+  </svg>
+
+  <div class='container'>
+
+    <div class="buttons-container center">
+      <div class="grid-item-1">
+        <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+          [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>
+
+        <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
+      </div>
+      <div class="grid-item-2">
+        <app-graph-mode [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters"
+          [width]="width" [height]="height" [navbarHeight]="navbarHeight"></app-graph-mode>
+      </div>
+
+      <div class="grid-item-3">
+        <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+          [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
+
+        <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+      </div>
+    </div>
+
+    <div class="sliders-container">
+
+      <p class="sliders-title">Skill filters</p>
+
+      <mat-divider></mat-divider>
+
+      <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+
+      <div class="slider-container" *ngFor="let filter of filterSliders">
+        <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+          [title1]="filter.title_1" [title2]="filter.title_2"></app-filter-slider>
+        <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="tooltipData" @ngIfAnimation>
+    <app-tooltip @easeInOut [tooltipData]="tooltipData" [expanded]="tooltipExpanded" [mobileBreakPoint]="mobileBreakPoint"></app-tooltip>
+  </div>
+
+</div>

@@ -1,8 +1,13 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material';
 import * as d3 from 'd3';
 import { DetailsComponent } from '../details/details.component';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA
+} from '@angular/material';
+import { TooltipMobileComponent } from '../tooltip-mobile/tooltip-mobile.component';
 
 @Component({
   selector: 'app-tooltip',
@@ -41,9 +46,9 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
                 </p>
       </mat-expansion-panel-header>
 
-      <img mat-card-image [src]="wdw.location.href.includes('localhost')
+      <img mat-card-image [src]="(wdw.location.href.includes('localhost')
       ? '../../assets/img/NOC_images/' + data.noc + '.jpg'
-      : '../../pave-angular/assets/img/NOC_images/' + data.noc + '.jpg'"
+      : '../../pave-angular/assets/img/NOC_images/' + data.noc + '.jpg')"
       alt="Photo of {{data.job}}">
         <p>
           Here is a longer job description; it could be roughly 250 characters.
@@ -87,7 +92,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
   @Input() public expanded = false;
   @Input() mobileBreakPoint;
   public wdw = window;
-  public data; // shortcut to access tooltipData.d.all
+  public data; // local shortcut to access tooltipData.d.all
   public tooltipHeight;
   public tooltipX;
   public tooltipY;
@@ -101,7 +106,9 @@ export class TooltipComponent implements OnInit, OnDestroy {
   public windowInnerHeight = window.innerHeight;
   public windowInnerWidth = window.innerWidth;
 
-  constructor(public dialog: MatDialog, private bottomSheet: MatBottomSheet) {}
+  constructor(public dialog: MatDialog, private bottomSheet: MatBottomSheet) {
+
+  }
 
   ngOnInit() {
     this.data = this.tooltipData.d.all;
@@ -110,7 +117,6 @@ export class TooltipComponent implements OnInit, OnDestroy {
       this.tooltipData.x,
       this.tooltipData.y
     );
-    // console.log(this.tooltipData.d.all);
   }
 
   ngOnDestroy(): void {}
@@ -125,10 +131,10 @@ export class TooltipComponent implements OnInit, OnDestroy {
       'background-image',
       window.location.href.includes('localhost')
         ? 'url("../../assets/img/NOC_images/' +
-          this.tooltipData.d.all.noc +
+          this.data.noc +
           '.jpg"'
         : 'url("../../pave-angular/assets/img/NOC_images/' +
-          this.tooltipData.d.all.noc +
+          this.data.noc +
           '.jpg"'
     );
   }
@@ -157,102 +163,13 @@ export class TooltipComponent implements OnInit, OnDestroy {
 
   openBottomSheetMobile() {
     // const bottomSheetRef =
-    this.bottomSheet.open(BottomSheetMobileTooltipComponent, {
-      data: { tooltipData: this.tooltipData }
-    });
+    setTimeout(() => {
+      this.bottomSheet.open(TooltipMobileComponent, {
+        data: {
+          ttdata: this.tooltipData.d.all
+        }
+      });
+    }, 0);
   }
 }
 
-@Component({
-  selector: 'app-bottom-sheet-mobile-tooltip',
-  template: `
-  <div class="container">
-   <mat-card
-    >
-          <mat-card-header>
-            <div mat-card-avatar class="header-image"></div>
-            <mat-card-title>{{data.job}}</mat-card-title>
-            <mat-card-subtitle>{{data.sector}}</mat-card-subtitle>
-          </mat-card-header>
-    </mat-card>
-    <mat-accordion>
-
-    <!-- PANEL 1 -->
-    <mat-expansion-panel
-    class="panel panel-1"
-    [expanded]="expanded"
-    (closed)="headerOpenState = false;
-    hideOnExpanded = 'block';"
-    >
-      <mat-expansion-panel-header>
-                <p>
-                  Here is a very brief job description; it could be roughly 100 characters.
-                </p>
-      </mat-expansion-panel-header>
-
-      <img mat-card-image [src]="wdw.location.href.includes('localhost')
-      ? '../../assets/img/NOC_images/' + data.noc + '.jpg'
-      : '../../pave-angular/assets/img/NOC_images/' + data.noc + '.jpg'"
-      alt="Photo of {{data.job}}">
-        <p>
-          Here is a longer job description; it could be roughly 250 characters.
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-        </p>
-
-      <mat-action-row>
-        <button (click)="openDetails(data)" mat-button> <mat-icon class="btn-icon blue-icon">info</mat-icon>
-        LEARN MORE</button>
-        <button mat-button> <mat-icon class="btn-icon orange-icon">star</mat-icon>
-        FAVOURITE</button>
-      </mat-action-row>
-
-    </mat-expansion-panel>
-    <!-- PANEL 2 -->
-    <mat-expansion-panel class="panel">
-                <p>
-                  Here is a brief job description; it could be roughly 250 characters.
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                </p>
-    </mat-expansion-panel>
-    <!-- PANEL 3 -->
-    <mat-expansion-panel class="panel">
-                  <p>
-                  Here is a brief job description; it could be roughly 250 characters.
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                </p>
-    </mat-expansion-panel>
-
-  </mat-accordion>
-  </div>
-  `
-})
-export class BottomSheetMobileTooltipComponent implements OnInit {
-  constructor(
-    private bottomSheetRef: MatBottomSheetRef<BottomSheetMobileTooltipComponent>
-  ) {}
-  public data;
-  public wdw = window;
-  public expanded = true;
-  @Input() tooltipData;
-
-  ngOnInit() {
-    this.data = this.tooltipData.d.all;
-  }
-  openLink(event: MouseEvent): void {
-    this.bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
-
-  openDetails(jobData): void {
-      // const dialogRef =
-      // this.dialog.open(DetailsComponent, {
-      //   height: '95%',
-      //   width: 'auto',
-      //   data: jobData
-      // });
-    }
-  }
-}

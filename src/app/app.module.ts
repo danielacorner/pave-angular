@@ -13,7 +13,7 @@ import { ColourLegendButtonComponent } from './colour-legend-button/colour-legen
 import { SizeLegendButtonComponent } from './size-legend-button/size-legend-button.component';
 import { FilterSliderComponent } from './filter-slider/filter-slider.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
-import { BottomSheetMobileTooltipComponent } from './tooltip/tooltip.component';
+import { TooltipMobileComponent } from './tooltip-mobile/tooltip-mobile.component';
 
 // Services
 import { DataService } from './data.service';
@@ -54,7 +54,7 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     GraphModeComponent,
     ChangeSizesDropdownComponent,
     ChangeColoursDropdownComponent,
-    BottomSheetMobileTooltipComponent
+    TooltipMobileComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +75,7 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     MatBottomSheetModule,
     FormsModule
   ],
-  entryComponents: [DetailsComponent, BottomSheetMobileTooltipComponent],
+  entryComponents: [DetailsComponent, TooltipMobileComponent],
   providers: [DataService, MatDialogTitle, AppStatusService],
   bootstrap: [AppComponent]
 })
