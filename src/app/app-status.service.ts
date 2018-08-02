@@ -47,6 +47,9 @@ export class AppStatusService {
   private _defaultCircleRadiusSource = new BehaviorSubject<any>(1.0);
   public currentDefaultCircleRadius = this._defaultCircleRadiusSource.asObservable();
 
+  private _svgTransformSource = new BehaviorSubject<any>(1);
+  public currentSvgTransform = this._svgTransformSource.asObservable();
+
   // private _circlesSource = new BehaviorSubject<any>(null);
   // public currentCircles = this._circlesSource.asObservable();
 
@@ -106,6 +109,10 @@ export class AppStatusService {
 
   public changeCircleRadius(v) {
     this._defaultCircleRadiusSource.next(v);
+  }
+
+  public changeSvgTransform(v) {
+    this._svgTransformSource.next(v);
   }
 
   constructor() {}

@@ -1,6 +1,9 @@
       body, html {
         overflow-y: hidden;
       }
+      svg {
+        transition: transform 1s;
+      }
       .sliders-title {
         line-height: 0.2rem;
         font-size: 16px;

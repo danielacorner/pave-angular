@@ -40,24 +40,26 @@ export class VizComponent implements OnInit, AfterContentInit {
     private _dataService: DataService,
     private _statusService: AppStatusService
   ) {}
-  // positioning
+  // ----- POSITIONING ----- //
   public wdw = window;
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
   public width = window.innerWidth;
   public mobileBreakPoint = 480;
-  // the graphing canvas
+
+  // ----- CANVAS PROPERTIES ----- //
+  public data$ = [];
+  public circles;
+  public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
   public canvasStyles = {
     position: 'absolute',
     top: this.navbarHeight + 'px',
     width: this.width,
-    height: this.height,
+    height: this.height
   };
   // move the circles into the center
   public gTransform =
     'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
-  // data
-  public data$ = [];
 
   // ----- FILTER SLIDERS ----- //
   public filterSliders = [
@@ -74,55 +76,62 @@ export class VizComponent implements OnInit, AfterContentInit {
       title_2: 'Information'
     }
   ];
-  // ----- CIRCLE PROPERTIES ----- //
-  // radius range
-  public minRadius = 0.5; // % screen width
-  // public maxRadius = window.innerWidth * 0.025;
-  public radiusRange; // subscription
-  public radiusScale;
 
-  // zoom when fewer nodes
-  public svgTransform = 'scale(1)';
-  // custom circle sizes and colours/clusters
-  // ----- STARTING RADIUS & CLUSTERS ----- //
-  public radiusSelector = 'none'; // subscription
-  public clusterSelector; // subscription
-  public uniqueClusterValues; // subscription
-  public clusteringAmount = 0.5;
-  public forceCluster; // subscription
-  public forceSimulation; // subscription
-  // circles and clusters
-  public nodes;
+  // ----- CIRCLE PROPERTIES ----- //
+  // subscriptions are defined in ngOnInit() through the _statusService
+  public subscriptions = [
+    'radiusSelector',
+    'clusterSelector',
+    'uniqueClusterValues',
+    'forceCluster',
+    'forceSimulation',
+    'radiusRange',
+    'radiusScale',
+    'filteredNodes',
+    'nodes',
+    'clusterCenters',
+    'numClusters',
+    'defaultCircleRadius',
+    'svgTransform'
+  ];
+  public radiusSelector = 'none'; // default value because forceGravity defined before subscription
+  public clusterSelector;
+  public uniqueClusterValues;
+  public forceCluster;
+  public forceSimulation;
+  public radiusRange;
+  public radiusScale;
   public filteredNodes;
-  public circles;
-  public numClusters; // number of distinct clusters
-  public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
+  public nodes;
   public clusterCenters;
+  public numClusters;
+  public svgTransform = 'scale(1)'; // zoom when fewer nodes
 
   // ----- SIMULATION & FORCES ----- //
+  public clusteringAmount = 0.5;
   public defaultCircleRadius = 1.0;
   public nodeAttractionConstant = -0.28; // negative = repel
   public nodeAttraction =
     window.innerWidth * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
-    public centerGravity = 1.75;
-    public forceXCombine = d3.forceX().strength(this.centerGravity);
-    public forceYCombine = d3.forceY().strength(this.centerGravity);
-    public forceGravity = d3
+  public centerGravity = 1.75;
+  public forceXCombine = d3.forceX().strength(this.centerGravity);
+  public forceYCombine = d3.forceY().strength(this.centerGravity);
+  public forceGravity = d3
     .forceManyBody()
     .strength(
       this.radiusSelector === 'none'
         ? this.nodeAttraction
         : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
-      );
+    );
   public forceCollide = null;
   public nodePadding = 1;
   // public forceCollide = d3.forceCollide().radius(d => (6*d.r) + this.nodePadding);
   public ticked;
   // tooltip
   public tooltipData;
-  public tooltipExpanded = false;
+  public tooltipExpanded = false; // whether the tooltip is expanded
   public autoExpand;
-  public justClosed = false;
+  public justClosed = false; // whether the tooltip was clicked-closed
 
   // filter slider positions
   public sliderPositions = { language: 0, logic: 0, math: 0, computer: 0 };
@@ -148,43 +157,10 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit() {
-    this._statusService.currentRadiusSelector.subscribe(
-      v => (this.radiusSelector = v)
-    );
-    this._statusService.currentClusterSelector.subscribe(
-      v => (this.clusterSelector = v)
-    );
-    this._statusService.currentUniqueClusterValues.subscribe(
-      v => (this.uniqueClusterValues = v)
-    );
-    this._statusService.currentForceCluster.subscribe(
-      v => (this.forceCluster = v)
-    );
-    this._statusService.currentForceSimulation.subscribe(
-      v => (this.forceSimulation = v)
-    );
-    this._statusService.currentRadiusRange.subscribe(
-      v => (this.radiusRange = v)
-    );
-    this._statusService.currentRadiusScale.subscribe(
-      v => (this.radiusScale = v)
-    );
-    this._statusService.currentFilteredNodes.subscribe(
-      v => (this.filteredNodes = v)
-    );
-    this._statusService.currentNodes.subscribe(v => (this.nodes = v));
-    // this._statusService.currentCircles.subscribe(
-    //   v => (this.circles = v)
-    // );
-    this._statusService.currentClusterCenters.subscribe(
-      v => (this.clusterCenters = v)
-    );
-    this._statusService.currentNumClusters.subscribe(
-      v => (this.numClusters = v)
-    );
-    this._statusService.currentDefaultCircleRadius.subscribe(
-      v => (this.defaultCircleRadius = v)
-    );
+    this.subscriptions.forEach(s => {
+      const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
+      this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -433,7 +409,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
       // todo: edit pop size based on d.r
-      .attr('r', $(window).width() * 0.04)
+      .attr('r', d => d.r * 1.75 + 'vw')
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -488,8 +464,11 @@ export class VizComponent implements OnInit, AfterContentInit {
       .merge(this.circles);
 
     // ZOOM to fit remaining of circles
-    const zoomAmount = Math.pow((this.nodes.length / this.filteredNodes.length), 0.5);
-    this.svgTransform = 'scale(' + zoomAmount + ')';
+    const zoomAmount = Math.pow(
+      this.nodes.length / this.filteredNodes.length,
+      0.5
+    );
+    this._statusService.changeSvgTransform('scale(' + zoomAmount + ')');
 
     // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
     // todo: fix by settimeout 0 for each individual circle?

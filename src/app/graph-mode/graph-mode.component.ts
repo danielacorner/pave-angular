@@ -132,6 +132,8 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public scaleX;
   public scaleY;
 
+  public svgTransform;
+
   public oldXPositions = [];
   public oldYPositions = [];
   public newXPositions = [];
@@ -146,6 +148,9 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
     );
     this._statusService.currentForceSimulation.subscribe(
       v => (this.forceSimulation = v)
+    );
+    this._statusService.currentSvgTransform.subscribe(
+      v => (this.svgTransform = v)
     );
   }
 
@@ -163,6 +168,8 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
 
   graphModeOn() {
     const that = this;
+
+    this._statusService.changeSvgTransform('scale(1)');
 
     that.data$.map(d => (that.newXPositions = d[that.xSelector]));
     that.data$.map(d => (that.newYPositions = d[that.ySelector]));
@@ -207,6 +214,8 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
 
   graphModeOff() {
     const that = this;
+
+    // todo: change svg transform back based on number of filtered nodes
 
     d3.selectAll('circle')
       .transition()

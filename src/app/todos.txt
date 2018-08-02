@@ -7,12 +7,18 @@ potential next steps:
   MOBILE (minimal) setup & responsive design
   - position navbar search and top buttons responsively
   - after resize, reset post-filter transform to center on zoom
+  - fade-in the job images with zoom amount
   - show only header preview & no overlay & 'details' btn
    - viz setup (tooltip details bottom card,
     drag up to open details? other functionality?)
    - size graph view based on screen width
   Graph view:
    - axes
+
+potential information visualization channels
+-colour scale
+-direction of line
+
 
 2. ----- Build the Features -----
   Implement 'sub-levels' of the viz
@@ -29,13 +35,15 @@ potential next steps:
     -bugfix/modularize different-category clustering
   Legends & filtering by the legend (change opacity of groups)
   Hook filters together (output minimum levels)
+  Cluster independently of colours
+    -'colour by' for colour scale grokking
 
 
 3. ----- Refactor the Code -----
   improve app speed/performance
           (note to self: use EventEmitter on ticked function)
   clean/organize code for flexibility & extensibility
-    - for future developers using this code
+    - break out large components into units
 
 
 4. ----- study automated scraping -----
