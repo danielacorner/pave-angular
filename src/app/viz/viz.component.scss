@@ -7,24 +7,29 @@
       }
       .sliders-container {
         height: 160px;
-        position: absolute;
+        width: 93%;
+        position: fixed;
         bottom: 0px;
-        margin: auto;
+        left: 4%;
+        pointer-events: none;
       }
-      .slider-container {
-        display: inline-block;
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
       }
       .slider {
         display: inline-block;
         height: inherit;
         width: 19.5vw;
-        margin: 0 0 0 1vw;
+        margin-left: 2vw;
+      }
+      .mat-slider {
+        pointer-events: auto;
       }
       .divider-inline {
         display: inline-block;
         height: 75px;
       }
-
       .buttons-container {
         margin-top: 20px;
         display: grid;
@@ -41,3 +46,15 @@
         grid-template-rows: auto auto;
         grid-gap: 10px;
       }
+
+@media only screen and (max-width: 600px) {
+    .grid-container {
+      grid-template-columns: auto auto;
+    }
+    .sliders-container {
+      bottom: 70px;
+    }
+    .slider {
+      width: 43vw;
+    }
+}

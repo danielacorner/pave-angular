@@ -163,7 +163,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
 
   openBottomSheetMobile() {
     // const bottomSheetRef =
-    setTimeout(() => {
+    setTimeout(() => { // setTimeout 0 to fix ExpressionChangedAfterItHasBeenCheckedError
       this.bottomSheet.open(TooltipMobileComponent, {
         data: {
           ttdata: this.tooltipData.d.all

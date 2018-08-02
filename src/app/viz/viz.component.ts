@@ -41,6 +41,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     private _statusService: AppStatusService
   ) {}
   // positioning
+  public wdw = window;
   public navbarHeight = 64;
   public height = window.innerHeight - this.navbarHeight;
   public width = window.innerWidth;
@@ -50,7 +51,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     position: 'absolute',
     top: this.navbarHeight + 'px',
     width: this.width,
-    height: this.height
+    height: this.height,
   };
   // move the circles into the center
   public gTransform =
@@ -74,19 +75,20 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
   ];
   // ----- CIRCLE PROPERTIES ----- //
-  public padding = 1.5; // separation between same-color circles
-  public clusterPadding = 6; // separation between different-color circles
   // radius range
   public minRadius = 0.5; // % screen width
   // public maxRadius = window.innerWidth * 0.025;
   public radiusRange; // subscription
   public radiusScale;
 
+  // zoom when fewer nodes
+  public svgTransform = 'scale(1)';
   // custom circle sizes and colours/clusters
   // ----- STARTING RADIUS & CLUSTERS ----- //
   public radiusSelector = 'none'; // subscription
   public clusterSelector; // subscription
   public uniqueClusterValues; // subscription
+  public clusteringAmount = 0.5;
   public forceCluster; // subscription
   public forceSimulation; // subscription
   // circles and clusters
@@ -98,23 +100,23 @@ export class VizComponent implements OnInit, AfterContentInit {
   public clusterCenters;
 
   // ----- SIMULATION & FORCES ----- //
-  public defaultCircleRadius = 1.0; // negative = repel
-  public nodeAttractionConstant = 0.25;
+  public defaultCircleRadius = 1.0;
+  public nodeAttractionConstant = -0.28; // negative = repel
   public nodeAttraction =
-    window.innerWidth * this.nodeAttractionConstant * -this.defaultCircleRadius; // negative = repel
-  public nodePadding = 1;
-  public centerGravity = 1.75;
-  public forceXCombine = d3.forceX().strength(this.centerGravity);
-  public forceYCombine = d3.forceY().strength(this.centerGravity);
-  public forceGravity = d3
+    window.innerWidth * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
+    public centerGravity = 1.75;
+    public forceXCombine = d3.forceX().strength(this.centerGravity);
+    public forceYCombine = d3.forceY().strength(this.centerGravity);
+    public forceGravity = d3
     .forceManyBody()
     .strength(
       this.radiusSelector === 'none'
         ? this.nodeAttraction
         : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
-    );
+      );
   public forceCollide = null;
-  // public forceCollide = d3.forceCollide().radius(d => d.r + this.nodePadding);
+  public nodePadding = 1;
+  // public forceCollide = d3.forceCollide().radius(d => (6*d.r) + this.nodePadding);
   public ticked;
   // tooltip
   public tooltipData;
@@ -191,7 +193,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.nodeAttraction =
       event.target.innerWidth *
       this.nodeAttractionConstant *
-      -this.defaultCircleRadius;
+      this.defaultCircleRadius;
 
     this.forceGravity = d3
       .forceManyBody()
@@ -292,7 +294,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .selectAll('circle')
         .data(this.nodes)
         .enter()
-        .append('circle')
+        .append('svg:circle')
         .style('opacity', 0)
         .attr('id', d => 'circle_' + d.id)
         .attr('r', d => d.r + 'vw')
@@ -342,7 +344,6 @@ export class VizComponent implements OnInit, AfterContentInit {
             that.justClosed = true;
           }
         });
-      // );
 
       setTimeout(() => {
         this.circles
@@ -367,7 +368,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             }
             let x = d.x - clusterCenter.x,
               y = d.y - clusterCenter.y,
-              l = Math.sqrt(x * x + y * y);
+              l = this.clusteringAmount * Math.sqrt(x * x + y * y);
             const r = d.r + clusterCenter.r;
             if (l !== r) {
               l = ((l - r) / l) * alpha;
@@ -431,7 +432,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       .transition()
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
-      .attr('r', $(window).height() * 0.03)
+      // todo: edit pop size based on d.r
+      .attr('r', $(window).width() * 0.04)
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -441,25 +443,53 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.circles = this.circles
       .data(this.filteredNodes)
       .enter()
-      .append('circle')
-      .attr('r', d => d.r)
+      .append('svg:circle')
+      .attr('r', d => d.r + 'vw')
       .attr('fill', d => that.colourScale(d.cluster))
       // add tooltips to each circle
       .on('mouseover', d => {
+        // initialize the tooltip
         that.tooltipData = {
           d: d,
           x: d.x + that.width / 2,
           y: d.y + that.height / 2
         };
-        d3.select('app-tooltip')
-          .transition()
-          .duration(200)
-          .style('opacity', 0.9);
+        // highlight the circle border
+        d3.selectAll('circle')
+          .filter(c => c.id === d.id)
+          .attr('stroke', 'black')
+          .style('stroke-width', '2px');
+        // start the clock for auto-expansion after 2 seconds unless clicked-closed
+        if (!that.justClosed) {
+          that.autoExpand = setTimeout(() => {
+            that.tooltipExpanded = true;
+          }, 2000);
+        }
       })
       .on('mouseout', () => {
-        that.tooltipData = null;
+        // clear the autoExpand timeout
+        clearTimeout(that.autoExpand);
+        // remove the border highlight
+        d3.selectAll('circle').attr('stroke', 'none');
+        // remove the tooltip unless expanded
+        if (that.tooltipExpanded) {
+          return;
+        } else {
+          that.tooltipData = null;
+        }
+        that.justClosed = false;
+      })
+      .on('click', () => {
+        that.tooltipExpanded = !that.tooltipExpanded;
+        if (!that.tooltipExpanded) {
+          that.justClosed = true;
+        }
       })
       .merge(this.circles);
+
+    // ZOOM to fit remaining of circles
+    const zoomAmount = Math.pow((this.nodes.length / this.filteredNodes.length), 0.5);
+    this.svgTransform = 'scale(' + zoomAmount + ')';
 
     // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
     // todo: fix by settimeout 0 for each individual circle?

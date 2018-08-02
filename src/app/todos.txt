@@ -5,11 +5,11 @@ potential next steps:
 
 1. ----- Style the App -----
   MOBILE (minimal) setup & responsive design
-  - set bottom sliders to be fully responsive
-  (push outside of container div)
-  - below breakpoint, size circles based on num circles (for clickability)
+  - position navbar search and top buttons responsively
+  - after resize, reset post-filter transform to center on zoom
+  - show only header preview & no overlay & 'details' btn
    - viz setup (tooltip details bottom card,
-    tap to open? small-expand with button? other functionality)
+    drag up to open details? other functionality?)
    - size graph view based on screen width
   Graph view:
    - axes

@@ -11,6 +11,7 @@ import * as d3 from 'd3';
       <p>{{title2}}</p>
       </div>
       <mat-slider thumbLabel [min]="min" [max]="max" step="1"
+      [style.pointerEvents]="'auto'"
       [(ngModel)]="sliderValue"
       tickInterval="10"
       (change)="fireEvent()"
@@ -21,10 +22,15 @@ import * as d3 from 'd3';
     `
       .slider-container {
       }
-      mat-slider {
-      }
       .title p {
         line-height: 0.5rem;
+      }
+      @media only screen and (max-width: 600px) {
+        mat-slider {
+          padding-top: 0px;
+          margin-top: -15px;
+          width: 40vw;
+        }
       }
     `
   ]

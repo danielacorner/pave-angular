@@ -1,5 +1,7 @@
 <div>
-  <svg [ngStyle]="canvasStyles" (click)="closeTooltip($event)">
+  <svg [ngStyle]="canvasStyles"
+  [style.transform]="svgTransform"
+  (click)="closeTooltip($event)">
     <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
     </g>
   </svg>
@@ -32,12 +34,18 @@
 
       <mat-divider></mat-divider>
 
-      <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+      <div class="grid-container">
 
-      <div class="slider-container" *ngFor="let filter of filterSliders">
-        <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-          [title1]="filter.title_1" [title2]="filter.title_2"></app-filter-slider>
+        <div class="slider-container"
+        *ngFor="let filter of filterSliders">
+        <mat-divider
+        *ngIf="['math', 'computer'].includes(filter.variable) && wdw.innerWidth < 600"></mat-divider>
         <mat-divider class="divider-inline" [vertical]="true"></mat-divider>
+          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+            [title1]="filter.title_1" [title2]="filter.title_2"
+            ></app-filter-slider>
+        </div>
+
       </div>
 
     </div>
