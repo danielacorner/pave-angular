@@ -50,6 +50,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- CANVAS PROPERTIES ----- //
   public data$ = [];
   public circles;
+  public minRadius = window.innerWidth * 0.03;
   public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
   public canvasStyles = {
     position: 'absolute',
