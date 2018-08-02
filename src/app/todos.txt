@@ -1,6 +1,13 @@
 todos
 -----
 
+bugs:
+- click once, same job still selected
+- zoom with change sizes
+- sliders move when used
+- slider maxima are too high (70%)
+- reset filters button
+
 potential next steps:
 
 1. ----- Style the App -----

@@ -1,5 +1,5 @@
 <div>
-  <svg [ngStyle]="canvasStyles"
+  <svg id="canvas" class="center" [ngStyle]="canvasStyles"
   [style.transform]="svgTransform"
   (click)="closeTooltip($event)">
     <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">

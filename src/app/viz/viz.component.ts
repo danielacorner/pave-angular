@@ -55,12 +55,17 @@ export class VizComponent implements OnInit, AfterContentInit {
   public canvasStyles = {
     position: 'absolute',
     top: this.navbarHeight + 'px',
-    width: this.width,
-    height: this.height
+    left: 0,
+    width: window.innerWidth,
+    height: window.innerHeight - this.navbarHeight
   };
   // move the circles into the center
   public gTransform =
-    'translate(' + this.width / 2 + 'px,' + this.height / 2 + 'px)';
+    'translate(' +
+    window.innerWidth / 2 +
+    'px,' +
+    (window.innerHeight - this.navbarHeight) / 2 +
+    'px)';
 
   // ----- FILTER SLIDERS ----- //
   public filterSliders = [
@@ -166,6 +171,11 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    // reposition canvas
+    this.canvasStyles.top = this.navbarHeight + 'px';
+    this.canvasStyles.width = window.innerWidth;
+    this.canvasStyles.height = window.innerHeight - this.navbarHeight;
+
     // recalculate forces
     this.nodeAttraction =
       event.target.innerWidth *
@@ -262,6 +272,22 @@ export class VizComponent implements OnInit, AfterContentInit {
           return d;
         })
       );
+
+      // todo: fill circles with images when <30 circles remain
+      d3.select('#canvas').append('defs')
+        .selectAll('.img-pattern')
+        .data(this.nodes)
+        .enter().append('pattern')
+        .attr('class', 'img-pattern')
+        .attr('id', d => 'pattern_' + d.id )
+        .attr('height', '100%')
+        .attr('width', '100%')
+        .attr('patternContentUnits', 'objectBoundingBox')
+        .append('image')
+        .attr('height', 1)
+        .attr('width', 1)
+        .attr('preserveAspectRatio', 'none')
+        .attr('xlink:href', d => '../../assets/img/NOC_images/' + d.all.noc + '.jpg');
 
       // append the circles to svg then style
       // add functions for interaction
@@ -465,11 +491,23 @@ export class VizComponent implements OnInit, AfterContentInit {
       .merge(this.circles);
 
     // ZOOM to fit remaining of circles
+    // todo: calculate zoom based on total circle area if size-changed doesn't fit
     const zoomAmount = Math.pow(
       this.nodes.length / this.filteredNodes.length,
-      0.5
+      0.45
     );
     this._statusService.changeSvgTransform('scale(' + zoomAmount + ')');
+
+    // fill circles with images if <30 remain
+    setTimeout(() => {
+    this.filteredNodes.length <= 30
+      ? d3.selectAll('circle')
+          .attr('fill', d => 'url(#pattern_' + d.id + ')')
+          .attr('stroke', d => this.colourScale(d.cluster))
+      : d3.selectAll('circle')
+          .attr('fill', d => this.colourScale(d.cluster))
+          .attr('stroke', 'none');
+    }, 1000);
 
     // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
     // todo: fix by settimeout 0 for each individual circle?
