@@ -50,8 +50,8 @@ export class FilterSliderComponent implements OnInit {
     // load data and set slider range on creation
     this._dataService.getData().subscribe(receivedData => {
       this.min = d3.min(receivedData.map(d => d[this.filterVariable]));
-      // shrink max by half to expand slider usability
-      this.max = d3.max(receivedData.map(d => d[this.filterVariable])) * 0.5;
+      // shrink max to expand slider usability
+      this.max = d3.max(receivedData.map(d => d[this.filterVariable])) * 0.7;
     });
   }
 

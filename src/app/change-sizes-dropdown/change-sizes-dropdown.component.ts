@@ -131,8 +131,8 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     d3.selectAll('circle').transition().attr(
       'r',
       this.radiusSelector === 'none'
-        ? this.defaultCircleRadius + 'vw'
-        : d => this.radiusScale(+d.all[this.radiusSelector]) + 'vw'
+        ? this.defaultCircleRadius + 'vmin'
+        : d => this.radiusScale(+d.all[this.radiusSelector]) + 'vmin'
     ).delay((d, i) => i * 0.8);
 
     setTimeout(() => {

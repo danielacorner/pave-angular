@@ -4,9 +4,9 @@
       svg {
         transition: transform 1s;
       }
-      circle {
-        transition: fill 1s, stroke 1s;
-      }
+      // circle {
+      //   transition: fill 1s, stroke 1s, fill-opacity 1s;
+      // }
       .sliders-title {
         line-height: 0.2rem;
         font-size: 16px;

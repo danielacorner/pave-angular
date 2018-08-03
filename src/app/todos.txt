@@ -1,7 +1,10 @@
 todos
 -----
 
+- subtract filters height wherever subtracting navbarheight
+
 bugs:
+- size selector bug
 - click once, same job still selected
 - zoom with change sizes
 - sliders move when used

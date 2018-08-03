@@ -50,7 +50,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- CANVAS PROPERTIES ----- //
   public data$ = [];
   public circles;
-  public minRadius = window.innerWidth * 0.03;
+  public minRadius = Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight)) * 0.0006; // vmin
   public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
   public canvasStyles = {
     position: 'absolute',
@@ -70,14 +70,14 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- FILTER SLIDERS ----- //
   public filterSliders = [
     {
-      variable: 'language',
+      variable: 'skillsLang',
       title_1: 'Language and',
       title_2: 'Communication'
     },
-    { variable: 'logic', title_1: 'Logic and', title_2: 'Reasoning' },
-    { variable: 'math', title_1: 'Math and', title_2: 'Spatial' },
+    { variable: 'skillsLogi', title_1: 'Logic and', title_2: 'Reasoning' },
+    { variable: 'skillsMath', title_1: 'Math and', title_2: 'Spatial' },
     {
-      variable: 'computer',
+      variable: 'skillsComp',
       title_1: 'Computer and',
       title_2: 'Information'
     }
@@ -118,7 +118,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   public defaultCircleRadius = 1.0;
   public nodeAttractionConstant = -0.28; // negative = repel
   public nodeAttraction =
-    window.innerWidth * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
+    Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight))
+     * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
   public centerGravity = 1.75;
   public forceXCombine = d3.forceX().strength(this.centerGravity);
   public forceYCombine = d3.forceY().strength(this.centerGravity);
@@ -140,7 +141,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public justClosed = false; // whether the tooltip was clicked-closed
 
   // filter slider positions
-  public sliderPositions = { language: 0, logic: 0, math: 0, computer: 0 };
+  public sliderPositions = { skillsLang: 0, skillsLogi: 0, skillsMath: 0, skillsComp: 0 };
 
   // Drag functions used for interactivity
   public dragstarted = d => {
@@ -178,7 +179,7 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // recalculate forces
     this.nodeAttraction =
-      event.target.innerWidth *
+      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
       this.nodeAttractionConstant *
       this.defaultCircleRadius;
 
@@ -254,10 +255,10 @@ export class VizComponent implements OnInit, AfterContentInit {
             cluster: forcedCluster,
             clusterValue: d[that.clusterSelector],
             // skills
-            math: d.skillsMath,
-            logic: d.skillsLogi,
-            language: d.skillsLang,
-            computer: d.skillsComp,
+            skillsMath: d.skillsMath,
+            skillsLogi: d.skillsLogi,
+            skillsLang: d.skillsLang,
+            skillsComp: d.skillsComp,
             // tooltip info
             all: d
           };
@@ -299,8 +300,9 @@ export class VizComponent implements OnInit, AfterContentInit {
         .enter()
         .append('svg:circle')
         .style('opacity', 0)
+        .attr('stroke', d => this.colourScale(d.cluster))
         .attr('id', d => 'circle_' + d.id)
-        .attr('r', d => d.r + 'vw')
+        .attr('r', d => d.r + 'vmin')
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
@@ -320,7 +322,6 @@ export class VizComponent implements OnInit, AfterContentInit {
           d3.selectAll('circle')
             .filter(c => c.id === d.id)
             .attr('stroke', 'black')
-            .style('stroke-width', '2px');
           // start the clock for auto-expansion after 2 seconds unless clicked-closed
           if (!that.justClosed) {
             that.autoExpand = setTimeout(() => {
@@ -332,7 +333,9 @@ export class VizComponent implements OnInit, AfterContentInit {
           // clear the autoExpand timeout
           clearTimeout(that.autoExpand);
           // remove the border highlight
-          d3.selectAll('circle').attr('stroke', 'none');
+          d3.selectAll('circle').attr('stroke', d =>
+            this.colourScale(d.cluster)
+          );
           // remove the tooltip unless expanded
           if (that.tooltipExpanded) {
             return;
@@ -436,7 +439,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
       // todo: edit pop size based on d.r
-      .attr('r', d => d.r * 1.75 + 'vw')
+      .attr('r', d => d.r * 1.75 + 'vmin')
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -447,8 +450,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       .data(this.filteredNodes)
       .enter()
       .append('svg:circle')
-      .attr('r', d => d.r + 'vw')
+      .attr('r', d => d.r + 'vmin')
       .attr('fill', d => that.colourScale(d.cluster))
+      .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
       .on('mouseover', d => {
         // initialize the tooltip
@@ -461,7 +465,6 @@ export class VizComponent implements OnInit, AfterContentInit {
         d3.selectAll('circle')
           .filter(c => c.id === d.id)
           .attr('stroke', 'black')
-          .style('stroke-width', '2px');
         // start the clock for auto-expansion after 2 seconds unless clicked-closed
         if (!that.justClosed) {
           that.autoExpand = setTimeout(() => {
@@ -473,7 +476,8 @@ export class VizComponent implements OnInit, AfterContentInit {
         // clear the autoExpand timeout
         clearTimeout(that.autoExpand);
         // remove the border highlight
-        d3.selectAll('circle').attr('stroke', 'none');
+        d3.selectAll('circle')
+          .attr('stroke', d => this.colourScale(d.cluster));
         // remove the tooltip unless expanded
         if (that.tooltipExpanded) {
           return;
@@ -500,26 +504,42 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // fill circles with images if <30 remain
     setTimeout(() => {
-    this.filteredNodes.length <= 30
-      ? d3.selectAll('circle')
-          .attr('fill', d => 'url(#pattern_' + d.id + ')')
+    this.filteredNodes.length <= 40
+      ? this.circles
+          .style('fill-opacity', 0.2)
+          .style('fill', d => 'url(#pattern_' + d.id + ')')
           .attr('stroke', d => this.colourScale(d.cluster))
-      : d3.selectAll('circle')
-          .attr('fill', d => this.colourScale(d.cluster))
-          .attr('stroke', 'none');
+          .transition().duration(1000)
+          .style('fill-opacity', 1)
+          .call(
+            d3
+              .drag()
+              .on('start', that.dragstarted)
+              .on('drag', that.dragged)
+              .on('end', that.dragended)
+          )
+      : this.circles
+          .style('fill', d => this.colourScale(d.cluster))
+          .call(
+            d3
+              .drag()
+              .on('start', that.dragstarted)
+              .on('drag', that.dragged)
+              .on('end', that.dragended)
+          );
     }, 1000);
 
     // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
     // todo: fix by settimeout 0 for each individual circle?
-    setTimeout(() => {
-      that.circles.call(
-        d3
-          .drag()
-          .on('start', that.dragstarted)
-          .on('drag', that.dragged)
-          .on('end', that.dragended)
-      );
-    }, 2000);
+    // setTimeout(() => {
+    //   that.circles.call(
+    //     d3
+    //       .drag()
+    //       .on('start', that.dragstarted)
+    //       .on('drag', that.dragged)
+    //       .on('end', that.dragended)
+    //   );
+    // }, 4000);
     // Update nodes and restart the simulation.
     this._statusService.changeForceSimulation(
       this.forceSimulation
