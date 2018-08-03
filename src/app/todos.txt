@@ -1,15 +1,14 @@
 todos
 -----
-
-- subtract filters height wherever subtracting navbarheight
+split viz into smaller components
+- simulation service
+  - changeNodes, changeForceSimulation, drag functions
 
 bugs:
-- size selector bug
+- zoom gtransform y is too high
+  - should be remaining height / 2
 - click once, same job still selected
-- zoom with change sizes
-- sliders move when used
-- slider maxima are too high (70%)
-- reset filters button
+- sliders move when used on tablet
 
 potential next steps:
 
@@ -22,15 +21,17 @@ potential next steps:
    - viz setup (tooltip details bottom card,
     drag up to open details? other functionality?)
    - size graph view based on screen width
+   - subtract filters height wherever subtracting navbarheight
   Graph view:
    - axes
 
 potential information visualization channels
--colour scale
--direction of line
+-continuous colour scale
+-direction of lines
 
 
 2. ----- Build the Features -----
+  Reset filters button
   Implement 'sub-levels' of the viz
    - like 'expand filtered results into schools offering these programs'
   Save favourites feature

@@ -108,8 +108,8 @@ export class TooltipMobileComponent implements OnInit {
     d3.select('.header-image-mobile').style(
       'background-image',
       window.location.href.includes('localhost')
-        ? 'url("../../assets/img/NOC_images/' + this.data.ttdata.noc + '.jpg"'
-        : 'url("../../pave-angular/assets/img/NOC_images/' +
+        ? 'url("../../assets/img/NOC_thumbnails/tn_' + this.data.ttdata.noc + '.jpg"'
+        : 'url("../../pave-angular/assets/img/NOC_thumbnails/tn_' +
           this.data.ttdata.noc +
           '.jpg"'
     );

@@ -2,6 +2,8 @@ import { Component, OnInit, AfterContentInit, HostListener } from '@angular/core
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 import { AppStatusService } from '../app-status.service';
+import { AppFilterService } from '../app-filter.service';
+import { AppSimulationService } from '../app-simulation.service';
 
 import {
   trigger,
@@ -38,7 +40,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class VizComponent implements OnInit, AfterContentInit {
   constructor(
     private _dataService: DataService,
-    private _statusService: AppStatusService
+    private _statusService: AppStatusService,
+    private _filterService: AppFilterService,
+    private _simulationService: AppSimulationService,
   ) {}
   // ----- POSITIONING ----- //
   public wdw = window;
@@ -63,7 +67,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public gTransform =
     'translate(' +
     window.innerWidth / 2 +
-    'px,' +
+    'px, ' +
     (window.innerHeight - this.navbarHeight) / 2 +
     'px)';
 
@@ -114,7 +118,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   public svgTransform = 'scale(1)'; // zoom when fewer nodes
 
   // ----- SIMULATION & FORCES ----- //
-  public clusteringAmount = 0.5;
+  // public clusteringAmount = 0.5;
   public defaultCircleRadius = 1.0;
   public nodeAttractionConstant = -0.28; // negative = repel
   public nodeAttraction =
@@ -140,9 +144,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   public autoExpand;
   public justClosed = false; // whether the tooltip was clicked-closed
 
-  // filter slider positions
-  public sliderPositions = { skillsLang: 0, skillsLogi: 0, skillsMath: 0, skillsComp: 0 };
-
   // Drag functions used for interactivity
   public dragstarted = d => {
     if (!d3.event.active) {
@@ -164,6 +165,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit() {
+    // pull in the subscriptions
     this.subscriptions.forEach(s => {
       const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
       this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
@@ -202,7 +204,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
-      (window.innerHeight / 2 - this.navbarHeight) +
+      (window.innerHeight / 2 + this.navbarHeight) +
       'px)';
   }
 
@@ -290,12 +292,11 @@ export class VizComponent implements OnInit, AfterContentInit {
         .attr('preserveAspectRatio', 'none')
         .attr('xlink:href', d =>
           window.location.href.includes('localhost')
-            ? '../../assets/img/NOC_images/' + d.all.noc + '.jpg'
-            : '../../pave-angular/assets/img/NOC_images/' + d.all.noc + '.jpg');
+            ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
+            : '../../pave-angular/assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg');
 
       // append the circles to svg then style
       // add functions for interaction
-      // this._statusService.changeCircles(
       this.circles = d3
         .select('.circlesG')
         .selectAll('circle')
@@ -303,11 +304,9 @@ export class VizComponent implements OnInit, AfterContentInit {
         .enter()
         .append('svg:circle')
         .style('opacity', 0)
-        .attr('stroke', d => this.colourScale(d.cluster))
         .attr('id', d => 'circle_' + d.id)
         .attr('r', d => d.r + 'vmin')
         .attr('fill', d => this.colourScale(d.cluster))
-        .attr('fill-opacity', 0)
         .call(
           d3
             .drag()
@@ -360,7 +359,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           .transition()
           .duration(1500)
           .style('opacity', 1)
-          .attr('fill-opacity', 1)
+          .attr('stroke', d => this.colourScale(d.cluster))
           .delay((d, i) => i * 3);
       }, 500);
 
@@ -368,29 +367,30 @@ export class VizComponent implements OnInit, AfterContentInit {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
-      this._statusService.changeForceCluster(
-        // These are implementations of the custom forces.
-        alpha => {
-          that.nodes.forEach(d => {
-            // if(d.id==1){console.log(d);}
-            const clusterCenter = that.clusterCenters[d.cluster];
-            if (clusterCenter === d) {
-              return;
-            }
-            let x = d.x - clusterCenter.x,
-              y = d.y - clusterCenter.y,
-              l = this.clusteringAmount * Math.sqrt(x * x + y * y);
-            const r = d.r + clusterCenter.r;
-            if (l !== r) {
-              l = ((l - r) / l) * alpha;
-              d.x -= x *= l;
-              d.y -= y *= l;
-              clusterCenter.x += x;
-              clusterCenter.y += y;
-            }
-          });
-        }
-      );
+      this._simulationService.forceCluster(that.nodes, that.clusterCenters);
+      // this._statusService.changeForceCluster(
+      //   // These are implementations of the custom forces.
+      //   alpha => {
+      //     that.nodes.forEach(d => {
+      //       // if(d.id==1){console.log(d);}
+      //       const clusterCenter = that.clusterCenters[d.cluster];
+      //       if (clusterCenter === d) {
+      //         return;
+      //       }
+      //       let x = d.x - clusterCenter.x,
+      //         y = d.y - clusterCenter.y,
+      //         l = this.clusteringAmount * Math.sqrt(x * x + y * y);
+      //       const r = d.r + clusterCenter.r;
+      //       if (l !== r) {
+      //         l = ((l - r) / l) * alpha;
+      //         d.x -= x *= l;
+      //         d.y -= y *= l;
+      //         clusterCenter.x += x;
+      //         clusterCenter.y += y;
+      //       }
+      //     });
+      //   }
+      // );
 
       // create the forceCluster/collision force simulation
       const newForceSimulation = d3
@@ -420,21 +420,8 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   // Filter slider function: $event = skill level, filterVariable = skill name
   handleSliderUpdate($event, filterVariable) {
-    const that = this;
-    this.sliderPositions[filterVariable] = $event;
-    // update the viz with the slider value, $event
-    // update the nodes from the data
-    this._statusService.changeFilteredNodes(
-      this.nodes.filter(d => {
-        for (const key in this.sliderPositions) {
-          // filter out any nodes below the slider thresholds
-          if (d[key] < this.sliderPositions[key]) {
-            return false;
-          }
-        }
-        return true;
-      })
-    );
+    // update the nodes with the new slider positions
+    this._filterService.filterViz($event, filterVariable, this.nodes);
     // UPDATE the viz data
     this.circles = this.circles.data(this.filteredNodes, d => d.id);
     // EXIT
@@ -456,59 +443,59 @@ export class VizComponent implements OnInit, AfterContentInit {
       .enter()
       .append('svg:circle')
       .attr('r', d => d.r + 'vmin')
-      .attr('fill', d => that.colourScale(d.cluster))
-      .attr('fill-opacity', 1)
+      .attr('fill', d => this.colourScale(d.cluster))
       .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
       .on('mouseover', d => {
         // initialize the tooltip
-        that.tooltipData = {
+        this.tooltipData = {
           d: d,
-          x: d.x + that.width / 2,
-          y: d.y + that.height / 2
+          x: d.x + this.width / 2,
+          y: d.y + this.height / 2
         };
         // highlight the circle border
         d3.selectAll('circle')
           .filter(c => c.id === d.id)
           .attr('stroke', 'black');
         // start the clock for auto-expansion after 2 seconds unless clicked-closed
-        if (!that.justClosed) {
-          that.autoExpand = setTimeout(() => {
-            that.tooltipExpanded = true;
+        if (!this.justClosed) {
+          this.autoExpand = setTimeout(() => {
+            this.tooltipExpanded = true;
           }, 2000);
         }
       })
       .on('mouseout', () => {
         // clear the autoExpand timeout
-        clearTimeout(that.autoExpand);
+        clearTimeout(this.autoExpand);
         // remove the border highlight
         d3.selectAll('circle')
           .attr('stroke', d => this.colourScale(d.cluster));
         // remove the tooltip unless expanded
-        if (that.tooltipExpanded) {
+        if (this.tooltipExpanded) {
           return;
         } else {
-          that.tooltipData = null;
+          this.tooltipData = null;
         }
-        that.justClosed = false;
+        this.justClosed = false;
       })
       .on('click', () => {
-        that.tooltipExpanded = !that.tooltipExpanded;
-        if (!that.tooltipExpanded) {
-          that.justClosed = true;
+        this.tooltipExpanded = !this.tooltipExpanded;
+        if (!this.tooltipExpanded) {
+          this.justClosed = true;
+          this.tooltipData = null;
         }
       })
       .merge(this.circles);
 
     // ZOOM to fit remaining of circles
-    // todo: calculate zoom based on total circle area if size-changed doesn't fit
+    // todo: if size-changed circles don't fit, calculate zoom based on total circle area
     const zoomAmount = Math.pow(
       this.nodes.length / this.filteredNodes.length,
-      0.45
+      0.45 // less than sqrt (0.5) to reduce overflow
     );
     this._statusService.changeSvgTransform('scale(' + zoomAmount + ')');
 
-    // fill circles with images if <30 remain
+    // fill circles with images if <40 remain
     setTimeout(() => {
     this.filteredNodes.length <= 40
       ? this.circles
@@ -520,32 +507,21 @@ export class VizComponent implements OnInit, AfterContentInit {
           .call(
             d3
               .drag()
-              .on('start', that.dragstarted)
-              .on('drag', that.dragged)
-              .on('end', that.dragended)
+              .on('start', this.dragstarted)
+              .on('drag', this.dragged)
+              .on('end', this.dragended)
           )
       : this.circles
           .attr('fill', d => this.colourScale(d.cluster))
           .call(
             d3
               .drag()
-              .on('start', that.dragstarted)
-              .on('drag', that.dragged)
-              .on('end', that.dragended)
+              .on('start', this.dragstarted)
+              .on('drag', this.dragged)
+              .on('end', this.dragended)
           );
     }, 1000);
 
-    // todo: modify to eliminate "freeze twitch" on drag-call (temporarily delayed by 2000ms)
-    // todo: fix by settimeout 0 for each individual circle?
-    // setTimeout(() => {
-    //   that.circles.call(
-    //     d3
-    //       .drag()
-    //       .on('start', that.dragstarted)
-    //       .on('drag', that.dragged)
-    //       .on('end', that.dragended)
-    //   );
-    // }, 4000);
     // Update nodes and restart the simulation.
     this._statusService.changeForceSimulation(
       this.forceSimulation

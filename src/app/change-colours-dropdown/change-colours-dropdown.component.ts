@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 import { AppStatusService } from '../app-status.service';
+import { AppSimulationService } from '../app-simulation.service';
 
 @Component({
   selector: 'app-change-colours-dropdown',
@@ -67,7 +68,8 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     }
   ];
 
-  constructor(private _dataService: DataService, private _statusService: AppStatusService) { }
+  constructor(private _dataService: DataService, private _statusService: AppStatusService,
+  private _simulationService: AppSimulationService) { }
 
   ngOnInit() {
     this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
@@ -124,33 +126,13 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
     // transition the circle colours
     d3.selectAll('circle').transition()
       .attr('fill', (d, i) => this.colourScale(this.nodes[i].cluster))
+      .attr('stroke', d => this.colourScale(d.cluster))
       .delay((d, i) => i * 0.8);
 
       // .attr('r', that.clusterSelector === 'none' ? window.innerWidth * 0.009 :
       //   d => that.colourScale(+d.all[that.clusterSelector]))
 
-    this._statusService.changeForceCluster(alpha => {
-      that.nodes.forEach(d => {
-        const cluster = that.clusterCenters[d.cluster];
-        // if (d.id === 200) { console.log(cluster); }
-        // if (d.id === 200) { console.log(d); }
-        if (cluster === d) {
-          return;
-        }
-        let x = d.x - cluster.x,
-          y = d.y - cluster.y,
-          l = Math.sqrt(x * x + y * y);
-        const r = d.r + cluster.r;
-        if (l !== r) {
-          l = ((l - r) / l) * alpha;
-          d.x -= x *= l;
-          d.y -= y *= l;
-          cluster.x += x;
-          cluster.y += y;
-        }
-      });
-    });
-
+    this._simulationService.forceCluster(this.nodes, this.clusterCenters)
 
     setTimeout(() => {
       this.forceSimulation
