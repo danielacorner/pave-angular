@@ -274,7 +274,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         })
       );
 
-      // todo: fill circles with images when <30 circles remain
+      // circle svg image patterns
       d3.select('#canvas').append('defs')
         .selectAll('.img-pattern')
         .data(this.nodes)
@@ -288,7 +288,10 @@ export class VizComponent implements OnInit, AfterContentInit {
         .attr('height', 1)
         .attr('width', 1)
         .attr('preserveAspectRatio', 'none')
-        .attr('xlink:href', d => '../../assets/img/NOC_images/' + d.all.noc + '.jpg');
+        .attr('xlink:href', d =>
+          window.location.href.includes('localhost')
+            ? '../../assets/img/NOC_images/' + d.all.noc + '.jpg'
+            : '../../pave-angular/assets/img/NOC_images/' + d.all.noc + '.jpg');
 
       // append the circles to svg then style
       // add functions for interaction
@@ -304,6 +307,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .attr('id', d => 'circle_' + d.id)
         .attr('r', d => d.r + 'vmin')
         .attr('fill', d => this.colourScale(d.cluster))
+        .attr('fill-opacity', 0)
         .call(
           d3
             .drag()
@@ -321,7 +325,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           // highlight the circle border
           d3.selectAll('circle')
             .filter(c => c.id === d.id)
-            .attr('stroke', 'black')
+            .attr('stroke', 'black');
           // start the clock for auto-expansion after 2 seconds unless clicked-closed
           if (!that.justClosed) {
             that.autoExpand = setTimeout(() => {
@@ -356,6 +360,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           .transition()
           .duration(1500)
           .style('opacity', 1)
+          .attr('fill-opacity', 1)
           .delay((d, i) => i * 3);
       }, 500);
 
@@ -452,6 +457,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .append('svg:circle')
       .attr('r', d => d.r + 'vmin')
       .attr('fill', d => that.colourScale(d.cluster))
+      .attr('fill-opacity', 1)
       .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
       .on('mouseover', d => {
@@ -464,7 +470,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         // highlight the circle border
         d3.selectAll('circle')
           .filter(c => c.id === d.id)
-          .attr('stroke', 'black')
+          .attr('stroke', 'black');
         // start the clock for auto-expansion after 2 seconds unless clicked-closed
         if (!that.justClosed) {
           that.autoExpand = setTimeout(() => {
@@ -506,11 +512,11 @@ export class VizComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
     this.filteredNodes.length <= 40
       ? this.circles
-          .style('fill-opacity', 0.2)
-          .style('fill', d => 'url(#pattern_' + d.id + ')')
+          .attr('fill-opacity', 0.2)
+          .attr('fill', d => 'url(#pattern_' + d.id + ')')
           .attr('stroke', d => this.colourScale(d.cluster))
           .transition().duration(1000)
-          .style('fill-opacity', 1)
+          .attr('fill-opacity', 1)
           .call(
             d3
               .drag()
@@ -519,7 +525,7 @@ export class VizComponent implements OnInit, AfterContentInit {
               .on('end', that.dragended)
           )
       : this.circles
-          .style('fill', d => this.colourScale(d.cluster))
+          .attr('fill', d => this.colourScale(d.cluster))
           .call(
             d3
               .drag()
