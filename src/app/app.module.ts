@@ -2,22 +2,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VizComponent } from './viz/viz.component';
-import { ColourLegendButtonComponent } from './colour-legend-button/colour-legend-button.component';
-import { SizeLegendButtonComponent } from './size-legend-button/size-legend-button.component';
-import { FilterSliderComponent } from './filter-slider/filter-slider.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
-import { TooltipMobileComponent } from './tooltip-mobile/tooltip-mobile.component';
+import { ColourLegendButtonComponent } from './controls/colour-legend-button/colour-legend-button.component';
+import { SizeLegendButtonComponent } from './controls/size-legend-button/size-legend-button.component';
+import { FilterSliderComponent } from './controls/filter-slider/filter-slider.component';
+import { TooltipComponent } from './details/tooltip/tooltip.component';
+import { TooltipMobileComponent } from './details/tooltip-mobile/tooltip-mobile.component';
+import { GraphComponent } from './visuals/graph/graph.component';
+import { SHARED_VISUALS } from './visuals/shared';
 
 // Services
 import { DataService } from './data.service';
 import { AppStatusService } from './app-status.service';
+import { D3Service, D3_DIRECTIVES } from './d3';
 
 // Material
 import {
@@ -36,10 +39,12 @@ import {
   MatBottomSheetModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DetailsComponent } from './details/details.component';
-import { GraphModeComponent } from './graph-mode/graph-mode.component';
-import { ChangeSizesDropdownComponent } from './change-sizes-dropdown/change-sizes-dropdown.component';
-import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change-colours-dropdown.component';
+import { DetailsComponent } from './details/modal/details.component';
+import { GraphModeComponent } from './controls/graph-mode/graph-mode.component';
+import { ChangeSizesDropdownComponent } from './controls/change-sizes-dropdown/change-sizes-dropdown.component';
+import { ChangeColoursDropdownComponent } from './controls/change-colours-dropdown/change-colours-dropdown.component';
+import { DraggableDirective } from './d3/directives/draggable.directive';
+import { ZoomableDirective } from './d3/directives/zoomable.directive';
 
 @NgModule({
   declarations: [
@@ -54,7 +59,12 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     GraphModeComponent,
     ChangeSizesDropdownComponent,
     ChangeColoursDropdownComponent,
-    TooltipMobileComponent
+    TooltipMobileComponent,
+    DraggableDirective,
+    ZoomableDirective,
+    GraphComponent,
+    ...SHARED_VISUALS,
+    ...D3_DIRECTIVES,
   ],
   imports: [
     BrowserModule,
@@ -73,10 +83,10 @@ import { ChangeColoursDropdownComponent } from './change-colours-dropdown/change
     MatSlideToggleModule,
     MatSelectModule,
     MatBottomSheetModule,
-    FormsModule
+    FormsModule,
   ],
   entryComponents: [DetailsComponent, TooltipMobileComponent],
-  providers: [DataService, MatDialogTitle, AppStatusService],
+  providers: [DataService, MatDialogTitle, AppStatusService, D3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -151,18 +151,18 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
     d.fx = d.x;
     d.fy = d.y;
-  };
+  }
   public dragged = d => {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
-  };
+  }
   public dragended = d => {
     if (!d3.event.active) {
       this.forceSimulation.alphaTarget(0);
     }
     d.fx = null;
     d.fy = null;
-  };
+  }
 
   ngOnInit() {
     // pull in the subscriptions
