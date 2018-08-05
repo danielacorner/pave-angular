@@ -14,6 +14,12 @@ export class AppStatusService {
   private _forceClusterSource = new BehaviorSubject<any>(null);
   public currentForceCluster = this._forceClusterSource.asObservable();
 
+  private _forceCollideSource = new BehaviorSubject<any>(null);
+  public currentForceCollide = this._forceCollideSource.asObservable();
+
+  private _forceGravitySource = new BehaviorSubject<any>(null);
+  public currentForceGravity = this._forceGravitySource.asObservable();
+
   private _forceSimulationSource = new BehaviorSubject<any>(null);
   public currentForceSimulation = this._forceSimulationSource.asObservable();
 
@@ -65,6 +71,14 @@ export class AppStatusService {
 
   public changeForceCluster(v) {
     this._forceClusterSource.next(v);
+  }
+
+  public changeForceCollide(v) {
+    this._forceCollideSource.next(v);
+  }
+
+  public changeForceGravity(v) {
+    this._forceGravitySource.next(v);
   }
 
   public changeForceSimulation(v) {

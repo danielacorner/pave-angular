@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { DataService } from '../data.service';
-import { AppStatusService } from '../app-status.service';
+import { DataService } from '../../data.service';
+import { AppStatusService } from '../../app-status.service';
 
 @Component({
   selector: 'app-graph-mode',
@@ -91,8 +91,14 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   @Input() public height;
   @Input() public navbarHeight;
   // subscriptions
+  public subscriptions = [
+    'forceCluster',
+    'forceSimulation',
+    'svgTransform'
+  ];
   public forceCluster;
   public forceSimulation;
+  public svgTransform;
   public data$;
 
   public axisSelectorGroups = [
@@ -132,8 +138,6 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public scaleX;
   public scaleY;
 
-  public svgTransform;
-
   public oldXPositions = [];
   public oldYPositions = [];
   public newXPositions = [];
@@ -143,16 +147,14 @@ export class GraphModeComponent implements OnInit, AfterContentInit {
   public graphDimensions = { x: 0.8, y: 0.7 };
 
   ngOnInit() {
-    this._statusService.currentForceCluster.subscribe(
-      v => (this.forceCluster = v)
-    );
-    this._statusService.currentForceSimulation.subscribe(
-      v => (this.forceSimulation = v)
-    );
-    this._statusService.currentSvgTransform.subscribe(
-      v => (this.svgTransform = v)
-    );
-  }
+    // pull in the subscriptions
+    this.subscriptions.forEach(s => {
+      const titleCase = s
+          .charAt(0)
+          .toUpperCase() + s.slice(1);
+      this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
+    });
+             }
 
   ngAfterContentInit() {
     // resolve d3 function scope by saving outer scope

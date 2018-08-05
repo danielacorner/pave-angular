@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
+import { DataService } from '../../data.service';
+import { AppStatusService } from '../../app-status.service';
+import { AppSimulationService } from './../../app-simulation.service';
 import * as d3 from 'd3';
-import { DataService } from '../data.service';
-import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-change-sizes-dropdown',
@@ -41,15 +42,28 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
   @Input() public minRadius;
   @Input() public width;
   // subscriptions
+  public subscriptions = [
+    'defaultCircleRadius',
+    'radiusRange',
+    'radiusScale',
+    'radiusSelector',
+    'forceSimulation',
+    'forceCollide',
+    'forceGravity',
+    'nodes',
+    'filteredNodes'
+  ];
   public defaultCircleRadius;
   public radiusRange;
   public radiusScale;
   public radiusSelector;
   public forceSimulation;
-  public active = true;
-  public data$;
+  public forceCollide;
+  public forceGravity;
   public nodes;
   public filteredNodes;
+  public active = true;
+  public data$;
 
   public radiusSelectorGroups = [
     {
@@ -72,34 +86,19 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
 
   constructor(
     private _dataService: DataService,
-    private _statusService: AppStatusService
+    private _statusService: AppStatusService,
+    private _simulationService: AppSimulationService
   ) {}
 
   ngOnInit() {
-    this._statusService.currentRadiusSelector.subscribe(
-      v => (this.radiusSelector = v)
-    );
-    this._statusService.currentForceSimulation.subscribe(
-      v => (this.forceSimulation = v)
-    );
-    this._statusService.currentRadiusRange.subscribe(
-      v => (this.radiusRange = v)
-    );
-    this._statusService.currentRadiusScale.subscribe(
-      v => (this.radiusScale = v)
-    );
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
     });
-    this._statusService.currentFilteredNodes.subscribe(
-      v => (this.filteredNodes = v)
-    );
-    this._statusService.currentNodes.subscribe(
-      v => (this.nodes = v)
-    );
-    this._statusService.currentDefaultCircleRadius.subscribe(
-      v => (this.defaultCircleRadius = v)
-    );
+    // pull in the subscriptions
+    this.subscriptions.forEach(s => {
+      const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
+      this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
+    });
 
   }
 
@@ -147,6 +146,11 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     }, 1000);
 
     setTimeout(() => {
+      // change the collision force to the new radius
+      this._statusService.changeForceCollide(
+        this._simulationService.forceCollide(this.radiusSelector, this.defaultCircleRadius, this.nodePadding)
+      );
+      // change the force simulation with new gravities and radii
       this._statusService.changeForceSimulation(
         this.forceSimulation
           .force(
@@ -163,6 +167,7 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
                       ) * this.nodeAttraction
               )
           )
+          .force('collide', this.forceCollide)
           .alpha(0.3)
           .restart()
       );

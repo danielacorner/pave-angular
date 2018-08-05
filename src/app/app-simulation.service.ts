@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppStatusService } from './app-status.service';
+import * as d3 from 'd3';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,32 @@ export class AppSimulationService {
           }
         });
       }
+    );
+  }
+
+  forceCollide(radiusSelector, defaultCircleRadius, nodePadding) {
+    this._statusService.changeForceCollide(
+      d3.forceCollide().radius(
+        radiusSelector === 'none'
+        ? (defaultCircleRadius + nodePadding) + 'vmin'
+        : d => (d.r + nodePadding) + 'vmin'
+      )
+    );
+  }
+
+  forceGravity(radiusSelector, nodeAttraction, radiusScale) {
+    this._statusService.changeForceGravity(
+      d3
+      .forceManyBody()
+      .strength(
+        radiusSelector === 'none'
+        ? nodeAttraction
+        : d => Math.pow(
+          radiusScale(+d.all[radiusSelector]),
+          2
+        ) * nodeAttraction
+
+      )
     );
   }
 }

@@ -6,9 +6,12 @@ import { Component } from '@angular/core';
     <app-navbar></app-navbar>
     <app-viz></app-viz>
     <router-outlet></router-outlet>
+
   `,
   styles: []
 })
 export class AppComponent {
-  title = 'app';
+
+  constructor() {
+  }
 }

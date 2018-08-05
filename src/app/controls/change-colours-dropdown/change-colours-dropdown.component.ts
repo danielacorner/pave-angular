@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
-import { DataService } from '../data.service';
-import { AppStatusService } from '../app-status.service';
-import { AppSimulationService } from '../app-simulation.service';
+import { DataService } from '../../data.service';
+import { AppStatusService } from '../../app-status.service';
+import { AppSimulationService } from '../../app-simulation.service';
 
 @Component({
   selector: 'app-change-colours-dropdown',
@@ -132,7 +132,7 @@ export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit 
       // .attr('r', that.clusterSelector === 'none' ? window.innerWidth * 0.009 :
       //   d => that.colourScale(+d.all[that.clusterSelector]))
 
-    this._simulationService.forceCluster(this.nodes, this.clusterCenters)
+    this._simulationService.forceCluster(this.nodes, this.clusterCenters);
 
     setTimeout(() => {
       this.forceSimulation

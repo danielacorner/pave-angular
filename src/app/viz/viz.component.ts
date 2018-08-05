@@ -94,6 +94,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     'clusterSelector',
     'uniqueClusterValues',
     'forceCluster',
+    'forceGravity',
     'forceSimulation',
     'radiusRange',
     'radiusScale',
@@ -127,16 +128,10 @@ export class VizComponent implements OnInit, AfterContentInit {
   public centerGravity = 1.75;
   public forceXCombine = d3.forceX().strength(this.centerGravity);
   public forceYCombine = d3.forceY().strength(this.centerGravity);
-  public forceGravity = d3
-    .forceManyBody()
-    .strength(
-      this.radiusSelector === 'none'
-        ? this.nodeAttraction
-        : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
-    );
-  public forceCollide = null;
-  public nodePadding = 1;
-  // public forceCollide = d3.forceCollide().radius(d => (6*d.r) + this.nodePadding);
+  public forceGravity;
+  public nodePadding = -1;
+  // public forceCollide = null;
+  public forceCollide;
   public ticked;
   // tooltip
   public tooltipData;
@@ -170,8 +165,15 @@ export class VizComponent implements OnInit, AfterContentInit {
       const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
       this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
     });
+    this.updateForceCollide();
+    this.updateForceGravity();
   }
-
+  updateForceCollide() {
+    this._simulationService.forceCollide(this.radiusSelector, this.defaultCircleRadius, this.nodePadding);
+  }
+  updateForceGravity() {
+    this._simulationService.forceGravity(this.radiusSelector, this.nodeAttraction, this.radiusScale);
+  }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     // reposition canvas
@@ -180,22 +182,22 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.canvasStyles.height = window.innerHeight - this.navbarHeight;
 
     // recalculate forces
-    this.nodeAttraction =
+    this.radiusSelector === 'none'
+    ? (this.nodeAttraction =
       Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
-      this.nodeAttractionConstant *
-      this.defaultCircleRadius;
+      this.nodeAttractionConstant * this.defaultCircleRadius)
+    : (this.nodeAttraction =
+      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
+      this.nodeAttractionConstant);
 
-    this.forceGravity = d3
-      .forceManyBody()
-      .strength(
-        this.radiusSelector === 'none'
-          ? this.nodeAttraction
-          : d => Math.pow(d.r, 2) * this.nodeAttraction + 3
-      );
+    // change the collision and gravity forces for the new radii
+    this.updateForceCollide();
+    this.updateForceGravity();
 
     this._statusService.changeForceSimulation(
       this.forceSimulation
         .force('gravity', this.forceGravity)
+        .force('collide', this.forceCollide)
         .alpha(0.3)
         .restart()
     );
@@ -204,8 +206,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
-      (window.innerHeight / 2 + this.navbarHeight) +
+      (window.innerHeight / 2 - this.navbarHeight) +
       'px)';
+
   }
 
   ngAfterContentInit() {
@@ -368,29 +371,6 @@ export class VizComponent implements OnInit, AfterContentInit {
       };
 
       this._simulationService.forceCluster(that.nodes, that.clusterCenters);
-      // this._statusService.changeForceCluster(
-      //   // These are implementations of the custom forces.
-      //   alpha => {
-      //     that.nodes.forEach(d => {
-      //       // if(d.id==1){console.log(d);}
-      //       const clusterCenter = that.clusterCenters[d.cluster];
-      //       if (clusterCenter === d) {
-      //         return;
-      //       }
-      //       let x = d.x - clusterCenter.x,
-      //         y = d.y - clusterCenter.y,
-      //         l = this.clusteringAmount * Math.sqrt(x * x + y * y);
-      //       const r = d.r + clusterCenter.r;
-      //       if (l !== r) {
-      //         l = ((l - r) / l) * alpha;
-      //         d.x -= x *= l;
-      //         d.y -= y *= l;
-      //         clusterCenter.x += x;
-      //         clusterCenter.y += y;
-      //       }
-      //     });
-      //   }
-      // );
 
       // create the forceCluster/collision force simulation
       const newForceSimulation = d3

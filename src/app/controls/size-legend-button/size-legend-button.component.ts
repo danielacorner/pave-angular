@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
-import { AppStatusService } from '../app-status.service';
+import { AppStatusService } from '../../app-status.service';
 
 @Component({
   selector: 'app-size-legend-button',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material';
 import * as d3 from 'd3';
-import { DetailsComponent } from '../details/details.component';
+import { ModalComponent } from '../modal/modal.component';
 import {
   MatBottomSheet,
   MatBottomSheetRef,
@@ -153,7 +153,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
       return;
     } else {
       // const dialogRef =
-      this.dialog.open(DetailsComponent, {
+      this.dialog.open(ModalComponent, {
         height: '95%',
         width: 'auto',
         data: jobData
