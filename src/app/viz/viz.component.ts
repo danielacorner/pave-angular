@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { AppStatusService } from '../app-status.service';
 import { AppFilterService } from '../app-filter.service';
 import { AppSimulationService } from '../app-simulation.service';
+import { forceCluster } from 'd3-force-cluster';
 
 import {
   trigger,
@@ -42,7 +43,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     private _dataService: DataService,
     private _statusService: AppStatusService,
     private _filterService: AppFilterService,
-    private _simulationService: AppSimulationService,
+    private _simulationService: AppSimulationService
   ) {}
   // ----- POSITIONING ----- //
   public wdw = window;
@@ -54,7 +55,9 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- CANVAS PROPERTIES ----- //
   public data$ = [];
   public circles;
-  public minRadius = Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight)) * 0.0006; // vmin
+  public minRadius =
+    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+    0.0006; // vmin
   public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
   public canvasStyles = {
     position: 'absolute',
@@ -108,8 +111,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   public radiusSelector = 'none'; // default value because forceGravity defined before subscription
   public clusterSelector;
   public uniqueClusterValues;
-  public forceCluster;
-  public forceSimulation;
   public radiusRange;
   public radiusScale;
   public filteredNodes;
@@ -118,18 +119,33 @@ export class VizComponent implements OnInit, AfterContentInit {
   public numClusters;
   public svgTransform = 'scale(1)'; // zoom when fewer nodes
 
-  // ----- SIMULATION & FORCES ----- //
-  // public clusteringAmount = 0.5;
-  public defaultCircleRadius = 1.0;
-  public nodeAttractionConstant = -0.28; // negative = repel
-  public nodeAttraction =
-    Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight))
-     * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
-  public centerGravity = 1.75;
-  public forceXCombine = d3.forceX().strength(this.centerGravity);
-  public forceYCombine = d3.forceY().strength(this.centerGravity);
+  // ----------------------------------------------------------------------------
+  // Simulation & Forces --------------------------------------------------------
+  // ----------------------------------------------------------------------------
+  // Constants
+  public CLUSTERING_AMOUNT = 0.5;
+  public DEFAULT_CIRCLE_RADIUS = 1.0;
+  public NODE_REPEL = -0.85;
+  public NODE_ATTRACT = 0.075; // negative = repel
+  // public NODE_ATTRACT = -0.28; // negative = repel
+  public CENTER_GRAVITY = 0.0175;
+  public NODE_PADDING = -0.1;
+
+  // Responsive force multipliers
+  public nodeAttract =
+    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+    this.NODE_ATTRACT * this.DEFAULT_CIRCLE_RADIUS;
+  public nodeRepel =
+    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+    this.NODE_REPEL * this.DEFAULT_CIRCLE_RADIUS;
+  // todo: make forceX, Y responsive
+  public forceXCombine = d3.forceX().strength(this.CENTER_GRAVITY);
+  public forceYCombine = d3.forceY().strength(this.CENTER_GRAVITY);
+
+  public forceCluster;
+  public forceSimulation;
   public forceGravity;
-  public nodePadding = -1;
+  public forceCharge;
   // public forceCollide = null;
   public forceCollide;
   public ticked;
@@ -159,6 +175,45 @@ export class VizComponent implements OnInit, AfterContentInit {
     d.fy = null;
   };
 
+  // --------------------------------------------------------------
+  // Update functions
+  // --------------------------------------------------------------
+  updateForceCluster() {
+    this._simulationService.forceCluster(
+      this.nodes,
+      this.clusterCenters,
+      this.CLUSTERING_AMOUNT
+    );
+  }
+  updateForceCollide() {
+    this._simulationService.forceCollide(
+      this.radiusSelector,
+      this.DEFAULT_CIRCLE_RADIUS,
+      this.NODE_PADDING
+    );
+  }
+  updateForceGravity() {
+    this._simulationService.forceGravity(
+      this.radiusSelector,
+      this.nodeAttract,
+      this.radiusScale
+    );
+  }
+  updateForceCharge() {
+    this._simulationService.forceCharge(
+      this.radiusSelector,
+      this.nodeRepel,
+      this.radiusScale
+    );
+  }
+  updateSimulation() {
+    this._simulationService.forceSimulation(
+      this.forceSimulation,
+      this.forceGravity,
+      this.forceCollide
+    );
+  }
+
   ngOnInit() {
     // pull in the subscriptions
     this.subscriptions.forEach(s => {
@@ -167,12 +222,6 @@ export class VizComponent implements OnInit, AfterContentInit {
     });
     this.updateForceCollide();
     this.updateForceGravity();
-  }
-  updateForceCollide() {
-    this._simulationService.forceCollide(this.radiusSelector, this.defaultCircleRadius, this.nodePadding);
-  }
-  updateForceGravity() {
-    this._simulationService.forceGravity(this.radiusSelector, this.nodeAttraction, this.radiusScale);
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -183,24 +232,24 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // recalculate forces
     this.radiusSelector === 'none'
-    ? (this.nodeAttraction =
-      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
-      this.nodeAttractionConstant * this.defaultCircleRadius)
-    : (this.nodeAttraction =
-      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
-      this.nodeAttractionConstant);
+      ? (this.nodeAttract =
+          Math.min(
+            event.target.innerWidth,
+            event.target.innerHeight - this.navbarHeight
+          ) *
+          this.NODE_ATTRACT *
+          this.DEFAULT_CIRCLE_RADIUS)
+      : (this.nodeAttract =
+          Math.min(
+            event.target.innerWidth,
+            event.target.innerHeight - this.navbarHeight
+          ) * this.NODE_ATTRACT);
 
     // change the collision and gravity forces for the new radii
+    this.updateForceCluster(); // todo: necessary?
     this.updateForceCollide();
     this.updateForceGravity();
-
-    this._statusService.changeForceSimulation(
-      this.forceSimulation
-        .force('gravity', this.forceGravity)
-        .force('collide', this.forceCollide)
-        .alpha(0.3)
-        .restart()
-    );
+    this.updateSimulation();
 
     this.gTransform =
       'translate(' +
@@ -208,7 +257,6 @@ export class VizComponent implements OnInit, AfterContentInit {
       'px,' +
       (window.innerHeight / 2 - this.navbarHeight) +
       'px)';
-
   }
 
   ngAfterContentInit() {
@@ -224,17 +272,17 @@ export class VizComponent implements OnInit, AfterContentInit {
           .scaleSqrt() // sqrt because circle areas
           .domain(
             this.radiusSelector === 'none'
-              ? [1, 1]
-              : d3.extent(this.data$, d => +d[that.radiusSelector])
+              ? [1, 1] // equal radii if none
+              : d3.extent(this.data$, d => +d[this.radiusSelector]) // else min, max
           )
           .range(
             this.radiusSelector === 'none'
-              ? Array(2).fill(this.defaultCircleRadius)
-              : this.radiusRange
+              ? Array(2).fill(this.DEFAULT_CIRCLE_RADIUS) // equal radii if none
+              : this.radiusRange // else min, max
           )
       );
 
-      // convert each unique value to a cluster number
+      // create array of unique cluster values
       this._statusService.changeUniqueClusterValues(
         this.data$
           .map(d => d[that.clusterSelector])
@@ -250,7 +298,7 @@ export class VizComponent implements OnInit, AfterContentInit {
 
           // SELECT THE CLUSTER VARIABLE 2/2
           const forcedCluster =
-            this.uniqueClusterValues.indexOf(d[that.clusterSelector]) + 1;
+            this.uniqueClusterValues.indexOf(d[this.clusterSelector]) + 1;
 
           // define the nodes
           d = {
@@ -280,12 +328,14 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
 
       // circle svg image patterns
-      d3.select('#canvas').append('defs')
+      d3.select('#canvas')
+        .append('defs')
         .selectAll('.img-pattern')
         .data(this.nodes)
-        .enter().append('pattern')
+        .enter()
+        .append('pattern')
         .attr('class', 'img-pattern')
-        .attr('id', d => 'pattern_' + d.id )
+        .attr('id', d => 'pattern_' + d.id)
         .attr('height', '100%')
         .attr('width', '100%')
         .attr('patternContentUnits', 'objectBoundingBox')
@@ -293,10 +343,15 @@ export class VizComponent implements OnInit, AfterContentInit {
         .attr('height', 1)
         .attr('width', 1)
         .attr('preserveAspectRatio', 'none')
-        .attr('xlink:href', d =>
-          window.location.href.includes('localhost')
-            ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
-            : '../../pave-angular/assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg');
+        .attr(
+          'xlink:href',
+          d =>
+            window.location.href.includes('localhost')
+              ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
+              : '../../pave-angular/assets/img/NOC_thumbnails/tn_' +
+                d.all.noc +
+                '.jpg'
+        );
 
       // append the circles to svg then style
       // add functions for interaction
@@ -370,8 +425,6 @@ export class VizComponent implements OnInit, AfterContentInit {
         that.circles.attr('cx', d => d.x).attr('cy', d => d.y);
       };
 
-      this._simulationService.forceCluster(that.nodes, that.clusterCenters);
-
       // create the forceCluster/collision force simulation
       const newForceSimulation = d3
         .forceSimulation(this.nodes)
@@ -380,6 +433,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .force('y', that.forceYCombine)
         .force('collide', that.forceCollide)
         .force('gravity', that.forceGravity)
+        .force('charge', that.forceCharge)
         .force('cluster', that.forceCluster)
         .on('tick', that.ticked);
 
@@ -448,8 +502,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         // clear the autoExpand timeout
         clearTimeout(this.autoExpand);
         // remove the border highlight
-        d3.selectAll('circle')
-          .attr('stroke', d => this.colourScale(d.cluster));
+        d3.selectAll('circle').attr('stroke', d => this.colourScale(d.cluster));
         // remove the tooltip unless expanded
         if (this.tooltipExpanded) {
           return;
@@ -477,23 +530,22 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // fill circles with images if <40 remain
     setTimeout(() => {
-    this.filteredNodes.length <= 40
-      ? this.circles
-          .attr('fill-opacity', 0.2)
-          .attr('fill', d => 'url(#pattern_' + d.id + ')')
-          .attr('stroke', d => this.colourScale(d.cluster))
-          .transition().duration(1000)
-          .attr('fill-opacity', 1)
-          .call(
-            d3
-              .drag()
-              .on('start', this.dragstarted)
-              .on('drag', this.dragged)
-              .on('end', this.dragended)
-          )
-      : this.circles
-          .attr('fill', d => this.colourScale(d.cluster))
-          .call(
+      this.filteredNodes.length <= 40
+        ? this.circles
+            .attr('fill-opacity', 0.2)
+            .attr('fill', d => 'url(#pattern_' + d.id + ')')
+            .attr('stroke', d => this.colourScale(d.cluster))
+            .transition()
+            .duration(1000)
+            .attr('fill-opacity', 1)
+            .call(
+              d3
+                .drag()
+                .on('start', this.dragstarted)
+                .on('drag', this.dragged)
+                .on('end', this.dragended)
+            )
+        : this.circles.attr('fill', d => this.colourScale(d.cluster)).call(
             d3
               .drag()
               .on('start', this.dragstarted)

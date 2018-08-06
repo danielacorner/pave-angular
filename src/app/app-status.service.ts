@@ -20,6 +20,9 @@ export class AppStatusService {
   private _forceGravitySource = new BehaviorSubject<any>(null);
   public currentForceGravity = this._forceGravitySource.asObservable();
 
+  private _forceChargeSource = new BehaviorSubject<any>(null);
+  public currentForceCharge = this._forceChargeSource.asObservable();
+
   private _forceSimulationSource = new BehaviorSubject<any>(null);
   public currentForceSimulation = this._forceSimulationSource.asObservable();
 
@@ -79,6 +82,10 @@ export class AppStatusService {
 
   public changeForceGravity(v) {
     this._forceGravitySource.next(v);
+  }
+
+  public changeForceCharge(v) {
+    this._forceChargeSource.next(v);
   }
 
   public changeForceSimulation(v) {
