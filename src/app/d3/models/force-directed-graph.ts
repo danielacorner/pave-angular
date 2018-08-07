@@ -6,8 +6,11 @@ import * as _d3 from 'd3';
 const FORCES = {
   LINKS: 1 / 50,
   COLLISION: 1,
-  CHARGE: -1
+  CHARGE: -1,
+  X: 1.75,
+  Y: 1.75,
 };
+const NODE_PADDING = 5;
 
 export class ForceDirectedGraph {
   public ticker: EventEmitter<d3.Simulation<Node, Link>> = new EventEmitter();
@@ -80,9 +83,11 @@ export class ForceDirectedGraph {
           _d3
             .forceCollide()
             .strength(FORCES.COLLISION)
-            .radius(d => d['r'] + 5)
+            .radius(d => d['r'] + NODE_PADDING)
             .iterations(2)
-        );
+        )
+        .force('x', _d3.forceX().strength(FORCES.X))
+        .force('y', _d3.forceY().strength(FORCES.Y));
 
       // Connecting the d3 ticker to an angular event emitter
       this.simulation.on('tick', function() {

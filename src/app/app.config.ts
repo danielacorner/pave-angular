@@ -12,6 +12,6 @@ const CONFIG = {
     // 'rgb(0,82,154)'
     // 'rgb(0,60,113)'
   ]
-}
+};
 
 export default CONFIG;
