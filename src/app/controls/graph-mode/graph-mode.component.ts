@@ -73,7 +73,7 @@ import { AppStatusService } from '../../app-status.service';
         bottom: 100px;
         right: 100px;
       }
-      @media only screen and (max-width: 690px) {
+      @media only screen and (max-width: 692px) {
         button {
           transform: scale(0.8);
           width: 220px;

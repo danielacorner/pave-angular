@@ -41,9 +41,29 @@
       <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
         [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
     </div>
-    <div class="legend-sort-mobile-container center">
-      <button class="legend-button-mobile btn-small" (click)="mobileLegendMenu()">Legend</button>
-      <button class="sort-button-mobile btn-small" (click)="mobileSortMenu()">Sort</button>
+    <div class="controls-mobile-container center">
+      <button class="legend-button-mobile btn-small"
+      [matMenuTriggerFor]="legendMenu"
+      >Legend</button>
+      <mat-menu #legendMenu="matMenu" yPosition="above">
+        <div mat-menu-item><app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+          [height]="height" [navbarHeight]="navbarHeight"
+          ></app-colour-legend-button>
+        </div>
+        <div mat-menu-item><app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+          [height]="height" [navbarHeight]="navbarHeight"
+          ></app-size-legend-button>
+        </div>
+      </mat-menu>
+      <button class="sort-button-mobile btn-small"
+      [matMenuTriggerFor]="sortMenu"
+      >Sort</button>
+      <mat-menu #sortMenu="matMenu" yPosition="above">
+        <div mat-menu-item><app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
+        </div>
+        <div mat-menu-item><app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+        </div>
+      </mat-menu>
     </div>
     <div class="graph-button-container center">
       <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"

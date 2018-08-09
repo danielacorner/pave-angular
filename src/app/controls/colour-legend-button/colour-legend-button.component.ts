@@ -53,19 +53,29 @@ import * as d3 from 'd3';
         transition: transform 0.2s;
       }
       .annotation {
-
+      }
+      @media only screen and (max-width: 576px) {
+        button {
+          transform: scale(0.7);
+        }
       }
     `
   ]
 })
 export class ColourLegendButtonComponent implements OnInit {
   // static inputs
-  @Input() public forceXCombine;
-  @Input() public forceYCombine;
-  @Input() public nClusters;
-  @Input() public navbarHeight;
-  @Input() public width;
-  @Input() public height;
+  @Input()
+  public forceXCombine;
+  @Input()
+  public forceYCombine;
+  @Input()
+  public nClusters;
+  @Input()
+  public navbarHeight;
+  @Input()
+  public width;
+  @Input()
+  public height;
   // subscriptions
   public forceSimulation;
   public forceCluster;
@@ -84,11 +94,21 @@ export class ColourLegendButtonComponent implements OnInit {
   constructor(private _statusService: AppStatusService) {}
 
   ngOnInit() {
-    this._statusService.currentClusterSelector.subscribe(v => (this.clusterSelector = v));
-    this._statusService.currentUniqueClusterValues.subscribe(v => (this.uniqueClusterValues = v));
-    this._statusService.currentForceCluster.subscribe(v => (this.forceCluster = v));
-    this._statusService.currentForceSimulation.subscribe(v => (this.forceSimulation = v));
-    this._statusService.currentColourSortActive.subscribe(v => (this.colourSortActive = v));
+    this._statusService.currentClusterSelector.subscribe(
+      v => (this.clusterSelector = v)
+    );
+    this._statusService.currentUniqueClusterValues.subscribe(
+      v => (this.uniqueClusterValues = v)
+    );
+    this._statusService.currentForceCluster.subscribe(
+      v => (this.forceCluster = v)
+    );
+    this._statusService.currentForceSimulation.subscribe(
+      v => (this.forceSimulation = v)
+    );
+    this._statusService.currentColourSortActive.subscribe(
+      v => (this.colourSortActive = v)
+    );
   }
 
   handleClick() {
@@ -118,12 +138,14 @@ export class ColourLegendButtonComponent implements OnInit {
       .strength(1.2);
 
     if (this.colourSortActive) {
-      this._statusService.changeForceSimulation(this.forceSimulation
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
           .force('x', forceXSeparate)
           .force('y', forceYSeparate)
           .alpha(0.3)
           .alphaTarget(0.001)
-          .restart());
+          .restart()
+      );
 
       this.createAnnotations();
 
@@ -141,12 +163,14 @@ export class ColourLegendButtonComponent implements OnInit {
           .style('opacity', 1);
       }, 3000);
     } else {
-      this._statusService.changeForceSimulation(this.forceSimulation
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
           .force('x', that.forceXCombine)
           .force('y', that.forceYCombine)
           .alpha(0.3)
           .alphaTarget(0.001)
-          .restart());
+          .restart()
+      );
 
       this.clearAnnotations();
     }
@@ -229,7 +253,10 @@ export class ColourLegendButtonComponent implements OnInit {
 
   clearAnnotations() {
     clearInterval(this.refreshInterval);
-    d3.selectAll('.annotation').transition().duration(500)
-      .style('opacity', 0).remove();
+    d3.selectAll('.annotation')
+      .transition()
+      .duration(500)
+      .style('opacity', 0)
+      .remove();
   }
 }

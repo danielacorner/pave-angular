@@ -33,7 +33,8 @@ import {
   MatDividerModule,
   MatSlideToggleModule,
   MatSelectModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatMenuModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './details/modal/modal.component';
@@ -73,6 +74,7 @@ import { ChangeColoursDropdownComponent } from './controls/change-colours-dropdo
     MatSlideToggleModule,
     MatSelectModule,
     MatBottomSheetModule,
+    MatMenuModule,
     FormsModule,
   ],
   entryComponents: [ModalComponent, TooltipMobileComponent],

@@ -70,7 +70,7 @@
         bottom: 0px;
         width: 100%;
       }
-      .legend-sort-mobile-container {
+      .controls-mobile-container {
       display: none;
       }
 //  }
@@ -95,7 +95,7 @@
 
 }
 // todo: switch to min-width for performance
-@media only screen and (max-width: 690px) {
+@media only screen and (max-width: 692px) {
     .grid-container {
       grid-template-columns: auto auto;
     }
@@ -117,11 +117,14 @@
     .sort-buttons-container, .dropdowns-container, {
       display: none;
     }
-    .legend-sort-mobile-container {
+    .controls-mobile-container {
       display: block;
       margin-left: 10px;
     }
-    .legend-sort-mobile-container button {
+    .controls-mobile-container button {
       margin: 0 5px 8px 5px;
+    }
+    .mat-menu-item {
+      height: 75px;
     }
 }
