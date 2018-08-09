@@ -56,7 +56,7 @@ import * as d3 from 'd3';
       }
       @media only screen and (max-width: 576px) {
         button {
-          transform: scale(0.7);
+          transform: scale(0.8);
         }
       }
     `

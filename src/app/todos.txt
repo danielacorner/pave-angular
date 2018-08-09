@@ -1,12 +1,8 @@
 todos
 -----
-split viz into smaller components
-- simulation service
-  - changeNodes, changeForceSimulation, drag functions
 
 bugs:
-- zoom gtransform y is too high
-  - should be remaining height / 2
+- Graph view button z index (should be below tooltip)
 - click once, same job still selected
 - sliders move when used on tablet
 
