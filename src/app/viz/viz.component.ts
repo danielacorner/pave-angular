@@ -1,9 +1,15 @@
-import { Component, OnInit, AfterContentInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterContentInit,
+  HostListener
+} from '@angular/core';
 import * as d3 from 'd3';
 import { DataService } from '../data.service';
 import { AppStatusService } from '../app-status.service';
 import { AppFilterService } from '../app-filter.service';
 import { AppSimulationService } from '../app-simulation.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import {
   trigger,
@@ -43,6 +49,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     private _statusService: AppStatusService,
     private _filterService: AppFilterService,
     private _simulationService: AppSimulationService,
+    private _sanitizer: DomSanitizer
   ) {}
   // ----- POSITIONING ----- //
   public wdw = window;
@@ -54,7 +61,9 @@ export class VizComponent implements OnInit, AfterContentInit {
   // ----- CANVAS PROPERTIES ----- //
   public data$ = [];
   public circles;
-  public minRadius = Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight)) * 0.0006; // vmin
+  public minRadius =
+    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+    0.0006; // vmin
   public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
   public canvasStyles = {
     position: 'absolute',
@@ -123,8 +132,9 @@ export class VizComponent implements OnInit, AfterContentInit {
   public defaultCircleRadius = 1.0;
   public nodeAttractionConstant = -0.28; // negative = repel
   public nodeAttraction =
-    Math.min(window.innerWidth, (window.innerHeight - this.navbarHeight))
-     * this.nodeAttractionConstant * this.defaultCircleRadius; // negative = repel
+    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+    this.nodeAttractionConstant *
+    this.defaultCircleRadius; // negative = repel
   public centerGravity = 1.75;
   public forceXCombine = d3.forceX().strength(this.centerGravity);
   public forceYCombine = d3.forceY().strength(this.centerGravity);
@@ -169,10 +179,18 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.updateForceGravity();
   }
   updateForceCollide() {
-    this._simulationService.forceCollide(this.radiusSelector, this.defaultCircleRadius, this.nodePadding);
+    this._simulationService.forceCollide(
+      this.radiusSelector,
+      this.defaultCircleRadius,
+      this.nodePadding
+    );
   }
   updateForceGravity() {
-    this._simulationService.forceGravity(this.radiusSelector, this.nodeAttraction, this.radiusScale);
+    this._simulationService.forceGravity(
+      this.radiusSelector,
+      this.nodeAttraction,
+      this.radiusScale
+    );
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -183,12 +201,18 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // recalculate forces
     this.radiusSelector === 'none'
-    ? (this.nodeAttraction =
-      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
-      this.nodeAttractionConstant * this.defaultCircleRadius)
-    : (this.nodeAttraction =
-      Math.min(event.target.innerWidth, (event.target.innerHeight - this.navbarHeight)) *
-      this.nodeAttractionConstant);
+      ? (this.nodeAttraction =
+          Math.min(
+            event.target.innerWidth,
+            event.target.innerHeight - this.navbarHeight
+          ) *
+          this.nodeAttractionConstant *
+          this.defaultCircleRadius)
+      : (this.nodeAttraction =
+          Math.min(
+            event.target.innerWidth,
+            event.target.innerHeight - this.navbarHeight
+          ) * this.nodeAttractionConstant);
 
     // change the collision and gravity forces for the new radii
     this.updateForceCollide();
@@ -208,7 +232,6 @@ export class VizComponent implements OnInit, AfterContentInit {
       'px,' +
       (event.target.innerHeight - this.navbarHeight + 80) / 2 +
       'px)';
-
   }
 
   ngAfterContentInit() {
@@ -280,12 +303,14 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
 
       // circle svg image patterns
-      d3.select('#canvas').append('defs')
+      d3.select('#canvas')
+        .append('defs')
         .selectAll('.img-pattern')
         .data(this.nodes)
-        .enter().append('pattern')
+        .enter()
+        .append('pattern')
         .attr('class', 'img-pattern')
-        .attr('id', d => 'pattern_' + d.id )
+        .attr('id', d => 'pattern_' + d.id)
         .attr('height', '100%')
         .attr('width', '100%')
         .attr('patternContentUnits', 'objectBoundingBox')
@@ -293,10 +318,15 @@ export class VizComponent implements OnInit, AfterContentInit {
         .attr('height', 1)
         .attr('width', 1)
         .attr('preserveAspectRatio', 'none')
-        .attr('xlink:href', d =>
-          window.location.href.includes('localhost')
-            ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
-            : '../../pave-angular/assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg');
+        .attr(
+          'xlink:href',
+          d =>
+            window.location.href.includes('localhost')
+              ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
+              : '../../pave-angular/assets/img/NOC_thumbnails/tn_' +
+                d.all.noc +
+                '.jpg'
+        );
 
       // append the circles to svg then style
       // add functions for interaction
@@ -448,8 +478,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         // clear the autoExpand timeout
         clearTimeout(this.autoExpand);
         // remove the border highlight
-        d3.selectAll('circle')
-          .attr('stroke', d => this.colourScale(d.cluster));
+        d3.selectAll('circle').attr('stroke', d => this.colourScale(d.cluster));
         // remove the tooltip unless expanded
         if (this.tooltipExpanded) {
           return;
@@ -473,27 +502,32 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.nodes.length / this.filteredNodes.length,
       0.45 // less than sqrt (0.5) to reduce overflow
     );
-    this._statusService.changeSvgTransform('scale(' + zoomAmount + ')');
+    console.log(zoomAmount);
+    const yTranslateAmount = Math.max(-this.nodes.length / this.filteredNodes.length, -35);
+    console.log(yTranslateAmount);
+    const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
+      'scale(' + zoomAmount + ') translate(0,' + yTranslateAmount + 'px)'
+    );
+    this._statusService.changeSvgTransform(newSvgTransform);
 
     // fill circles with images if <40 remain
     setTimeout(() => {
-    this.filteredNodes.length <= 40
-      ? this.circles
-          .attr('fill-opacity', 0.2)
-          .attr('fill', d => 'url(#pattern_' + d.id + ')')
-          .attr('stroke', d => this.colourScale(d.cluster))
-          .transition().duration(1000)
-          .attr('fill-opacity', 1)
-          .call(
-            d3
-              .drag()
-              .on('start', this.dragstarted)
-              .on('drag', this.dragged)
-              .on('end', this.dragended)
-          )
-      : this.circles
-          .attr('fill', d => this.colourScale(d.cluster))
-          .call(
+      this.filteredNodes.length <= 40
+        ? this.circles
+            .attr('fill-opacity', 0.2)
+            .attr('fill', d => 'url(#pattern_' + d.id + ')')
+            .attr('stroke', d => this.colourScale(d.cluster))
+            .transition()
+            .duration(1000)
+            .attr('fill-opacity', 1)
+            .call(
+              d3
+                .drag()
+                .on('start', this.dragstarted)
+                .on('drag', this.dragged)
+                .on('end', this.dragended)
+            )
+        : this.circles.attr('fill', d => this.colourScale(d.cluster)).call(
             d3
               .drag()
               .on('start', this.dragstarted)

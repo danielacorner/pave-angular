@@ -1,0 +1,150 @@
+<div>
+  <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="closeTooltip($event)">
+    <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
+    </g>
+  </svg>
+
+<<<<<<< HEAD
+  <div class='container'>
+
+    <div class="simulation-controls-container">
+
+      <div class="simulation-slider"
+      *ngFor="let force of simulationSliders">
+
+        <mat-divider> </mat-divider>
+        <!-- <mat-divider class="divider-inline" [vertical]="true"></mat-divider> -->
+        <app-filter-slider class="slider"
+        (childEvent)="handleSimulationSliderUpdate($event, force.constant, force.force)"
+        [variable]="force.constant"
+        [title]="force.constant"
+        [value]="force.value"
+        ></app-filter-slider>
+      </div>
+
+    </div>
+
+    <div class="buttons-container center">
+
+      <div class="grid-item-1">
+        <app-colour-legend-button
+        [forceXCombine]="forceXCombine"
+        [forceYCombine]="forceYCombine"
+        [nClusters]="numClusters"
+        [width]="width"
+        [height]="height"
+        [navbarHeight]="navbarHeight"
+        ></app-colour-legend-button>
+
+        <app-change-colours-dropdown
+        [colourScale]="colourScale"
+        [clusteringAmount]="CLUSTERING_AMOUNT"
+        ></app-change-colours-dropdown>
+      </div>
+
+      <div class="grid-item-2">
+        <app-graph-mode
+        [nodes]="nodes"
+        [forceXCombine]="forceXCombine"
+        [forceYCombine]="forceYCombine"
+        [nClusters]="numClusters"
+        [width]="width"
+        [height]="height"
+        [navbarHeight]="navbarHeight"
+        ></app-graph-mode>
+      </div>
+
+      <div class="grid-item-3">
+        <app-size-legend-button
+        [forceXCombine]="forceXCombine"
+        [forceYCombine]="forceYCombine"
+        [nClusters]="numClusters"
+        [width]="width"
+        [height]="height"
+        [navbarHeight]="navbarHeight"
+        ></app-size-legend-button>
+
+        <app-change-sizes-dropdown
+        [nodeAttraction]="nodeAttraction"
+        [nodePadding]="nodePadding"
+        [minRadius]="minRadius"
+        [width]="width"
+        ></app-change-sizes-dropdown>
+      </div>
+
+    </div>
+=======
+  <p class="sliders-title">Explore Canada’s job landscape according to your present or future skills</p>
+
+  <div class='container'>
+>>>>>>> 72e324c0ba362205b5324f79e1f602e4e416dbf1
+
+    <div class="sliders-container">
+
+      <p class="sliders-subtitle">Adjust your skills:</p>
+
+      <!-- <mat-divider></mat-divider> -->
+      <div class="grid-container">
+
+<<<<<<< HEAD
+        <div class="slider-container"
+        *ngFor="let filter of filterSliders">
+        <mat-divider *ngIf="['math', 'computer'].includes(filter.variable) && wdw.innerWidth < 600"
+        ></mat-divider>
+        <mat-divider class="divider-inline"
+        [vertical]="true"
+        ></mat-divider>
+          <app-filter-slider class="slider"
+          (childEvent)="handleFilterSliderUpdate($event, filter.variable)"
+          [variable]="filter.variable"
+          [title]="filter.title"
+          ></app-filter-slider>
+=======
+        <div class="slider-container" *ngFor="let filter of filterSliders">
+          <!-- <mat-divider
+          *ngIf="['math', 'computer'].includes(filter.variable) && wdw.innerWidth < 600"></mat-divider> -->
+          <!-- <mat-divider class="divider-inline" [vertical]="true"></mat-divider> -->
+          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+            [title1]="filter.title_1" [title2]="filter.title_2"></app-filter-slider>
+>>>>>>> 72e324c0ba362205b5324f79e1f602e4e416dbf1
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="controls-container">
+
+    <div class="dropdowns-container">
+      <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
+      <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+    </div>
+
+    <div class="sort-buttons-container center">
+      <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+        [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>
+      <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+        [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
+    </div>
+    <div class="legend-sort-mobile-container center">
+      <button class="legend-button-mobile btn-small">Legend</button>
+      <button class="sort-button-mobile btn-small">Sort</button>
+    </div>
+    <div class="graph-button-container center">
+      <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
+        [nClusters]="numClusters" [width]="width" [height]="height" [navbarHeight]="navbarHeight"></app-graph-mode>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="tooltipData" @ngIfAnimation>
+    <app-tooltip @easeInOut
+    [tooltipData]="tooltipData"
+    [expanded]="tooltipExpanded"
+    [mobileBreakPoint]="mobileBreakPoint"
+    ></app-tooltip>
+  </div>
+
+</div>

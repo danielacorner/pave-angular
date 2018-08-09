@@ -42,8 +42,8 @@
         [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
     </div>
     <div class="legend-sort-mobile-container center">
-      <button class="legend-button-mobile btn-small">Legend</button>
-      <button class="sort-button-mobile btn-small">Sort</button>
+      <button class="legend-button-mobile btn-small" (click)="mobileLegendMenu()">Legend</button>
+      <button class="sort-button-mobile btn-small" (click)="mobileSortMenu()">Sort</button>
     </div>
     <div class="graph-button-container center">
       <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
