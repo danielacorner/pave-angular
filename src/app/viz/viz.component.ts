@@ -544,4 +544,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .restart()
     );
   }
+
+  mobileLegendMenu() {}
+  mobileSortMenu() {}
 }
