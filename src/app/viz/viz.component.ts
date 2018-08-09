@@ -68,7 +68,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     'translate(' +
     window.innerWidth / 2 +
     'px, ' +
-    (window.innerHeight - this.navbarHeight) / 2 +
+    (window.innerHeight - this.navbarHeight + 80) / 2 +
     'px)';
 
   // ----- FILTER SLIDERS ----- //
@@ -178,8 +178,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   onResize(event) {
     // reposition canvas
     this.canvasStyles.top = this.navbarHeight + 'px';
-    this.canvasStyles.width = window.innerWidth;
-    this.canvasStyles.height = window.innerHeight - this.navbarHeight;
+    this.canvasStyles.width = event.target.innerWidth;
+    this.canvasStyles.height = event.target.innerHeight - this.navbarHeight;
 
     // recalculate forces
     this.radiusSelector === 'none'
@@ -206,7 +206,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
-      (window.innerHeight / 2 - this.navbarHeight) +
+      (event.target.innerHeight - this.navbarHeight + 80) / 2 +
       'px)';
 
   }

@@ -25,7 +25,7 @@ import * as d3 from 'd3';
       .title p {
         line-height: 0.5rem;
       }
-      @media only screen and (max-width: 600px) {
+      @media only screen and (max-width: 692px) {
         mat-slider {
           padding-top: 0px;
           margin-top: -15px;

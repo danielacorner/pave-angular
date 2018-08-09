@@ -82,6 +82,14 @@ import { Component, OnInit } from '@angular/core';
       form button {
         margin: -5px 12px 0px 12px;
       }
+
+      @media only screen and (max-width: 672px) {
+        .input-field {
+          width: 0px;
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
     `
   ]
 })

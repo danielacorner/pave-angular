@@ -7,17 +7,27 @@
       // circle {
       //   transition: fill 1s, stroke 1s, fill-opacity 1s;
       // }
-      .sliders-title {
-        line-height: 0.2rem;
-        font-size: 16px;
-      }
+// mobile
+
+// tablet & desktop
+// @media (min-width: 576px) {
+
       .sliders-container {
         height: 160px;
-        width: 93%;
-        position: fixed;
-        bottom: 0px;
+        max-width: 700px;
+        margin: 22px auto 0 auto;
         left: 4%;
         pointer-events: none;
+      }
+      .sliders-title {
+        font-size: 24px;
+        text-align: center;
+        margin: 20px 4% 0 4%;
+      }
+      .sliders-subtitle {
+        line-height: 0.2rem;
+        font-size: 18px;
+        font-weight: bold;
       }
       .grid-container {
         display: grid;
@@ -26,7 +36,7 @@
       .slider {
         display: inline-block;
         height: inherit;
-        width: 19.5vw;
+        width: 100%;
         margin-left: 2vw;
       }
       .mat-slider {
@@ -36,31 +46,82 @@
         display: inline-block;
         height: 75px;
       }
-      .buttons-container {
-        margin-top: 20px;
+      .sort-buttons-container {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
         display: grid;
-        grid-gap: 5%;
-        grid-template-columns: auto auto auto;
+        grid-gap: 10px;
+        grid-template-rows: auto auto;
       }
-      .grid-item-1 {
+      .graph-button-container {
+        margin-bottom: 30px;
+        margin-left: 10px;
+      }
+      .dropdowns-container {
         display: grid;
         grid-template-rows: auto auto;
-        grid-gap: 10px;
+        position: absolute;
+        left: 50px;
+        bottom: 50px;
       }
-      .grid-item-3 {
-        display: grid;
-        grid-template-rows: auto auto;
-        grid-gap: 10px;
+      .controls-container {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
       }
+      .legend-sort-mobile-container {
+      display: none;
+      }
+//  }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 834px) {
+  .sliders-title {
+    font-size: 2.8vw;
+  }
+}
+
+@media only screen and (max-width: 790px) {
+  .sort-buttons-container {
+    bottom: 20px;
+    right: 45px;
+  }
+  .dropdowns-container {
+    bottom: 20px;
+    left: 30px;
+  }
+  .graph-button {
+  }
+
+}
+// todo: switch to min-width for performance
+@media only screen and (max-width: 690px) {
     .grid-container {
       grid-template-columns: auto auto;
     }
     .sliders-container {
-      bottom: 70px;
+      width: 100%
     }
     .slider {
-      width: 43vw;
+      width: 100%;
+    }
+    .sort-buttons-container, .dropdowns-container {
+      transform: scale(0.8);
+    }
+}
+// mobile
+@media only screen and (max-width: 576px) {
+    .grid-container {
+      grid-template-columns: auto auto;
+    }
+    .sort-buttons-container, .dropdowns-container, {
+      display: none;
+    }
+    .legend-sort-mobile-container {
+      display: block;
+      margin-left: 10px;
+    }
+    .legend-sort-mobile-container button {
+      margin: 0 5px 8px 5px;
     }
 }
