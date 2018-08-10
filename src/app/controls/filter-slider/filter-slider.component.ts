@@ -7,8 +7,7 @@ import * as d3 from 'd3';
   template: `
     <div class="slider-container">
       <div class="title">
-      <p>{{title1}}</p>
-      <p>{{title2}}</p>
+      <p>{{title}}</p>
       </div>
       <mat-slider thumbLabel [min]="min" [max]="max" step="1"
       [style.pointerEvents]="'auto'"
@@ -24,6 +23,7 @@ import * as d3 from 'd3';
       }
       .title p {
         line-height: 0.5rem;
+        word-wrap: break-word;
       }
       @media only screen and (max-width: 692px) {
         mat-slider {
@@ -37,8 +37,7 @@ import * as d3 from 'd3';
 })
 export class FilterSliderComponent implements OnInit {
   public sliderValue;
-  @Input() public title1;
-  @Input() public title2;
+  @Input() public title;
   @Input() public filterVariable;
   @Output() public childEvent = new EventEmitter();
   public min;

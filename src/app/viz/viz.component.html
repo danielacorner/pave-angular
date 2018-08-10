@@ -12,20 +12,41 @@
 
       <p class="sliders-subtitle">Adjust your skills:</p>
 
-      <!-- <mat-divider></mat-divider> -->
       <div class="grid-container">
 
         <div class="slider-container" *ngFor="let filter of filterSliders">
-          <!-- <mat-divider
-          *ngIf="['math', 'computer'].includes(filter.variable) && wdw.innerWidth < 600"></mat-divider> -->
-          <!-- <mat-divider class="divider-inline" [vertical]="true"></mat-divider> -->
           <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-            [title1]="filter.title_1" [title2]="filter.title_2"></app-filter-slider>
+            [title]="filter.title"></app-filter-slider>
         </div>
 
       </div>
 
     </div>
+
+    <div class="sliders-container-mobile center">
+      <button class="btn sliders-mobile-btn"
+      [matMenuTriggerFor]="slidersMenu"
+      >Adjust your skills</button>
+
+      <mat-menu #slidersMenu="matMenu">
+        <div mat-menu-item class="sliders-menu-item"
+        *ngFor="let filter of filterSliders"
+        (click)="showMobileSlider(filter.variable)">
+          {{filter.title}}
+        </div>
+      </mat-menu>
+
+      <div class="slider-container-mobile" *ngFor="let filter of filterSliders"
+      >
+        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]">
+          <app-filter-slider
+          class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+            [title]="filter.title"></app-filter-slider>
+          <mat-icon (click)="showMobileSlider()">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
 
   </div>
   <div class="controls-container">
@@ -46,29 +67,31 @@
       [matMenuTriggerFor]="legendMenu"
       >Legend</button>
       <mat-menu #legendMenu="matMenu" yPosition="above">
-        <div mat-menu-item><app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-          [height]="height" [navbarHeight]="navbarHeight"
-          ></app-colour-legend-button>
+        <div mat-menu-item class="legend-menu-item">
+          <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
         </div>
-        <div mat-menu-item><app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-          [height]="height" [navbarHeight]="navbarHeight"
-          ></app-size-legend-button>
+        <div mat-menu-item class="legend-menu-item">
+          <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
         </div>
       </mat-menu>
       <button class="sort-button-mobile btn-small"
       [matMenuTriggerFor]="sortMenu"
       >Sort</button>
       <mat-menu #sortMenu="matMenu" yPosition="above">
-        <div mat-menu-item><app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
+        <div mat-menu-item class="sort-menu-item">
+          <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+            [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>
         </div>
-        <div mat-menu-item><app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+        <div mat-menu-item class="sort-menu-item">
+          <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+            [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
         </div>
       </mat-menu>
     </div>
-    <div class="graph-button-container center">
+    <!-- <div class="graph-button-container center">
       <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
         [nClusters]="numClusters" [width]="width" [height]="height" [navbarHeight]="navbarHeight"></app-graph-mode>
-    </div>
+    </div> -->
 
   </div>
 

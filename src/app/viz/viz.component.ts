@@ -84,15 +84,13 @@ export class VizComponent implements OnInit, AfterContentInit {
   public filterSliders = [
     {
       variable: 'skillsLang',
-      title_1: 'Language and',
-      title_2: 'Communication'
+      title: 'Language and Communication'
     },
-    { variable: 'skillsLogi', title_1: 'Logic and', title_2: 'Reasoning' },
-    { variable: 'skillsMath', title_1: 'Math and', title_2: 'Spatial' },
+    { variable: 'skillsLogi', title: 'Logic and Reasoning' },
+    { variable: 'skillsMath', title: 'Math and Spatial' },
     {
       variable: 'skillsComp',
-      title_1: 'Computer and',
-      title_2: 'Information'
+      title: 'Computer and Information'
     }
   ];
 
@@ -149,7 +147,15 @@ export class VizComponent implements OnInit, AfterContentInit {
   public autoExpand;
   public justClosed = false; // whether the tooltip was clicked-closed
 
-  // Drag functions used for interactivity
+  mobileSliderActive = {
+    skillsLang: false,
+    skillsLogi: false,
+    skillsMath: false,
+    skillsComp: false
+  }
+
+
+  // // Drag functions used for interactivity
   public dragstarted = d => {
     if (!d3.event.active) {
       this.forceSimulation.alphaTarget(0.3).restart();
@@ -168,6 +174,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     d.fx = null;
     d.fy = null;
   };
+
 
   ngOnInit() {
     // pull in the subscriptions
@@ -218,6 +225,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.updateForceCollide();
     this.updateForceGravity();
 
+    // start the simulation
     this._statusService.changeForceSimulation(
       this.forceSimulation
         .force('gravity', this.forceGravity)
@@ -543,6 +551,11 @@ export class VizComponent implements OnInit, AfterContentInit {
         .alpha(0.3)
         .restart()
     );
+  }
+
+  showMobileSlider(filterVar?) {
+    this.mobileSliderActive = { skillsLang: false, skillsLogi: false, skillsMath: false, skillsComp: false };
+    if (filterVar) { this.mobileSliderActive[filterVar] = true; }
   }
 
 }

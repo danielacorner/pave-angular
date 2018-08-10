@@ -9,9 +9,35 @@
       // }
 // mobile
 
-// tablet & desktop
-// @media (min-width: 576px) {
+      .sliders-container {
+        display: none;
+      }
+      .sliders-mobile-btn {
+        position: relative;
+        margin: 20px 0;
+      }
+      .slider-container-mobile * {
+        display: inline-block;
+        background: white;
+      }
+      .slider-card-mobile {
+        width: 60%;
+      }
+      .slider-card-mobile .slider {
+        width: 85%;
+      }
+      .slider-container-mobile mat-icon {
+      }
 
+// tablet & desktop
+      @media (min-width: 450px) {
+        .sliders-container {
+          display: inline;
+        }
+        .sliders-container-mobile {
+          display: none;
+        }
+      }
       .sliders-container {
         height: 160px;
         max-width: 700px;
@@ -124,7 +150,13 @@
     .controls-mobile-container button {
       margin: 0 5px 8px 5px;
     }
-    .mat-menu-item {
+    .legend-menu-item, .sort-menu-item {
       height: 75px;
     }
+}
+// short mobile
+@media (max-height: 700px) {
+  .graph-button-container {
+    margin-bottom: 5px;
+  }
 }
