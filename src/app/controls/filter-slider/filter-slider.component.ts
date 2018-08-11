@@ -22,15 +22,20 @@ import * as d3 from 'd3';
       .slider-container {
       }
       .title p {
-        line-height: 0.5rem;
+        line-height: 1.5rem;
         word-wrap: break-word;
+        height: 25px;
+        width: 100px;
       }
       @media only screen and (max-width: 692px) {
         mat-slider {
           padding-top: 0px;
           margin-top: -15px;
-          width: 40vw;
+          width: 60vw;
         }
+      .title p {
+        height: 15px;
+        width: auto;
       }
     `
   ]

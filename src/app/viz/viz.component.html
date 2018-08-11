@@ -12,14 +12,15 @@
 
       <p class="sliders-subtitle">Adjust your skills:</p>
 
-      <div class="grid-container">
-
-        <div class="slider-container" *ngFor="let filter of filterSliders">
-          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+        <div class="grid-container">
+          <div class="spacer"></div>
+          <div class="slider-container" *ngFor="let filter of filterSliders">
+            <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
             [title]="filter.title"></app-filter-slider>
-        </div>
+          </div>
+          <div class="spacer"></div>
 
-      </div>
+        </div>
 
     </div>
 
@@ -36,13 +37,18 @@
         </div>
       </mat-menu>
 
-      <div class="slider-container-mobile" *ngFor="let filter of filterSliders"
+      <div class="slider-container-mobile"
+      *ngFor="let filter of filterSliders"
       >
-        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]">
+        <div class="slider-card-mobile z-depth-1"
+          *ngIf="mobileSliderActive[filter.variable]"
+          @ngIfAnimation
+          @easeInOut>
           <app-filter-slider
           class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
             [title]="filter.title"></app-filter-slider>
-          <mat-icon (click)="showMobileSlider()">close</mat-icon>
+          <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]"
+          >close</mat-icon>
         </div>
       </div>
     </div>
@@ -77,7 +83,7 @@
       <button class="sort-button-mobile btn-small"
       [matMenuTriggerFor]="sortMenu"
       >Sort</button>
-      <mat-menu #sortMenu="matMenu" yPosition="above">
+      <mat-menu #sortMenu="matMenu" yPosition="above" xPosition="before">
         <div mat-menu-item class="sort-menu-item">
           <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
             [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>

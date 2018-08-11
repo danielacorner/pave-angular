@@ -14,19 +14,22 @@
       }
       .sliders-mobile-btn {
         position: relative;
-        margin: 20px 0;
+        margin: 20px 0 10px 0;
       }
       .slider-container-mobile * {
         display: inline-block;
         background: white;
       }
       .slider-card-mobile {
-        width: 60%;
+        width: 82%;
       }
       .slider-card-mobile .slider {
         width: 85%;
       }
       .slider-container-mobile mat-icon {
+        cursor: pointer;
+        position: absolute;
+        margin: 2px 0 0 -8px;
       }
 
 // tablet & desktop
@@ -42,7 +45,6 @@
         height: 160px;
         max-width: 700px;
         margin: 22px auto 0 auto;
-        left: 4%;
         pointer-events: none;
       }
       .sliders-title {
@@ -54,10 +56,12 @@
         line-height: 0.2rem;
         font-size: 18px;
         font-weight: bold;
+        margin: 20px 0px 8px calc(9vw - 59px);
       }
       .grid-container {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        margin: auto;
+        grid-template-columns: auto 150px 150px 150px 150px auto;
       }
       .slider {
         display: inline-block;
@@ -78,7 +82,7 @@
         right: 50px;
         display: grid;
         grid-gap: 10px;
-        grid-template-rows: auto auto;
+        grid-template-rows: repeat(2, auto);
       }
       .graph-button-container {
         margin-bottom: 30px;
@@ -124,6 +128,13 @@
 @media only screen and (max-width: 692px) {
     .grid-container {
       grid-template-columns: auto auto;
+      grid-template-rows: repeat(2, 60px);
+    }
+    .spacer {
+      display: none;
+    }
+    .sliders-subtitle {
+      margin: 20px 0px 8px 5px;
     }
     .sliders-container {
       width: 100%
@@ -137,15 +148,16 @@
 }
 // mobile
 @media only screen and (max-width: 576px) {
-    .grid-container {
-      grid-template-columns: auto auto;
-    }
+  .grid-container {
+    grid-template-columns: auto auto;
+  }
     .sort-buttons-container, .dropdowns-container, {
       display: none;
     }
     .controls-mobile-container {
       display: block;
       margin-left: 10px;
+      margin-bottom: 5vh;
     }
     .controls-mobile-container button {
       margin: 0 5px 8px 5px;
@@ -153,6 +165,14 @@
     .legend-menu-item, .sort-menu-item {
       height: 75px;
     }
+  }
+@media only screen and (max-width: 425px) {
+  .sliders-title {
+    font-size: 3.8vw;
+  }
+  .sliders-mobile-btn {
+    margin: 7px 0 10px 0;
+  }
 }
 // short mobile
 @media (max-height: 700px) {

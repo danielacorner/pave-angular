@@ -5,7 +5,16 @@ import { Component, OnInit } from '@angular/core';
   template: `
    <nav>
       <div class="nav-wrapper grey lighten-4">
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger hide-on-med-and-up"><i class="material-icons">menu</i></a>
+
+        <div id="navbar-mobile hide-on-med-and-up">
+
+          <a routerLink="/" exact class="left brand brand-mobile">Pave</a>
+
+          <a href="#" data-target="nav-mobile"
+          class="sidenav-trigger right"
+          ><i class="material-icons">menu</i></a>
+
+        </div>
 
         <ul id="nav-desktop" class="hide-on-small-only">
           <li><a routerLink="/" exact class="left brand">Pave</a></li>
@@ -27,14 +36,17 @@ import { Component, OnInit } from '@angular/core';
         </form></li>
         </ul>
 
-        <ul id="nav-mobile" class="sidenav">
-          <li><a routerLink="/" exact class="brand">Pave</a></li>
-          <li><a routerLink="/about" exact>About</a></li>
-          <li><a routerLink="/help" exact>Help</a></li>
-          <li><a routerLink="/feedback" exact>Feedback</a></li>          <li> <a href="#">Contact</a> </li>
-        </ul>
       </div>
    </nav>
+
+  <ul id="nav-mobile" class="sidenav">
+    <li><a routerLink="/" exact class="brand brand-logo">Pave</a></li>
+    <li><a routerLink="/about" exact>About</a></li>
+    <li><a routerLink="/help" exact>Help</a></li>
+    <li><a routerLink="/feedback" exact>Feedback</a></li>
+    <li> <a href="#">Contact</a> </li>
+  </ul>
+
      `,
   styles: [
     `
@@ -56,6 +68,7 @@ import { Component, OnInit } from '@angular/core';
       }
       .brand {
         font-size: 32px;
+        font-family: "Raleway";
       }
       nav {
         background: #eee;
@@ -82,7 +95,9 @@ import { Component, OnInit } from '@angular/core';
       form button {
         margin: -5px 12px 0px 12px;
       }
-
+      .brand-mobile {
+        margin-left: 12px;
+      }
       @media only screen and (max-width: 672px) {
         .input-field {
           width: 0px;
@@ -97,8 +112,5 @@ export class NavbarComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    $(document).ready(function() {
-      // $(".sidenav").sidenav();
-    });
   }
 }
