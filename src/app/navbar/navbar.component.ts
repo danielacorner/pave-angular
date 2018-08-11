@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
         <div id="navbar-mobile hide-on-med-and-up">
 
-          <a routerLink="/" exact class="left brand brand-mobile">Pave</a>
+          <a routerLink="/" exact class="left brand brand-mobile hide-on-med-and-up">Pave</a>
 
           <a href="#" data-target="nav-mobile"
           class="sidenav-trigger right"

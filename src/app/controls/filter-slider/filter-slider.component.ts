@@ -31,11 +31,17 @@ import * as d3 from 'd3';
         mat-slider {
           padding-top: 0px;
           margin-top: -15px;
+          width: 40vw;
+        }
+        .title p {
+          height: 15px;
+          width: auto;
+        }
+      }
+      @media only screen and (max-width: 425px) {
+        mat-slider {
           width: 60vw;
         }
-      .title p {
-        height: 15px;
-        width: auto;
       }
     `
   ]

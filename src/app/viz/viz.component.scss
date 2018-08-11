@@ -1,8 +1,22 @@
+$green: #47bf39;
+
+%btn-green {
+  border: 2px solid $green;
+  line-height: 0;
+  font-weight: bold;
+}
       body, html {
         overflow-y: hidden;
       }
       svg {
         transition: transform 1s;
+      }
+      .btn {
+        @extend %btn-green;
+        border-radius: 999px;
+      }
+      .sort-button-mobile, .legend-button-mobile {
+        border-radius: 4px;
       }
       // circle {
       //   transition: fill 1s, stroke 1s, fill-opacity 1s;
@@ -148,9 +162,6 @@
 }
 // mobile
 @media only screen and (max-width: 576px) {
-  .grid-container {
-    grid-template-columns: auto auto;
-  }
     .sort-buttons-container, .dropdowns-container, {
       display: none;
     }

@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-colour-legend-button',
   template: `
-  <button class='btn waves-effect z-depth-3'
+  <button class='btn waves-effect z-depth-3 white green-text'
     [class.green]="colourSortActive"
     [ngStyle]='btnStyles'
     (click)="handleClick()">
@@ -33,6 +33,10 @@ import * as d3 from 'd3';
       button {
         border-radius: 4px;
         opacity: 1;
+
+        border: 2px solid #47bf39;
+        line-height: 0;
+        font-weight: bold;
       }
       .grid-container {
         display: grid;

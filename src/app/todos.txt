@@ -1,6 +1,8 @@
 todos
 -----
 
+grey colour border disabled size legend button
+
 bugs:
 - Graph view button z index (should be below tooltip)
 - click once, same job still selected

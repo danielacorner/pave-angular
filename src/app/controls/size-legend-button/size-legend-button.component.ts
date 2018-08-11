@@ -5,22 +5,22 @@ import { AppStatusService } from '../../app-status.service';
 @Component({
   selector: 'app-size-legend-button',
   template: `
-  <button class='sizeBtn btn waves-effect z-depth-3'
+  <button class='sizeBtn btn waves-effect z-depth-3 white green-text'
     [class.green]="active"
     [disabled]="radiusSelector === 'none'"
     [ngStyle]='btnStyles'
     (click)="handleClick()">
   <div class='grid-container'>
-    <div class="sort-icon valign-wrapper">
-      <mat-icon
-      [style.transform]="(active ? 'rotate(90deg)' : null)"
-      >filter_list</mat-icon>
-    </div>
     <div class="btn-text">
       <span>
       <p>Sort by</p>
       <p>sizes</p>
       </span>
+    </div>
+    <div class="sort-icon valign-wrapper">
+      <mat-icon
+      [style.transform]="(active ? 'rotate(90deg)' : null)"
+      >filter_list</mat-icon>
     </div>
   </div>
   </button>
@@ -33,6 +33,10 @@ import { AppStatusService } from '../../app-status.service';
       button {
         border-radius: 4px;
         opacity: 1;
+
+        border: 2px solid #47bf39;
+        line-height: 0;
+        font-weight: bold;
       }
       .grid-container {
         display: grid;
@@ -85,7 +89,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
-    width: '130px'
+    width: '131px'
   };
   // public data$ = [];
   public active = false;
