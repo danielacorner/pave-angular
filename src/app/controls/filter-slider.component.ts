@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DataService } from '../../data.service';
+import { DataService } from '../services/data.service';
 import * as d3 from 'd3';
 
 @Component({

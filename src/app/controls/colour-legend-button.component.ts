@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AppStatusService } from '../../app-status.service';
+import { AppStatusService } from '../services/app-status.service';
 import * as d3 from 'd3';
 
 @Component({

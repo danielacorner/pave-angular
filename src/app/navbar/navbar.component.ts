@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,16 +12,18 @@ import { Component, OnInit } from '@angular/core';
           <a routerLink="/" exact class="left brand brand-mobile hide-on-med-and-up">Pave</a>
 
           <a href="#" data-target="nav-mobile"
-          class="sidenav-trigger right"
+          class="sidenav-trigger right hide-on-med-and-up"
           ><i class="material-icons">menu</i></a>
 
         </div>
 
         <ul id="nav-desktop" class="hide-on-small-only">
-          <li><a routerLink="/" exact class="left brand">Pave</a></li>
-          <li><a routerLink="/about" exact>About</a></li>
-          <li><a routerLink="/help" exact>Help</a></li>
-          <li><a routerLink="/feedback" exact>Feedback</a></li>
+          <li><a routerLink="/" exact class="left brand"
+          [class.activated]="currentUrl == '/'">Pave</a></li>
+          <li><a routerLink="/about" exact
+          [class.activated]="currentUrl == '/about'">About</a></li>
+          <li><a routerLink="/contact" exact
+          [class.activated]="currentUrl == '/contact'">Contact</a></li>
         <!-- search box -->
         <li class="right"><form>
           <ul>
@@ -42,9 +45,7 @@ import { Component, OnInit } from '@angular/core';
   <ul id="nav-mobile" class="sidenav">
     <li><a routerLink="/" exact class="brand brand-logo">Pave</a></li>
     <li><a routerLink="/about" exact>About</a></li>
-    <li><a routerLink="/help" exact>Help</a></li>
-    <li><a routerLink="/feedback" exact>Feedback</a></li>
-    <li> <a href="#">Contact</a> </li>
+    <li><a routerLink="/contact" exact>Contact</a></li>
   </ul>
 
      `,
@@ -59,25 +60,25 @@ import { Component, OnInit } from '@angular/core';
       .sidenav li {
         display: block;
       }
-      a:not(.btn) {
-        font-family: "Raleway";
+      a:not(.btn):not(.activated) {
+        font-family: 'Raleway';
         color: #27ae60;
         text-decoration: none;
         /* padding: 6px 8px; */
         /* border-radius: 10px; */
       }
+      .activated {
+        background: #3c8d44;
+        color: #e7e7e7;
+      }
       .brand {
         font-size: 32px;
-        font-family: "Raleway";
+        font-family: 'Raleway';
       }
       nav {
         background: #eee;
         /* padding: 14px 0; */
         /* margin-bottom: 40px; */
-      }
-      .router-link-active {
-        background: #eee;
-        color: #3c8d44;
       }
       input#search {
         height: 64px;
@@ -109,8 +110,11 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+  currentUrl: string;
 
-  ngOnInit() {
+  constructor(private router: Router) {
+    router.events.subscribe((_: NavigationEnd) => (this.currentUrl = _.url));
   }
+
+  ngOnInit() {}
 }

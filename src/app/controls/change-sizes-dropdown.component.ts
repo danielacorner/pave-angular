@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
-import { DataService } from '../../data.service';
-import { AppStatusService } from '../../app-status.service';
-import { AppSimulationService } from './../../app-simulation.service';
+import { DataService } from '../services/data.service';
+import { AppStatusService } from '../services/app-status.service';
+import { AppSimulationService } from '../services/app-simulation.service';
 import * as d3 from 'd3';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { DataService } from '../../data.service';
-import { AppStatusService } from '../../app-status.service';
+import { DataService } from '../services/data.service';
+import { AppStatusService } from '../services/app-status.service';
 
 @Component({
   selector: 'app-graph-mode',

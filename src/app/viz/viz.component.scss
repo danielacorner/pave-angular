@@ -5,118 +5,124 @@ $green: #47bf39;
   line-height: 0;
   font-weight: bold;
 }
-      body, html {
-        overflow-y: hidden;
-      }
-      svg {
-        transition: transform 1s;
-      }
-      .btn {
-        @extend %btn-green;
-        border-radius: 999px;
-      }
-      .sort-button-mobile, .legend-button-mobile {
-        border-radius: 4px;
-      }
-      // circle {
-      //   transition: fill 1s, stroke 1s, fill-opacity 1s;
-      // }
+body,
+html {
+  overflow-y: hidden;
+}
+svg {
+  transition: transform 1s;
+}
+.btn {
+  @extend %btn-green;
+  border-radius: 999px;
+}
+.sort-button-mobile,
+.legend-button-mobile {
+  border-radius: 4px;
+}
+// .circle:hover {
+//   stroke: black;
+//   stroke-width: 1px;
+// }
+// circle {
+//   transition: fill 1s, stroke 1s, fill-opacity 1s;
+// }
 // mobile
 
-      .sliders-container {
-        display: none;
-      }
-      .sliders-mobile-btn {
-        position: relative;
-        margin: 20px 0 10px 0;
-      }
-      .slider-container-mobile * {
-        display: inline-block;
-        background: white;
-      }
-      .slider-card-mobile {
-        width: 82%;
-      }
-      .slider-card-mobile .slider {
-        width: 85%;
-      }
-      .slider-container-mobile mat-icon {
-        cursor: pointer;
-        position: absolute;
-        margin: 2px 0 0 -8px;
-      }
+.sliders-container {
+  display: none;
+}
+.sliders-mobile-btn {
+  position: relative;
+  margin: 20px 0 10px 0;
+}
+.slider-container-mobile * {
+  display: inline-block;
+  background: white;
+}
+.slider-card-mobile {
+  width: 82%;
+}
+.slider-card-mobile .slider {
+  width: 85%;
+}
+.slider-container-mobile mat-icon {
+  cursor: pointer;
+  position: absolute;
+  margin: 2px 0 0 -8px;
+}
 
 // tablet & desktop
-      @media (min-width: 450px) {
-        .sliders-container {
-          display: inline;
-        }
-        .sliders-container-mobile {
-          display: none;
-        }
-      }
-      .sliders-container {
-        height: 160px;
-        max-width: 700px;
-        margin: 22px auto 0 auto;
-        pointer-events: none;
-      }
-      .sliders-title {
-        font-size: 24px;
-        text-align: center;
-        margin: 20px 4% 0 4%;
-      }
-      .sliders-subtitle {
-        line-height: 0.2rem;
-        font-size: 18px;
-        font-weight: bold;
-        margin: 20px 0px 8px calc(9vw - 59px);
-      }
-      .grid-container {
-        display: grid;
-        margin: auto;
-        grid-template-columns: auto 150px 150px 150px 150px auto;
-      }
-      .slider {
-        display: inline-block;
-        height: inherit;
-        width: 100%;
-        margin-left: 2vw;
-      }
-      .mat-slider {
-        pointer-events: auto;
-      }
-      .divider-inline {
-        display: inline-block;
-        height: 75px;
-      }
-      .sort-buttons-container {
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-        display: grid;
-        grid-gap: 10px;
-        grid-template-rows: repeat(2, auto);
-      }
-      .graph-button-container {
-        margin-bottom: 30px;
-        margin-left: 10px;
-      }
-      .dropdowns-container {
-        display: grid;
-        grid-template-rows: auto auto;
-        position: absolute;
-        left: 50px;
-        bottom: 50px;
-      }
-      .controls-container {
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-      }
-      .controls-mobile-container {
-      display: none;
-      }
+@media (min-width: 450px) {
+  .sliders-container {
+    display: inline;
+  }
+  .sliders-container-mobile {
+    display: none;
+  }
+}
+.sliders-container {
+  height: 160px;
+  max-width: 700px;
+  margin: 22px auto 0 auto;
+  pointer-events: none;
+}
+.sliders-title {
+  font-size: 24px;
+  text-align: center;
+  margin: 20px 4% 0 4%;
+}
+.sliders-subtitle {
+  line-height: 0.2rem;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0px 8px calc(9vw - 59px);
+}
+.grid-container {
+  display: grid;
+  margin: auto;
+  grid-template-columns: auto 150px 150px 150px 150px auto;
+}
+.slider {
+  display: inline-block;
+  height: inherit;
+  width: 100%;
+  margin-left: 2vw;
+}
+.mat-slider {
+  pointer-events: auto;
+}
+.divider-inline {
+  display: inline-block;
+  height: 75px;
+}
+.sort-buttons-container {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-rows: repeat(2, auto);
+}
+.graph-button-container {
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+.dropdowns-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
+}
+.controls-container {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.controls-mobile-container {
+  display: none;
+}
 //  }
 
 @media only screen and (max-width: 834px) {
@@ -136,47 +142,49 @@ $green: #47bf39;
   }
   .graph-button {
   }
-
 }
 // todo: switch to min-width for performance
 @media only screen and (max-width: 692px) {
-    .grid-container {
-      grid-template-columns: auto auto;
-      grid-template-rows: repeat(2, 60px);
-    }
-    .spacer {
-      display: none;
-    }
-    .sliders-subtitle {
-      margin: 20px 0px 8px 5px;
-    }
-    .sliders-container {
-      width: 100%
-    }
-    .slider {
-      width: 100%;
-    }
-    .sort-buttons-container, .dropdowns-container {
-      transform: scale(0.8);
-    }
+  .grid-container {
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(2, 60px);
+  }
+  .spacer {
+    display: none;
+  }
+  .sliders-subtitle {
+    margin: 20px 0px 8px 5px;
+  }
+  .sliders-container {
+    width: 100%;
+  }
+  .slider {
+    width: 100%;
+  }
+  .sort-buttons-container,
+  .dropdowns-container {
+    transform: scale(0.8);
+  }
 }
 // mobile
 @media only screen and (max-width: 576px) {
-    .sort-buttons-container, .dropdowns-container, {
-      display: none;
-    }
-    .controls-mobile-container {
-      display: block;
-      margin-left: 10px;
-      margin-bottom: 5vh;
-    }
-    .controls-mobile-container button {
-      margin: 0 5px 8px 5px;
-    }
-    .legend-menu-item, .sort-menu-item {
-      height: 75px;
-    }
+  .sort-buttons-container,
+  .dropdowns-container {
+    display: none;
   }
+  .controls-mobile-container {
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 5vh;
+  }
+  .controls-mobile-container button {
+    margin: 0 5px 8px 5px;
+  }
+  .legend-menu-item,
+  .sort-menu-item {
+    height: 75px;
+  }
+}
 @media only screen and (max-width: 425px) {
   .sliders-title {
     font-size: 3.8vw;

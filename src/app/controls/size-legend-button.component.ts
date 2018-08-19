@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
-import { AppStatusService } from '../../app-status.service';
+import { AppStatusService } from '../services/app-status.service';
 
 @Component({
   selector: 'app-size-legend-button',
   template: `
-  <button class='sizeBtn btn waves-effect z-depth-3 white green-text'
-    [class.green]="active"
+  <button class='sizeBtn btn waves-effect z-depth-3'
+    [class.btn-disabled]="radiusSelector === 'none'"
     [disabled]="radiusSelector === 'none'"
     [ngStyle]='btnStyles'
     (click)="handleClick()">
@@ -37,6 +37,9 @@ import { AppStatusService } from '../../app-status.service';
         border: 2px solid #47bf39;
         line-height: 0;
         font-weight: bold;
+      }
+      .btn-disabled {
+        border: none;
       }
       .grid-container {
         display: grid;
@@ -85,14 +88,16 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
   public forceSimulation;
   public forceCluster;
   public colourSortActive;
+  public active = false;
 
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
-    width: '131px'
+    width: '131px',
+    background: this.active ? 'green' : 'white',
+    fontColor: this.active ? 'white' : 'green'
   };
   // public data$ = [];
-  public active = false;
 
   ngOnInit() {
     this._statusService.currentRadiusSelector.subscribe(

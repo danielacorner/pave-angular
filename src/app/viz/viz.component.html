@@ -1,7 +1,20 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="closeTooltip($event)">
     <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
+      <!-- <svg:circle
+      *ngFor="let node of nodes" [attr.id]="'circle_'+node.id"
+      [attr.r]="node.r + 'vmin'"
+      [attr.fill]="colourScale(node.cluster)"
+      ></svg:circle> -->
     </g>
+    <!-- job image patterns -->
+    <defs>
+      <pattern *ngFor="let node of nodes" class="img-pattern" id="'pattern_'+node.id" height="100%" width="100%" patternContentUnits="objectBoundingBox">
+        <image height="1" width="1" preserveAspectRatio="none" [attr.xlink:href]="(wdw.location.href.includes('localhost') ?
+        '../../assets/img/NOC_thumbnails/tn_' + node.all.noc + '.jpg' :
+         '../../pave-angular/assets/img/NOC_thumbnails/tn_' + node.all.noc + '.jpg')"></image>
+      </pattern>
+    </defs>
   </svg>
 
   <p class="sliders-title">Explore Canada’s job landscape according to your present or future skills</p>
@@ -12,43 +25,32 @@
 
       <p class="sliders-subtitle">Adjust your skills:</p>
 
-        <div class="grid-container">
-          <div class="spacer"></div>
-          <div class="slider-container" *ngFor="let filter of filterSliders">
-            <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+      <div class="grid-container">
+        <div class="spacer"></div>
+        <div class="slider-container" *ngFor="let filter of filterSliders">
+          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
             [title]="filter.title"></app-filter-slider>
-          </div>
-          <div class="spacer"></div>
-
         </div>
+        <div class="spacer"></div>
+
+      </div>
 
     </div>
 
     <div class="sliders-container-mobile center">
-      <button class="btn sliders-mobile-btn white green-text"
-      [matMenuTriggerFor]="slidersMenu"
-      >Adjust your skills</button>
+      <button class="btn sliders-mobile-btn white green-text" [matMenuTriggerFor]="slidersMenu">Adjust your skills</button>
 
       <mat-menu #slidersMenu="matMenu">
-        <div mat-menu-item class="sliders-menu-item"
-        *ngFor="let filter of filterSliders"
-        (click)="showMobileSlider(filter.variable)">
+        <div mat-menu-item class="sliders-menu-item" *ngFor="let filter of filterSliders" (click)="showMobileSlider(filter.variable)">
           {{filter.title}}
         </div>
       </mat-menu>
 
-      <div class="slider-container-mobile"
-      *ngFor="let filter of filterSliders"
-      >
-        <div class="slider-card-mobile z-depth-1"
-          *ngIf="mobileSliderActive[filter.variable]"
-          @ngIfAnimation
-          @easeInOut>
-          <app-filter-slider
-          class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
+      <div class="slider-container-mobile" *ngFor="let filter of filterSliders">
+        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @ngIfAnimation @easeInOut>
+          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
             [title]="filter.title"></app-filter-slider>
-          <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]"
-          >close</mat-icon>
+          <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]">close</mat-icon>
         </div>
       </div>
     </div>
@@ -69,9 +71,7 @@
         [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
     </div>
     <div class="controls-mobile-container center">
-      <button class="btn legend-button-mobile btn-small white green-text z-depth-0"
-      [matMenuTriggerFor]="legendMenu"
-      >Legend</button>
+      <button class="btn legend-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="legendMenu">Legend</button>
       <mat-menu #legendMenu="matMenu" yPosition="above">
         <div mat-menu-item class="legend-menu-item">
           <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
@@ -80,9 +80,7 @@
           <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
         </div>
       </mat-menu>
-      <button class="btn sort-button-mobile btn-small white green-text z-depth-0"
-      [matMenuTriggerFor]="sortMenu"
-      >Sort</button>
+      <button class="btn sort-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="sortMenu">Sort</button>
       <mat-menu #sortMenu="matMenu" yPosition="above" xPosition="before">
         <div mat-menu-item class="sort-menu-item">
           <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
