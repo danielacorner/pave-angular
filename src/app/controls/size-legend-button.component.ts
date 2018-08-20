@@ -6,6 +6,10 @@ import { AppStatusService } from '../services/app-status.service';
   selector: 'app-size-legend-button',
   template: `
   <button class='sizeBtn btn waves-effect z-depth-3'
+    [class.white]="!active"
+    [class.green-text]="!active"
+    [class.green]="active"
+    [class.white-text]="active"
     [class.btn-disabled]="radiusSelector === 'none'"
     [disabled]="radiusSelector === 'none'"
     [ngStyle]='btnStyles'
@@ -46,12 +50,13 @@ import { AppStatusService } from '../services/app-status.service';
         grid-gap: 10px;
         grid-columns: auto auto;
       }
-      .sort-icon {
+      .btn-text {
+        width: 68px;
         text-align: center;
         grid-column: 1;
         grid-row: 1;
       }
-      .btn-text {
+      .sort-icon {
         text-align: center;
         grid-column: 2;
         grid-row: 1;
@@ -93,9 +98,7 @@ export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
-    width: '131px',
-    background: this.active ? 'green' : 'white',
-    fontColor: this.active ? 'white' : 'green'
+    width: '131px'
   };
   // public data$ = [];
 

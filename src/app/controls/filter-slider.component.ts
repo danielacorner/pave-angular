@@ -25,7 +25,7 @@ import * as d3 from 'd3';
         line-height: 1.5rem;
         word-wrap: break-word;
         height: 25px;
-        width: 100px;
+        width: 108px;
       }
       @media only screen and (max-width: 692px) {
         mat-slider {

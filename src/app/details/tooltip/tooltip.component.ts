@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as d3 from 'd3';
 import { ModalComponent } from '../modal/modal.component';
 import {
@@ -8,7 +8,7 @@ import {
   MAT_BOTTOM_SHEET_DATA
 } from '@angular/material';
 import { TooltipMobileComponent } from '../tooltip-mobile/tooltip-mobile.component';
-
+import APP_CONFIG from '../../app.config';
 @Component({
   selector: 'app-tooltip',
   template: `
@@ -18,7 +18,7 @@ import { TooltipMobileComponent } from '../tooltip-mobile/tooltip-mobile.compone
   [style.bottom]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? '20px' : null)"
   [style.left]="(tooltipX > windowInnerWidth * 0.5 ? tooltipX - 360 - circleR + 'px' : tooltipX + circleR + 'px')"
   [style.pointerEvents]="(expanded ? 'auto' : 'none')"
-  [style.display]="(windowInnerWidth < this.mobileBreakPoint ? 'none' : 'inline')"
+  [style.display]="(windowInnerWidth < this.MOBILE_BREAKPOINT ? 'none' : 'inline')"
   >
     <mat-card
     >
@@ -88,9 +88,10 @@ import { TooltipMobileComponent } from '../tooltip-mobile/tooltip-mobile.compone
   styleUrls: ['tooltip.component.scss']
 })
 export class TooltipComponent implements OnInit, OnDestroy {
-  @Input() public tooltipData;
-  @Input() public expanded = false;
-  @Input() mobileBreakPoint;
+  @Input()
+  public tooltipData;
+  @Input()
+  public expanded = false;
   public wdw = window;
   public data; // local shortcut to access tooltipData.d.all
   public tooltipHeight;
@@ -105,10 +106,9 @@ export class TooltipComponent implements OnInit, OnDestroy {
   };
   public windowInnerHeight = window.innerHeight;
   public windowInnerWidth = window.innerWidth;
+  public MOBILE_BREAKPOINT = APP_CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
 
-  constructor(public dialog: MatDialog, private bottomSheet: MatBottomSheet) {
-
-  }
+  constructor(public dialog: MatDialog, private bottomSheet: MatBottomSheet) {}
 
   ngOnInit() {
     this.data = this.tooltipData.d.all;
@@ -130,9 +130,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
     d3.select('.header-image').style(
       'background-image',
       window.location.href.includes('localhost')
-        ? 'url("../../assets/img/NOC_images/' +
-          this.data.noc +
-          '.jpg"'
+        ? 'url("../../assets/img/NOC_images/' + this.data.noc + '.jpg"'
         : 'url("../../pave-angular/assets/img/NOC_images/' +
           this.data.noc +
           '.jpg"'
@@ -140,7 +138,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
   }
 
   tooltipOpened(event) {
-    if (window.innerWidth < this.mobileBreakPoint) {
+    if (window.innerWidth < this.MOBILE_BREAKPOINT) {
       this.openBottomSheetMobile();
     } else {
       this.headerOpenState = true;
@@ -149,7 +147,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
   }
 
   openDetails(jobData): void {
-    if (window.innerWidth < this.mobileBreakPoint) {
+    if (window.innerWidth < this.MOBILE_BREAKPOINT) {
       return;
     } else {
       // const dialogRef =
@@ -163,7 +161,8 @@ export class TooltipComponent implements OnInit, OnDestroy {
 
   openBottomSheetMobile() {
     // const bottomSheetRef =
-    setTimeout(() => { // setTimeout 0 to fix ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      // setTimeout 0 to fix ExpressionChangedAfterItHasBeenCheckedError
       this.bottomSheet.open(TooltipMobileComponent, {
         data: {
           ttdata: this.tooltipData.d.all
@@ -172,4 +171,3 @@ export class TooltipComponent implements OnInit, OnDestroy {
     }, 0);
   }
 }
-

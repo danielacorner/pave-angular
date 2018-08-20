@@ -12,6 +12,7 @@ import { AppStatusService } from '../services/app-status.service';
 import { AppFilterService } from '../services/app-filter.service';
 import { AppSimulationService } from '../services/app-simulation.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import APP_CONFIG from '../app.config';
 
 import {
   trigger,
@@ -56,36 +57,36 @@ export class VizComponent implements OnInit, AfterContentInit {
     private ref: ChangeDetectorRef
   ) {}
   // ----- POSITIONING ----- //
-  public wdw = window;
-  public navbarHeight = 64;
-  public height = window.innerHeight - this.navbarHeight;
-  public width = window.innerWidth;
-  public mobileBreakPoint = 480;
+  wdw = window;
+  NAVBAR_HEIGHT = APP_CONFIG.DEFAULTS.NAVBAR_HEIGHT;
+  height = window.innerHeight - this.NAVBAR_HEIGHT;
+  width = window.innerWidth;
 
   // ----- CANVAS PROPERTIES ----- //
-  public data$ = [];
-  public circles;
-  public minRadius =
-    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
+  data$ = [];
+  circles;
+  minRadius =
+    Math.min(window.innerWidth, window.innerHeight - this.NAVBAR_HEIGHT) *
     0.0006; // vmin
-  public colourScale = d3.scaleOrdinal(d3.schemeCategory10);
-  public canvasStyles = {
+  colourScale = d3.scaleOrdinal(APP_CONFIG.SPECTRUM);
+  canvasStyles = {
     position: 'absolute',
-    top: this.navbarHeight + 'px',
+    top: this.NAVBAR_HEIGHT + 'px',
     left: 0,
     width: window.innerWidth,
-    height: window.innerHeight - this.navbarHeight
+    height: window.innerHeight - this.NAVBAR_HEIGHT
   };
+  circleImagesActive = false;
   // move the circles into the center
-  public gTransform =
+  gTransform =
     'translate(' +
     window.innerWidth / 2 +
     'px, ' +
-    (window.innerHeight - this.navbarHeight + 80) / 2 +
+    (window.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
     'px)';
 
   // ----- FILTER SLIDERS ----- //
-  public filterSliders = [
+  filterSliders = [
     {
       variable: 'skillsLang',
       title: 'Language and Communication'
@@ -100,7 +101,7 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   // ----- CIRCLE PROPERTIES ----- //
   // subscriptions are defined in ngOnInit() through the _statusService
-  public subscriptions = [
+  subscriptions = [
     'radiusSelector',
     'clusterSelector',
     'uniqueClusterValues',
@@ -116,40 +117,40 @@ export class VizComponent implements OnInit, AfterContentInit {
     'defaultCircleRadius',
     'svgTransform'
   ];
-  public radiusSelector = 'none'; // default value because forceGravity defined before subscription
-  public clusterSelector;
-  public uniqueClusterValues;
-  public forceCluster;
-  public forceSimulation;
-  public radiusRange;
-  public radiusScale;
-  public filteredNodes;
-  public nodes;
-  public clusterCenters;
-  public numClusters;
-  public svgTransform = 'scale(1)'; // zoom when fewer nodes
+  radiusSelector = 'none'; // default value because forceGravity defined before subscription
+  clusterSelector;
+  uniqueClusterValues;
+  forceCluster;
+  forceSimulation;
+  radiusRange;
+  radiusScale;
+  filteredNodes;
+  nodes;
+  clusterCenters;
+  numClusters;
+  svgTransform = 'scale(1)'; // zoom when fewer nodes
 
   // ----- SIMULATION & FORCES ----- //
-  // public clusteringAmount = 0.5;
-  public defaultCircleRadius = 1.0;
-  public nodeAttractionConstant = -0.28; // negative = repel
-  public nodeAttraction =
-    Math.min(window.innerWidth, window.innerHeight - this.navbarHeight) *
-    this.nodeAttractionConstant *
-    this.defaultCircleRadius; // negative = repel
-  public centerGravity = 1.75;
-  public forceXCombine = d3.forceX().strength(this.centerGravity);
-  public forceYCombine = d3.forceY().strength(this.centerGravity);
-  public forceGravity;
-  public nodePadding = -1;
-  // public forceCollide = null;
-  public forceCollide;
-  public ticked;
+  // clusteringAmount = 0.5;
+  CIRCLE_RADIUS = APP_CONFIG.DEFAULTS.CIRCLE_RADIUS;
+  NODE_PADDING = APP_CONFIG.DEFAULTS.NODE_PADDING;
+  NODE_ATTRACTION_CONSTANT = APP_CONFIG.FORCES.NODE_ATTRACTION_CONSTANT; // negative = repel
+  CENTER_GRAVITY = APP_CONFIG.FORCES.CENTER_GRAVITY;
+  nodeAttraction =
+    Math.min(window.innerWidth, window.innerHeight - this.NAVBAR_HEIGHT) *
+    this.NODE_ATTRACTION_CONSTANT *
+    this.CIRCLE_RADIUS; // negative = repel
+  forceXCombine = d3.forceX().strength(this.CENTER_GRAVITY);
+  forceYCombine = d3.forceY().strength(this.CENTER_GRAVITY);
+  forceGravity;
+  // forceCollide = null;
+  forceCollide;
+  ticked;
   // tooltip
-  public tooltipData;
-  public tooltipExpanded = false; // whether the tooltip is expanded
-  public autoExpand;
-  public justClosed = false; // whether the tooltip was clicked-closed
+  tooltipData;
+  tooltipExpanded = false; // whether the tooltip is expanded
+  autoExpand;
+  justClosed = false; // whether the tooltip was clicked-closed
 
   mobileSliderActive = {
     skillsLang: false,
@@ -159,18 +160,18 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
 
   // // Drag functions used for interactivity
-  public dragstarted = d => {
+  dragstarted = d => {
     if (!d3.event.active) {
       this.forceSimulation.alphaTarget(0.3).restart();
     }
     d.fx = d.x;
     d.fy = d.y;
   };
-  public dragged = d => {
+  dragged = d => {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
   };
-  public dragended = d => {
+  dragended = d => {
     if (!d3.event.active) {
       this.forceSimulation.alphaTarget(0);
     }
@@ -184,17 +185,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
       this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
     });
-    this.updateForceCollide();
-    this.updateForceGravity();
-  }
-  updateForceCollide() {
-    this._simulationService.forceCollide(
-      this.radiusSelector,
-      this.defaultCircleRadius,
-      this.nodePadding
-    );
-  }
-  updateForceGravity() {
+    this._simulationService.forceCollide(this.radiusSelector);
     this._simulationService.forceGravity(
       this.radiusSelector,
       this.nodeAttraction,
@@ -204,29 +195,32 @@ export class VizComponent implements OnInit, AfterContentInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     // reposition canvas
-    this.canvasStyles.top = this.navbarHeight + 'px';
+    this.canvasStyles.top = this.NAVBAR_HEIGHT + 'px';
     this.canvasStyles.width = event.target.innerWidth;
-    this.canvasStyles.height = event.target.innerHeight - this.navbarHeight;
+    this.canvasStyles.height = event.target.innerHeight - this.NAVBAR_HEIGHT;
 
     // recalculate forces
     this.radiusSelector === 'none'
       ? (this.nodeAttraction =
           Math.min(
             event.target.innerWidth,
-            event.target.innerHeight - this.navbarHeight
+            event.target.innerHeight - this.NAVBAR_HEIGHT
           ) *
-          this.nodeAttractionConstant *
-          this.defaultCircleRadius)
+          this.NODE_ATTRACTION_CONSTANT *
+          this.CIRCLE_RADIUS)
       : (this.nodeAttraction =
           Math.min(
             event.target.innerWidth,
-            event.target.innerHeight - this.navbarHeight
-          ) * this.nodeAttractionConstant);
+            event.target.innerHeight - this.NAVBAR_HEIGHT
+          ) * this.NODE_ATTRACTION_CONSTANT);
 
     // change the collision and gravity forces for the new radii
-    this.updateForceCollide();
-    this.updateForceGravity();
-
+    this._simulationService.forceCollide(this.radiusSelector);
+    this._simulationService.forceGravity(
+      this.radiusSelector,
+      this.nodeAttraction,
+      this.radiusScale
+    );
     // start the simulation
     this._statusService.changeForceSimulation(
       this.forceSimulation
@@ -240,7 +234,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
-      (event.target.innerHeight - this.navbarHeight + 80) / 2 +
+      (event.target.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
       'px)';
   }
 
@@ -260,7 +254,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           )
           .range(
             this.radiusSelector === 'none'
-              ? Array(2).fill(this.defaultCircleRadius)
+              ? Array(2).fill(this.CIRCLE_RADIUS)
               : this.radiusRange
           )
       );
@@ -310,6 +304,32 @@ export class VizComponent implements OnInit, AfterContentInit {
         })
       );
 
+      // circle svg image patterns
+      d3.select('#canvas')
+        .append('defs')
+        .selectAll('.img-pattern')
+        .data(this.nodes)
+        .enter()
+        .append('pattern')
+        .attr('class', 'img-pattern')
+        .attr('id', d => 'pattern_' + d.id)
+        .attr('height', '100%')
+        .attr('width', '100%')
+        .attr('patternContentUnits', 'objectBoundingBox')
+        .append('image')
+        .attr('height', 1)
+        .attr('width', 1)
+        .attr('preserveAspectRatio', 'none')
+        .attr(
+          'xlink:href',
+          d =>
+            window.location.href.includes('localhost')
+              ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
+              : '../../pave-angular/assets/img/NOC_thumbnails/tn_' +
+                d.all.noc +
+                '.jpg'
+        );
+
       // append the circles to svg then style
       // add functions for interaction
       this.circles = d3
@@ -322,7 +342,6 @@ export class VizComponent implements OnInit, AfterContentInit {
         .style('stroke', 'black')
         .style('stroke-width', 0)
         .attr('id', d => 'circle_' + d.id)
-        .attr('class', 'circle')
         .attr('r', d => d.r + 'vmin')
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
@@ -332,38 +351,8 @@ export class VizComponent implements OnInit, AfterContentInit {
             .on('drag', this.dragged)
             .on('end', this.dragended)
         )
-        .on('mouseover', d => {
-          // initialize the tooltip
-          this.tooltipData = {
-            d: d,
-            x: d.x + this.width / 2,
-            y: d.y + this.height / 2
-          };
-
-          // highlight the circle border
-          d3.select('#circle_' + d.id)
-            //   .filter(c => c.id === d.id)
-            .style('stroke-width', 1);
-          // start the clock for auto-expansion after 2 seconds unless clicked-closed
-          if (!this.justClosed) {
-            this.autoExpand = setTimeout(() => {
-              this.tooltipExpanded = true;
-            }, 2000);
-          }
-        })
-        .on('mouseout', d => {
-          // clear the autoExpand timeout
-          clearTimeout(this.autoExpand);
-          // remove the border highlight
-          d3.select('#circle_' + d.id).style('stroke-width', 0);
-          // remove the tooltip unless expanded
-          if (this.tooltipExpanded) {
-            return;
-          } else {
-            this.tooltipData = null;
-          }
-          this.justClosed = false;
-        })
+        .on('mouseover', d => this.handleMouseover(d))
+        .on('mouseout', d => this.handleMouseout(d))
         .on('click', () => {
           this.tooltipExpanded = !this.tooltipExpanded;
           if (!this.tooltipExpanded) {
@@ -400,6 +389,40 @@ export class VizComponent implements OnInit, AfterContentInit {
     });
   } // end ngAfterContentinit
 
+  handleMouseover(d) {
+    // initialize the tooltip
+    this.tooltipData = {
+      d: d,
+      x: d.x + this.width / 2,
+      y: d.y + this.height / 2
+    };
+
+    // highlight the circle border
+    d3.select('#circle_' + d.id).style('stroke-width', 2);
+
+    // start the clock for auto-expansion after 2 seconds unless clicked-closed
+    if (!this.justClosed) {
+      this.autoExpand = setTimeout(() => {
+        this.tooltipExpanded = true;
+      }, 2000);
+    }
+  }
+  handleMouseout(d) {
+    // clear the autoExpand timeout
+    clearTimeout(this.autoExpand);
+    // remove the border highlight (unless circle images are showing)
+    d3.select('#circle_' + d.id).style(
+      'stroke-width',
+      this.circleImagesActive ? 1.5 : 0
+    );
+    // remove the tooltip unless expanded
+    if (this.tooltipExpanded) {
+      return;
+    } else {
+      this.tooltipData = null;
+    }
+    this.justClosed = false;
+  }
   // close tooltip on background click
   closeTooltip($event) {
     if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
@@ -423,7 +446,6 @@ export class VizComponent implements OnInit, AfterContentInit {
       .transition()
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
-      // todo: edit pop size based on d.r
       .attr('r', d => d.r * 1.75 + 'vmin')
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
@@ -485,24 +507,27 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.nodes.length / this.filteredNodes.length,
       0.45 // less than sqrt (0.5) to reduce overflow
     );
-    console.log(zoomAmount);
     const yTranslateAmount = Math.max(
       -this.nodes.length / this.filteredNodes.length,
       -35
     );
-    console.log(yTranslateAmount);
     const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
       'scale(' + zoomAmount + ') translate(0,' + yTranslateAmount + 'px)'
     );
     this._statusService.changeSvgTransform(newSvgTransform);
 
-    // fill circles with images if <40 remain
+    // fill circles with images if <50 remain
     setTimeout(() => {
-      this.filteredNodes.length <= 40
+      this.filteredNodes.length <= 50
+        ? (this.circleImagesActive = true)
+        : (this.circleImagesActive = false);
+
+      this.circleImagesActive
         ? this.circles
             .attr('fill-opacity', 0.2)
             .attr('fill', d => 'url(#pattern_' + d.id + ')')
-            // .attr('stroke', d => this.colourScale(d.cluster))
+            .style('stroke', d => this.colourScale(d.cluster))
+            .style('stroke-width', 1.5)
             .transition()
             .duration(1000)
             .attr('fill-opacity', 1)
@@ -513,13 +538,17 @@ export class VizComponent implements OnInit, AfterContentInit {
                 .on('drag', this.dragged)
                 .on('end', this.dragended)
             )
-        : this.circles.attr('fill', d => this.colourScale(d.cluster)).call(
-            d3
-              .drag()
-              .on('start', this.dragstarted)
-              .on('drag', this.dragged)
-              .on('end', this.dragended)
-          );
+        : this.circles
+            .attr('fill', d => this.colourScale(d.cluster))
+            .style('stroke', 'black')
+            .style('stroke-width', 0)
+            .call(
+              d3
+                .drag()
+                .on('start', this.dragstarted)
+                .on('drag', this.dragged)
+                .on('end', this.dragended)
+            );
     }, 1000);
 
     // Update nodes and restart the simulation.

@@ -38,9 +38,7 @@ import * as d3 from 'd3';
 export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
   // static inputs
   @Input() public nodeAttraction;
-  @Input() public nodePadding;
   @Input() public minRadius;
-  @Input() public width;
   // subscriptions
   public subscriptions = [
     'defaultCircleRadius',
@@ -148,7 +146,7 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
       // change the collision force to the new radius
       this._statusService.changeForceCollide(
-        this._simulationService.forceCollide(this.radiusSelector, this.defaultCircleRadius, this.nodePadding)
+        this._simulationService.forceCollide(this.radiusSelector)
       );
       // change the force simulation with new gravities and radii
       this._statusService.changeForceSimulation(

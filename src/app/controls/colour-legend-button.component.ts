@@ -5,8 +5,11 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-colour-legend-button',
   template: `
-  <button class='btn waves-effect z-depth-3 white green-text'
+  <button class='btn waves-effect z-depth-3'
+    [class.white]="!colourSortActive"
+    [class.green-text]="!colourSortActive"
     [class.green]="colourSortActive"
+    [class.white-text]="colourSortActive"
     [ngStyle]='btnStyles'
     (click)="handleClick()">
   <div class='grid-container'>
@@ -90,7 +93,7 @@ export class ColourLegendButtonComponent implements OnInit {
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
-    width: '130px'
+    width: '130px',
   };
   public clusterCenters = [];
   public refreshInterval;

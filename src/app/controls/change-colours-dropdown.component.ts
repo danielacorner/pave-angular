@@ -38,8 +38,6 @@ import { AppSimulationService } from '../services/app-simulation.service';
 export class ChangeColoursDropdownComponent implements OnInit, AfterContentInit {
   // static inputs
   @Input() public colourScale;
-  @Input() public nodeAttraction;
-  @Input() public nodePadding;
   public active = true;
   public data$;
   public newClusters;

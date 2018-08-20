@@ -1,30 +1,18 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="closeTooltip($event)">
     <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
-      <!-- <svg:circle
-      *ngFor="let node of nodes" [attr.id]="'circle_'+node.id"
-      [attr.r]="node.r + 'vmin'"
-      [attr.fill]="colourScale(node.cluster)"
-      ></svg:circle> -->
     </g>
-    <!-- job image patterns -->
-    <defs>
-      <pattern *ngFor="let node of nodes" class="img-pattern" id="'pattern_'+node.id" height="100%" width="100%" patternContentUnits="objectBoundingBox">
-        <image height="1" width="1" preserveAspectRatio="none" [attr.xlink:href]="(wdw.location.href.includes('localhost') ?
-        '../../assets/img/NOC_thumbnails/tn_' + node.all.noc + '.jpg' :
-         '../../pave-angular/assets/img/NOC_thumbnails/tn_' + node.all.noc + '.jpg')"></image>
-      </pattern>
-    </defs>
   </svg>
-
+  <!-- sliders -->
   <p class="sliders-title">Explore Canada’s job landscape according to your present or future skills</p>
 
   <div class='container'>
 
     <div class="sliders-container">
-
-      <p class="sliders-subtitle">Adjust your skills:</p>
-
+      <p class="sliders-subtitle">
+        Adjust your skills:
+      </p>
+      <!-- sliders grid -->
       <div class="grid-container">
         <div class="spacer"></div>
         <div class="slider-container" *ngFor="let filter of filterSliders">
@@ -32,11 +20,9 @@
             [title]="filter.title"></app-filter-slider>
         </div>
         <div class="spacer"></div>
-
       </div>
-
     </div>
-
+    <!-- mobile sliders -->
     <div class="sliders-container-mobile center">
       <button class="btn sliders-mobile-btn white green-text" [matMenuTriggerFor]="slidersMenu">Adjust your skills</button>
 
@@ -57,51 +43,55 @@
 
 
   </div>
+  <!-- controls -->
   <div class="controls-container">
-
+    <!-- dropdowns -->
     <div class="dropdowns-container">
       <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
-      <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+      <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [minRadius]="minRadius"></app-change-sizes-dropdown>
     </div>
-
+    <!-- sort buttons -->
     <div class="sort-buttons-container center">
       <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-        [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>
+        [height]="height"></app-colour-legend-button>
       <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-        [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
+        [height]="height"></app-size-legend-button>
     </div>
+    <!-- mobile controls -->
     <div class="controls-mobile-container center">
+      <!-- mobile sort buttons -->
       <button class="btn legend-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="legendMenu">Legend</button>
       <mat-menu #legendMenu="matMenu" yPosition="above">
         <div mat-menu-item class="legend-menu-item">
           <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
         </div>
         <div mat-menu-item class="legend-menu-item">
-          <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [nodePadding]="nodePadding" [minRadius]="minRadius" [width]="width"></app-change-sizes-dropdown>
+          <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [minRadius]="minRadius"></app-change-sizes-dropdown>
         </div>
       </mat-menu>
       <button class="btn sort-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="sortMenu">Sort</button>
       <mat-menu #sortMenu="matMenu" yPosition="above" xPosition="before">
         <div mat-menu-item class="sort-menu-item">
           <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-            [height]="height" [navbarHeight]="navbarHeight"></app-colour-legend-button>
+            [height]="height"></app-colour-legend-button>
         </div>
         <div mat-menu-item class="sort-menu-item">
           <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-            [height]="height" [navbarHeight]="navbarHeight"></app-size-legend-button>
+            [height]="height"></app-size-legend-button>
         </div>
       </mat-menu>
     </div>
     <!-- <div class="graph-button-container center">
       <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
-        [nClusters]="numClusters" [width]="width" [height]="height" [navbarHeight]="navbarHeight"></app-graph-mode>
+        [nClusters]="numClusters" [width]="width" [height]="height" ></app-graph-mode>
     </div> -->
 
   </div>
 
-
+  <!-- tooltip -->
   <div *ngIf="tooltipData" @ngIfAnimation>
-    <app-tooltip @easeInOut [tooltipData]="tooltipData" [expanded]="tooltipExpanded" [mobileBreakPoint]="mobileBreakPoint"></app-tooltip>
+    <!-- todo: tooltipExpanded passed down -- does that even work? -->
+    <app-tooltip @easeInOut [tooltipData]="tooltipData" [expanded]="tooltipExpanded"></app-tooltip>
   </div>
 
 </div>
