@@ -6,6 +6,7 @@ todos
 - something like pave.com/24-14-00-08-industry-salary-1-0
 - finesse forces, padding
 - graph mode
+- about, contact, search results pages on different material tabs? to prevent simulation reloads
 
 bugs:
 - Tooltip stops updating after simulation stops

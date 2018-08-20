@@ -351,14 +351,9 @@ export class VizComponent implements OnInit, AfterContentInit {
             .on('drag', this.dragged)
             .on('end', this.dragended)
         )
-        .on('mouseover', d => this.handleMouseover(d))
-        .on('mouseout', d => this.handleMouseout(d))
-        .on('click', () => {
-          this.tooltipExpanded = !this.tooltipExpanded;
-          if (!this.tooltipExpanded) {
-            this.justClosed = true;
-          }
-        });
+        .on('mouseover', this.handleMouseover())
+        .on('mouseout', this.handleMouseout())
+        .on('click', this.handleClick());
 
       setTimeout(() => {
         this.circles
@@ -389,40 +384,55 @@ export class VizComponent implements OnInit, AfterContentInit {
     });
   } // end ngAfterContentinit
 
-  handleMouseover(d) {
-    // initialize the tooltip
-    this.tooltipData = {
-      d: d,
-      x: d.x + this.width / 2,
-      y: d.y + this.height / 2
+  handleMouseover() {
+    return d => {
+      console.log('mouseover!');
+      // initialize the tooltip
+      this.tooltipData = {
+        d: d,
+        x: d.x + this.width / 2,
+        y: d.y + this.height / 2
+      };
+      console.log(this.tooltipData);
+
+      // highlight the circle border
+      d3.select('#circle_' + d.id).style('stroke-width', 2);
+
+      // start the clock for auto-expansion after 2 seconds unless clicked-closed
+      if (!this.justClosed) {
+        this.autoExpand = setTimeout(() => {
+          this.tooltipExpanded = true;
+        }, 2000);
+      }
     };
-
-    // highlight the circle border
-    d3.select('#circle_' + d.id).style('stroke-width', 2);
-
-    // start the clock for auto-expansion after 2 seconds unless clicked-closed
-    if (!this.justClosed) {
-      this.autoExpand = setTimeout(() => {
-        this.tooltipExpanded = true;
-      }, 2000);
-    }
   }
-  handleMouseout(d) {
-    // clear the autoExpand timeout
-    clearTimeout(this.autoExpand);
-    // remove the border highlight (unless circle images are showing)
-    d3.select('#circle_' + d.id).style(
-      'stroke-width',
-      this.circleImagesActive ? 1.5 : 0
-    );
-    // remove the tooltip unless expanded
-    if (this.tooltipExpanded) {
-      return;
-    } else {
-      this.tooltipData = null;
-    }
-    this.justClosed = false;
+  handleMouseout() {
+    return d => {
+      console.log('mouseout!');
+      // clear the autoExpand timeout
+      clearTimeout(this.autoExpand);
+      // remove the border highlight (unless circle images are showing)
+      d3.select('#circle_' + d.id).style(
+        'stroke-width',
+        this.circleImagesActive ? 1.5 : 0
+      );
+      // remove the tooltip unless expanded
+      if (!this.tooltipExpanded) {
+        this.tooltipData = null;
+      }
+      this.justClosed = false;
+    };
   }
+  handleClick() {
+    return () => {
+      console.log('click!');
+      this.tooltipExpanded = !this.tooltipExpanded;
+      if (!this.tooltipExpanded) {
+        this.justClosed = true;
+      }
+    };
+  }
+
   // close tooltip on background click
   closeTooltip($event) {
     if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
@@ -461,44 +471,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('fill', d => this.colourScale(d.cluster))
       // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
-      .on('mouseover', d => {
-        // initialize the tooltip
-        this.tooltipData = {
-          d: d,
-          x: d.x + this.width / 2,
-          y: d.y + this.height / 2
-        };
-        // highlight the circle border
-        // d3.selectAll('circle')
-        //   .filter(c => c.id === d.id)
-        //   .attr('stroke', 'black');
-        // start the clock for auto-expansion after 2 seconds unless clicked-closed
-        if (!this.justClosed) {
-          this.autoExpand = setTimeout(() => {
-            this.tooltipExpanded = true;
-          }, 2000);
-        }
-      })
-      .on('mouseout', () => {
-        // clear the autoExpand timeout
-        clearTimeout(this.autoExpand);
-        // remove the border highlight
-        // d3.selectAll('circle').attr('stroke', d => this.colourScale(d.cluster));
-        // remove the tooltip unless expanded
-        if (this.tooltipExpanded) {
-          return;
-        } else {
-          this.tooltipData = null;
-        }
-        this.justClosed = false;
-      })
-      .on('click', () => {
-        this.tooltipExpanded = !this.tooltipExpanded;
-        if (!this.tooltipExpanded) {
-          this.justClosed = true;
-          this.tooltipData = null;
-        }
-      })
+      .on('mouseover', this.handleMouseover(d))
+      .on('mouseout', this.handleMouseout(d))
+      .on('click', this.handleClick())
       .merge(this.circles);
 
     // ZOOM to fit remaining of circles
