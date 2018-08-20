@@ -1,9 +1,15 @@
 todos
 -----
 
-grey colour border disabled size legend button
+- colour spectra for each colour-sort variable
+- url input/output :param for filter, sort, size, colour, sort state
+- something like pave.com/24-14-00-08-industry-salary-1-0
+- finesse forces, padding
+- graph mode
 
 bugs:
+- Tooltip stops updating after simulation stops
+- Tooltip not fully responsive to hover
 - Graph view button z index (should be below tooltip)
 - click once, same job still selected
 - sliders move when used on tablet
