@@ -1,10 +1,4 @@
 const CONFIG = {
-  // FORCES: {
-  //   CLUSTER: 0.5,
-  //   CENTER_GRAVITY: 1.75,
-  //   NODE_ATTRACTION_CONSTANT: -0.48,
-  //   VELOCITY_DECAY: 0.7
-  // },
   FORCES: {
     CLUSTER: 0.5,
     CENTER_GRAVITY: 1.75,
