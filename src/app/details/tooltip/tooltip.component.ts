@@ -89,26 +89,29 @@ import APP_CONFIG from '../../app.config';
 })
 export class TooltipComponent implements OnInit, OnDestroy {
   @Input()
-  public tooltipData;
+  tooltipData;
   @Input()
-  public expanded = false;
-  public wdw = window;
-  public data; // local shortcut to access tooltipData.d.all
-  public tooltipHeight;
-  public tooltipX;
-  public tooltipY;
-  public circleR;
-  public headerOpenState = false;
-  public hideOnExpanded = 'block';
-  public headerStyles = {
+  expanded = false;
+  wdw = window;
+  data; // local shortcut to access tooltipData.d.all
+  tooltipHeight;
+  tooltipX;
+  tooltipY;
+  circleR;
+  headerOpenState = false;
+  hideOnExpanded = 'block';
+  headerStyles = {
     marginBottom: '0px'
     // paddingTop: '20px',
   };
-  public windowInnerHeight = window.innerHeight;
-  public windowInnerWidth = window.innerWidth;
-  public MOBILE_BREAKPOINT = APP_CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
+  windowInnerHeight = window.innerHeight;
+  windowInnerWidth = window.innerWidth;
+  MOBILE_BREAKPOINT = APP_CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
+  dialog;
 
-  constructor(public dialog: MatDialog, private bottomSheet: MatBottomSheet) {}
+  constructor(dialog: MatDialog, private bottomSheet: MatBottomSheet) {
+    this.dialog = dialog;
+  }
 
   ngOnInit() {
     this.data = this.tooltipData.d.all;

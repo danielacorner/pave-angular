@@ -12,7 +12,7 @@ import { AppStatusService } from '../services/app-status.service';
 import { AppFilterService } from '../services/app-filter.service';
 import { AppSimulationService } from '../services/app-simulation.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import APP_CONFIG from '../app.config';
+import CONFIG from '../app.config';
 
 import {
   trigger,
@@ -58,7 +58,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   ) {}
   // ----- POSITIONING ----- //
   wdw = window;
-  NAVBAR_HEIGHT = APP_CONFIG.DEFAULTS.NAVBAR_HEIGHT;
+  NAVBAR_HEIGHT = CONFIG.DEFAULTS.NAVBAR_HEIGHT;
   height = window.innerHeight - this.NAVBAR_HEIGHT;
   width = window.innerWidth;
 
@@ -66,9 +66,11 @@ export class VizComponent implements OnInit, AfterContentInit {
   data$ = [];
   circles;
   minRadius =
-    Math.min(window.innerWidth, window.innerHeight - this.NAVBAR_HEIGHT) *
-    0.0006; // vmin
-  colourScale = d3.scaleOrdinal(APP_CONFIG.SPECTRUM);
+    Math.min(
+      window.innerWidth,
+      window.innerHeight - CONFIG.DEFAULTS.NAVBAR_HEIGHT
+    ) * 0.0006; // vmin
+  colourScale = d3.scaleOrdinal(CONFIG.SPECTRUM);
   canvasStyles = {
     position: 'absolute',
     top: this.NAVBAR_HEIGHT + 'px',
@@ -132,10 +134,10 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   // ----- SIMULATION & FORCES ----- //
   // clusteringAmount = 0.5;
-  CIRCLE_RADIUS = APP_CONFIG.DEFAULTS.CIRCLE_RADIUS;
-  NODE_PADDING = APP_CONFIG.DEFAULTS.NODE_PADDING;
-  NODE_ATTRACTION_CONSTANT = APP_CONFIG.FORCES.NODE_ATTRACTION_CONSTANT; // negative = repel
-  CENTER_GRAVITY = APP_CONFIG.FORCES.CENTER_GRAVITY;
+  CIRCLE_RADIUS = CONFIG.DEFAULTS.CIRCLE_RADIUS;
+  NODE_PADDING = CONFIG.DEFAULTS.NODE_PADDING;
+  NODE_ATTRACTION_CONSTANT = CONFIG.FORCES.NODE_ATTRACTION_CONSTANT; // negative = repel
+  CENTER_GRAVITY = CONFIG.FORCES.CENTER_GRAVITY;
   nodeAttraction =
     Math.min(window.innerWidth, window.innerHeight - this.NAVBAR_HEIGHT) *
     this.NODE_ATTRACTION_CONSTANT *
@@ -150,6 +152,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   tooltipData;
   tooltipExpanded = false; // whether the tooltip is expanded
   autoExpand;
+  autoFadeout;
   justClosed = false; // whether the tooltip was clicked-closed
 
   mobileSliderActive = {
@@ -369,14 +372,14 @@ export class VizComponent implements OnInit, AfterContentInit {
       // create the forceCluster/collision force simulation
       const newForceSimulation = d3
         .forceSimulation(this.nodes)
-        // .velocityDecay(0.3)
+        .velocityDecay(CONFIG.FORCES.VELOCITY_DECAY) // use for faster dev testing
         .force('x', this.forceXCombine)
         .force('y', this.forceYCombine)
         .force('collide', this.forceCollide)
         .force('gravity', this.forceGravity)
         .force('cluster', this.forceCluster)
         .on('tick', () => {
-          this.ref.markForCheck();
+          // this.ref.markForCheck();
           this.circles.attr('cx', d => d.x).attr('cy', d => d.y);
         });
 
@@ -386,14 +389,8 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   handleMouseover() {
     return d => {
-      console.log('mouseover!');
       // initialize the tooltip
-      this.tooltipData = {
-        d: d,
-        x: d.x + this.width / 2,
-        y: d.y + this.height / 2
-      };
-      console.log(this.tooltipData);
+      this.initTooltip(d);
 
       // highlight the circle border
       d3.select('#circle_' + d.id).style('stroke-width', 2);
@@ -404,37 +401,76 @@ export class VizComponent implements OnInit, AfterContentInit {
           this.tooltipExpanded = true;
         }, 2000);
       }
+
+      // call Angular's change-detection
+      this.ref.markForCheck();
     };
   }
   handleMouseout() {
     return d => {
-      console.log('mouseout!');
       // clear the autoExpand timeout
       clearTimeout(this.autoExpand);
-      // remove the border highlight (unless circle images are showing)
+
+      // remove the border highlight (unless zoomed in and circle images are showing)
       d3.select('#circle_' + d.id).style(
         'stroke-width',
         this.circleImagesActive ? 1.5 : 0
       );
-      // remove the tooltip unless expanded
-      if (!this.tooltipExpanded) {
+
+      // remove the tooltip unless expanded or clicked-closed
+      if (!this.tooltipExpanded && !this.justClosed) {
         this.tooltipData = null;
       }
       this.justClosed = false;
+
+      // call Angular's change-detection
+      this.ref.markForCheck();
     };
   }
   handleClick() {
-    return () => {
-      console.log('click!');
+    return d => {
+      // todo: how to identify current tooltip ? these both identify mouse target
+      // todo: let previousTooltipData somewhere
+      //   console.log('case 1');
       this.tooltipExpanded = !this.tooltipExpanded;
+      //
       if (!this.tooltipExpanded) {
         this.justClosed = true;
+        // this.tooltipData = null;
       }
+      // if clicking on another circle,
+      // } else if (d3.event.target.id !== this.tooltipData.d.id) {
+      //   console.log('case 2');
+      //   // (tooltip should be expanded in this case)
+      //   console.log('tooltipExpanded', this.tooltipExpanded);
+      //   this.tooltipExpanded = false;
+      //   this.initTooltip(d);
+      //   // this.tooltipExpanded = true;
+      // } else {
+      //   console.log('case 3');
+      //   this.handleSvgClick(d3.event);
+      //   // this.tooltipData = null;
+      //   // this.tooltipExpanded = false;
+      //   setTimeout(this.initTooltip(d), 301);
+      //   // this.tooltipExpanded = true;
+      // }
+      // expand the tooltip, or close if expanded
+      // this.tooltipExpanded = !this.tooltipExpanded;
+
+      // if tooltip was clicked-closed, prevent re-opening
+    };
+  }
+
+  private initTooltip(d: any) {
+    this.tooltipData = {
+      d: d,
+      x: d.x + this.width / 2,
+      y: d.y + this.height / 2
     };
   }
 
   // close tooltip on background click
-  closeTooltip($event) {
+  handleSvgClick($event) {
     if ($event.target.nodeName === 'svg' && this.tooltipExpanded) {
       this.tooltipExpanded = false;
       d3.select('app-tooltip')
@@ -471,8 +507,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('fill', d => this.colourScale(d.cluster))
       // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
-      .on('mouseover', this.handleMouseover(d))
-      .on('mouseout', this.handleMouseout(d))
+      .on('mouseover', this.handleMouseover())
+      .on('mouseout', this.handleMouseout())
       .on('click', this.handleClick())
       .merge(this.circles);
 
