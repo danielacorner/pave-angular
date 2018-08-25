@@ -13,7 +13,8 @@ import * as d3 from 'd3';
       [style.pointerEvents]="'auto'"
       [(ngModel)]="sliderValue"
       tickInterval="10"
-      (change)="fireEvent()"
+      (input)="fireDragEvent($event)"
+      (change)="fireMouseUpEvent($event)"
       ></mat-slider>
     </div>
   `,
@@ -47,12 +48,18 @@ import * as d3 from 'd3';
   ]
 })
 export class FilterSliderComponent implements OnInit {
-  public sliderValue;
-  @Input() public title;
-  @Input() public filterVariable;
-  @Output() public childEvent = new EventEmitter();
-  public min;
-  public max;
+  @Input()
+  sliderValue;
+  @Input()
+  title;
+  @Input()
+  filterVariable;
+  @Output()
+  mouseUpEvent = new EventEmitter();
+  @Output()
+  dragEvent = new EventEmitter();
+  min;
+  max;
 
   constructor(private _dataService: DataService) {}
 
@@ -65,7 +72,10 @@ export class FilterSliderComponent implements OnInit {
     });
   }
 
-  fireEvent() {
-    this.childEvent.emit(this.sliderValue);
+  fireDragEvent(e) {
+    this.dragEvent.emit(e);
+  }
+  fireMouseUpEvent(e) {
+    this.mouseUpEvent.emit(e);
   }
 }

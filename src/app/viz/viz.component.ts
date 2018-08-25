@@ -80,24 +80,34 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   circleImagesActive = false;
   // move the circles into the center
-  gTransform =
+  circlesGroupTransform =
     'translate(' +
     window.innerWidth / 2 +
     'px, ' +
-    (window.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
+    (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
     'px)';
 
   // ----- FILTER SLIDERS ----- //
   filterSliders = [
     {
       variable: 'skillsLang',
-      title: 'Language and Communication'
+      title: 'Language and Communication',
+      value: 0
     },
-    { variable: 'skillsLogi', title: 'Logic and Reasoning' },
-    { variable: 'skillsMath', title: 'Math and Spatial' },
+    {
+      variable: 'skillsLogi',
+      title: 'Logic and Reasoning',
+      value: 0
+    },
+    {
+      variable: 'skillsMath',
+      title: 'Math and Spatial',
+      value: 0
+    },
     {
       variable: 'skillsComp',
-      title: 'Computer and Information'
+      title: 'Computer and Information',
+      value: 0
     }
   ];
 
@@ -233,7 +243,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .restart()
     );
 
-    this.gTransform =
+    this.circlesGroupTransform =
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
@@ -345,7 +355,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .style('stroke', 'black')
         .style('stroke-width', 0)
         .attr('id', d => 'circle_' + d.id)
-        .attr('r', d => d.r + 'vmin')
+        .attr('r', this.circleWidth)
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
@@ -386,6 +396,26 @@ export class VizComponent implements OnInit, AfterContentInit {
       this._statusService.changeForceSimulation(newForceSimulation);
     });
   } // end ngAfterContentinit
+
+  circleWidth(d) {
+    const canvas = document.querySelector('#canvas');
+    const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+    if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+      return d.r + 'vmin';
+    } else {
+      return d.r * 1.5 + 'vmin';
+    }
+  }
+
+  circlePop(d) {
+    const canvas = document.querySelector('#canvas');
+    const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+    if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+      return d.r * 2 + 'vmin';
+    } else {
+      return d.r * 6 + 'vmin';
+    }
+  }
 
   handleMouseover() {
     return d => {
@@ -480,10 +510,12 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
   }
 
-  // Filter slider function: $event = skill level, filterVariable = skill name
-  handleSliderUpdate($event, filterVariable) {
-    // update the nodes with the new slider positions
-    this._filterService.filterViz($event, filterVariable, this.nodes);
+  // While moving the slider, filter the circles
+
+  // After mouseup from the slider, restart the simulation and zoom in/out
+
+  handleSliderDrag(event, filterVariable) {
+    this._filterService.filterViz(event.value, filterVariable, this.nodes);
     // UPDATE the viz data
     this.circles = this.circles.data(this.filteredNodes, d => d.id);
     // EXIT
@@ -492,7 +524,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .transition()
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
-      .attr('r', d => d.r * 1.75 + 'vmin')
+      .attr('r', this.circlePop)
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -503,27 +535,35 @@ export class VizComponent implements OnInit, AfterContentInit {
       .data(this.filteredNodes)
       .enter()
       .append('svg:circle')
-      .attr('r', d => d.r + 'vmin')
+      .attr('r', this.circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
       // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
-      .on('mouseover', this.handleMouseover())
-      .on('mouseout', this.handleMouseout())
-      .on('click', this.handleClick())
+      .on('mouseover', this.handleMouseover)
+      .on('mouseout', this.handleMouseout)
+      .on('click', this.handleClick)
       .merge(this.circles);
+  }
 
+  // Filter slider function: $event = skill level, filterVariable = skill name
+  handleSliderMouseUp(event, filterVariable) {
+    // Save the slider position
+    this.filterSliders
+      .filter(slider => slider.variable === filterVariable)
+      .map(slider => (slider.value = event.value));
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
     const zoomAmount = Math.pow(
       this.nodes.length / this.filteredNodes.length,
       0.45 // less than sqrt (0.5) to reduce overflow
     );
-    const yTranslateAmount = Math.max(
+    const circlesGroupYTranslate = Math.max(
       -this.nodes.length / this.filteredNodes.length,
-      -35
+      -10
     );
+
     const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
-      'scale(' + zoomAmount + ') translate(0,' + yTranslateAmount + 'px)'
+      'scale(' + zoomAmount + ') translate(0,' + circlesGroupYTranslate + 'px)'
     );
     this._statusService.changeSvgTransform(newSvgTransform);
 
@@ -538,7 +578,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             .attr('fill-opacity', 0.2)
             .attr('fill', d => 'url(#pattern_' + d.id + ')')
             .style('stroke', d => this.colourScale(d.cluster))
-            .style('stroke-width', 1.5)
+            .style('stroke-width', 5 / zoomAmount)
             .transition()
             .duration(1000)
             .attr('fill-opacity', 1)

@@ -1,6 +1,6 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="handleSvgClick($event)">
-    <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
+    <g class="circlesG" *ngIf="data$" [style.transform]="circlesGroupTransform">
     </g>
   </svg>
   <!-- sliders -->
@@ -12,16 +12,18 @@
       <p class="sliders-subtitle">
         Adjust your skills:
       </p>
+
       <!-- sliders grid -->
       <div class="grid-container">
         <div class="spacer"></div>
         <div class="slider-container" *ngFor="let filter of filterSliders">
-          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-            [title]="filter.title"></app-filter-slider>
+          <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" (dragEvent)="handleSliderDrag($event, filter.variable)"
+            [filterVariable]="filter.variable" [title]="filter.title"></app-filter-slider>
         </div>
         <div class="spacer"></div>
       </div>
     </div>
+
     <!-- mobile sliders -->
     <div class="sliders-container-mobile center">
       <button class="btn sliders-mobile-btn white green-text" [matMenuTriggerFor]="slidersMenu">Adjust your skills</button>
@@ -33,9 +35,10 @@
       </mat-menu>
 
       <div class="slider-container-mobile" *ngFor="let filter of filterSliders">
-        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @ngIfAnimation @easeInOut>
-          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-            [title]="filter.title"></app-filter-slider>
+        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @easeInOut>
+          <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" [filterVariable]="filter.variable"
+            (dragEvent)="handleSliderDrag($event, filter.variable)" [filterVariable]="filter.variable" [title]="filter.title"
+            [sliderValue]="filter.value"></app-filter-slider>
           <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]">close</mat-icon>
         </div>
       </div>
