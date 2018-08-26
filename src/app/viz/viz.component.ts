@@ -170,6 +170,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   slidersInUse = false;
   mobileView;
 
+  sufficientMemory = true;
+
   // // Drag functions used for interactivity
   dragstarted = d => {
     if (!d3.event.active) {
@@ -216,6 +218,14 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
 
     // recalculate forces
+    if (this.sufficientMemory) {
+      this.recenterForceSimulation(event);
+    } else {
+      console.log('recentering the packed circles viz');
+    }
+  }
+
+  private recenterForceSimulation(event: any) {
     this.radiusSelector === 'none'
       ? (this.nodeAttraction =
           Math.min(
@@ -229,7 +239,6 @@ export class VizComponent implements OnInit, AfterContentInit {
             event.target.innerWidth,
             event.target.innerHeight - this.NAVBAR_HEIGHT
           ) * this.NODE_ATTRACTION_CONSTANT);
-
     // change the collision and gravity forces for the new radii
     this._simulationService.forceCollide(this.radiusSelector);
     this._simulationService.forceGravity(
@@ -245,7 +254,6 @@ export class VizComponent implements OnInit, AfterContentInit {
         .alpha(0.3)
         .restart()
     );
-
     this.circlesGroupTransform =
       'translate(' +
       event.target.innerWidth / 2 +
@@ -255,6 +263,9 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
+    // todo: check web API indicating device memory and determine cut-off
+    this.sufficientMemory = false;
+
     // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
@@ -284,141 +295,214 @@ export class VizComponent implements OnInit, AfterContentInit {
       );
 
       // define the nodes
-      this._statusService.changeNodes(
-        this.data$.map(d => {
-          // scale radius to fit on the screen
-          const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
-
-          // SELECT THE CLUSTER VARIABLE 2/2
-          const forcedCluster =
-            this.uniqueClusterValues.indexOf(d[this.clusterSelector]) + 1;
-
-          // define the nodes
-          d = {
-            id: d.id,
-            // circle attributes
-            r: scaledRadius,
-            cluster: forcedCluster,
-            clusterValue: d[this.clusterSelector],
-            // skills
-            skillsMath: d.skillsMath,
-            skillsLogi: d.skillsLogi,
-            skillsLang: d.skillsLang,
-            skillsComp: d.skillsComp,
-            // tooltip info
-            all: d
-          };
-          // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
-          if (
-            !this.clusterCenters[forcedCluster] ||
-            scaledRadius > this.clusterCenters[forcedCluster].r
-          ) {
-            this.clusterCenters[forcedCluster] = d;
-            this._statusService.changeClusterCenters(this.clusterCenters);
-          }
-          return d;
-        })
-      );
+      this.defineNodes();
 
       // circle svg image patterns
-      d3.select('#canvas')
-        .append('defs')
-        .selectAll('.img-pattern')
-        .data(this.nodes)
-        .enter()
-        .append('pattern')
-        .attr('class', 'img-pattern')
-        .attr('id', d => 'pattern_' + d.id)
-        .attr('height', '100%')
-        .attr('width', '100%')
-        .attr('patternContentUnits', 'objectBoundingBox')
-        .append('image')
-        .attr('height', 1)
-        .attr('width', 1)
-        .attr('preserveAspectRatio', 'none')
-        .attr(
-          'xlink:href',
-          d =>
-            window.location.href.includes('localhost')
-              ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
-              : '../../pave-angular/assets/img/NOC_thumbnails/tn_' +
-                d.all.noc +
-                '.jpg'
-        );
+      this.attachImages();
 
-      // append the circles to svg then style
-      // add functions for interaction
-      this.circles = d3
-        .select('.circlesG')
-        .selectAll('circle')
-        .data(this.nodes)
-        .enter()
-        .append('svg:circle')
-        .style('opacity', 0)
-        .style('stroke', 'black')
-        .style('stroke-width', 0)
-        .attr('id', d => 'circle_' + d.id)
-        .attr('r', circleWidth)
-        .attr('fill', d => this.colourScale(d.cluster))
-        .call(
-          d3
-            .drag()
-            .on('start', this.dragstarted)
-            .on('drag', this.dragged)
-            .on('end', this.dragended)
-        )
-        .on('mouseover', this.handleMouseover())
-        .on('mouseout', this.handleMouseout())
-        .on('click', this.handleClick());
-
-      setTimeout(() => {
-        this.circles
-          .transition()
-          .duration(1500)
-          .style('opacity', 1)
-          // .attr('stroke', d => this.colourScale(d.cluster))
-          .delay((d, i) => i * 3);
-      }, 500);
-
-      this._simulationService.forceCluster(this.nodes, this.clusterCenters);
-
-      // create the forceCluster/collision force simulation
-      const newForceSimulation = d3
-        .forceSimulation(this.nodes)
-        .velocityDecay(CONFIG.FORCES.VELOCITY_DECAY) // use for faster dev testing
-        .force('x', this.forceXCombine)
-        .force('y', this.forceYCombine)
-        .force('collide', this.forceCollide)
-        .force('gravity', this.forceGravity)
-        .force('cluster', this.forceCluster)
-        .on('tick', () => {
-          // this.ref.markForCheck();
-          this.circles.attr('cx', d => d.x).attr('cy', d => d.y);
-        });
-
-      this._statusService.changeForceSimulation(newForceSimulation);
+      if (this.sufficientMemory) {
+        // append the circles to svg then style
+        // add functions for interaction
+        this.initForceSimulation();
+      } else {
+        this.initStaticChart();
+      }
     });
   } // end ngAfterContentinit
 
-  // circleWidth(d) {
-  //   const canvas = document.querySelector('#canvas');
-  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
-  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
-  //     return d.r + 'vmin';
-  //   } else {
-  //     return d.r * 1.5 + 'vmin';
-  //   }
-  // }
+  private defineNodes() {
+    this._statusService.changeNodes(
+      this.data$.map(d => {
+        // scale radius to fit on the screen
+        const scaledRadius = this.radiusScale(+d[this.radiusSelector]);
+        // SELECT THE CLUSTER VARIABLE 2/2
+        const forcedCluster =
+          this.uniqueClusterValues.indexOf(d[this.clusterSelector]) + 1;
+        // define the nodes
+        d = {
+          id: d.id,
+          // circle attributes
+          r: scaledRadius,
+          cluster: forcedCluster,
+          clusterValue: d[this.clusterSelector],
+          // skills
+          skillsMath: d.skillsMath,
+          skillsLogi: d.skillsLogi,
+          skillsLang: d.skillsLang,
+          skillsComp: d.skillsComp,
+          // tooltip info
+          all: d
+        };
+        // add to clusters array if it doesn't exist or the radius is larger than another radius in the cluster
+        if (
+          !this.clusterCenters[forcedCluster] ||
+          scaledRadius > this.clusterCenters[forcedCluster].r
+        ) {
+          this.clusterCenters[forcedCluster] = d;
+          this._statusService.changeClusterCenters(this.clusterCenters);
+        }
+        return d;
+      })
+    );
+  }
 
-  // circlePop(d) {
-  //   const canvas = document.querySelector('#canvas');
-  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
-  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
-  //     return d.r * 2 + 'vmin';
-  //   } else {
-  //     return d.r * 6 + 'vmin';
-  //   }
-  // }
+  private initForceSimulation() {
+    this.circles = d3
+      .select('.circlesG')
+      .selectAll('circle')
+      .data(this.nodes)
+      .enter()
+      .append('svg:circle')
+      .style('opacity', 0)
+      .style('stroke', 'black')
+      .style('stroke-width', 0)
+      .attr('id', d => 'circle_' + d.id)
+      .attr('r', circleWidth)
+      .attr('fill', d => this.colourScale(d.cluster))
+      .call(
+        d3
+          .drag()
+          .on('start', this.dragstarted)
+          .on('drag', this.dragged)
+          .on('end', this.dragended)
+      )
+      .on('mouseover', this.handleMouseover())
+      .on('mouseout', this.handleMouseout())
+      .on('click', this.handleClick());
+    setTimeout(() => {
+      this.circles
+        .transition()
+        .duration(1500)
+        .style('opacity', 1)
+        // .attr('stroke', d => this.colourScale(d.cluster))
+        .delay((d, i) => i * 3);
+    }, 500);
+    this._simulationService.forceCluster(this.nodes, this.clusterCenters);
+    // create the forceCluster/collision force simulation
+    const newForceSimulation = d3
+      .forceSimulation(this.nodes)
+      .velocityDecay(CONFIG.FORCES.VELOCITY_DECAY) // use for faster dev testing
+      .force('x', this.forceXCombine)
+      .force('y', this.forceYCombine)
+      .force('collide', this.forceCollide)
+      .force('gravity', this.forceGravity)
+      .force('cluster', this.forceCluster)
+      .on('tick', () => {
+        // this.ref.markForCheck();
+        this.circles.attr('cx', d => d.x).attr('cy', d => d.y);
+      });
+    this._statusService.changeForceSimulation(newForceSimulation);
+  }
+
+  private initStaticChart() {
+    // const dataset = {
+    //   children: [
+    //     { Name: 'Olives', Count: 4319 },
+    //     { Name: 'Tea', Count: 4159 },
+    //     { Name: 'Mashed Potatoes', Count: 2583 },
+    //     { Name: 'Boiled Potatoes', Count: 2074 },
+    //     { Name: 'Milk', Count: 1894 },
+    //     { Name: 'Chicken Salad', Count: 1809 },
+    //     { Name: 'Vanilla Ice Cream', Count: 1713 },
+    //     { Name: 'Cocoa', Count: 1636 },
+    //     { Name: 'Lettuce Salad', Count: 1566 },
+    //     { Name: 'Lobster Salad', Count: 1511 },
+    //     { Name: 'Chocolate', Count: 1489 },
+    //     { Name: 'Apple Pie', Count: 1487 },
+    //     { Name: 'Orange Juice', Count: 1423 },
+    //     { Name: 'American Cheese', Count: 1372 },
+    //     { Name: 'Green Peas', Count: 1341 },
+    //     { Name: 'Assorted Cakes', Count: 1331 },
+    //     { Name: 'French Fried Potatoes', Count: 1328 },
+    //     { Name: 'Potato Salad', Count: 1306 },
+    //     { Name: 'Baked Potatoes', Count: 1293 },
+    //     { Name: 'Roquefort', Count: 1273 },
+    //     { Name: 'Stewed Prunes', Count: 1268 }
+    //   ]
+    // };
+
+    const [width, height] = [
+      document.querySelector('#canvas').getBoundingClientRect().width,
+      document.querySelector('#canvas').getBoundingClientRect().height
+    ];
+
+    const bubble = d3
+      .pack(this.data$)
+      .size([width, height])
+      .padding(1.5);
+
+    const svg = d3.select('#canvas').attr('class', 'bubble');
+
+    const dataset = { children: this.data$ };
+
+    console.log('data$', this.data$);
+
+    const nodes = d3.hierarchy(dataset).sum(d => d.workers);
+    console.log(nodes);
+
+    const node = svg
+      .selectAll('.node')
+      .data(bubble(nodes).descendants())
+      .enter()
+      .filter(d => !d.children)
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+
+    node.append('title').text(d => d.job + ': ' + d.workers);
+
+    node
+      .append('circle')
+      .attr('r', d => d.r)
+      .style('fill', d => this.colourScale(d.data.cluster));
+
+    node
+      .append('text')
+      .attr('dy', '.2em')
+      .style('text-anchor', 'middle')
+      .text(d => d.data.job.substring(0, d.r / 3))
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', d => d.r / 5)
+      .attr('fill', 'white');
+
+    node
+      .append('text')
+      .attr('dy', '1.3em')
+      .style('text-anchor', 'middle')
+      .text(d => d.data.workers)
+      .attr('font-family', 'Gill Sans', 'Gill Sans MT')
+      .attr('font-size', d => d.r / 5)
+      .attr('fill', 'white');
+
+    d3.select(self.frameElement).style('height', height + 'px');
+  }
+
+  private attachImages() {
+    d3.select('#canvas')
+      .append('defs')
+      .selectAll('.img-pattern')
+      .data(this.nodes)
+      .enter()
+      .append('pattern')
+      .attr('class', 'img-pattern')
+      .attr('id', d => 'pattern_' + d.id)
+      .attr('height', '100%')
+      .attr('width', '100%')
+      .attr('patternContentUnits', 'objectBoundingBox')
+      .append('image')
+      .attr('height', 1)
+      .attr('width', 1)
+      .attr('preserveAspectRatio', 'none')
+      .attr(
+        'xlink:href',
+        d =>
+          window.location.href.includes('localhost')
+            ? '../../assets/img/NOC_thumbnails/tn_' + d.all.noc + '.jpg'
+            : '../../pave-angular/assets/img/NOC_thumbnails/tn_' +
+              d.all.noc +
+              '.jpg'
+      );
+  }
 
   handleMouseover() {
     return d => {

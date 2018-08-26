@@ -2,17 +2,16 @@ todos
 -----
 
 next:
-about, contact pages on tabs
+- debug mobile view: positioning after filtering
 
 - colour spectra for each colour-sort variable
 - url input/output :param for filter, sort, size, colour, sort state
 - something like pave.com/24-14-00-08-industry-salary-1-0
 - finesse forces, padding
 - graph mode
-- about, contact, search results pages on different material tabs? to prevent simulation reloads
 
 bugs:
-- colour sort is not responsive to cluster-number or zoom
+- colour sort split and labels - not responsive to number of clusters or zoom
 - mobile/tablet tooltip tap behaviour (detect mobile/tablet API?)
 - Graph view button z index (should be below tooltip)
 - click once, same job still selected
@@ -23,9 +22,8 @@ potential next steps:
 1. ----- Style the App -----
   MOBILE (minimal) setup & responsive design
   - position navbar search and top buttons responsively
-  - after resize, reset post-filter transform to center on zoom
-  - fade-in the job images with zoom amount
-  - show only header preview & no overlay & 'details' btn
+  - after screen resize, reset the transform to center (when filtered and zoomed)
+  - bottom-sheet: show only header preview & 'details' btn, no overlay
    - viz setup (tooltip details bottom card,
     drag up to open details? other functionality?)
    - size graph view based on screen width
@@ -36,20 +34,23 @@ potential next steps:
 potential information visualization channels
 -continuous colour scale
 -direction of lines
+-opacity
+-bars overlaid on nodes
 
 
 2. ----- Build the Features -----
 
 BIG features:
+  Accesibility:
+    i. mobile devices: static version, PWA (using a memory-detecting API)
+    ii. blindness & low motor skill: screenreader-friendly, keyboard-friendly, alt-text,
+      determine how someone would navigate with their keyboard
+      look at jobbank ?
   a. Multi-level viz with jobs > schools > scholarships ?
     e.g. orbital tree xenographics https://xeno.graphics/orbital-tree/
   b. Tooltip details pages: charts, use-cases, takeaways
     "can i, should i, how do i do this"
   c. Shareable filter-state 'snapshots' as url parameters
-  Accesibility:
-    i. mobile devices: static version, PWA (using a memory-detecting API)
-    ii. blindness & low motor skill: screenreader-friendly, keyboard-friendly, alt-text,
-      determine how someone would navigate with their keyboard
 
   Reset filters button
   Implement 'sub-levels' of the viz
