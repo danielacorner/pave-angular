@@ -18,8 +18,8 @@ import { ContactComponent } from './pages/contact.component';
 import { AboutComponent } from './pages/about.component';
 import { DetailsComponent } from './pages/details.component';
 // Controls
-import { ColourLegendButtonComponent } from './controls/colour-legend-button.component';
-import { SizeLegendButtonComponent } from './controls/size-legend-button.component';
+import { ColourSortButtonComponent } from './controls/colour-sort-button.component';
+import { SizeSortButtonComponent } from './controls/size-sort-button.component';
 import { FilterSliderComponent } from './controls/filter-slider.component';
 import { GraphModeComponent } from './controls/graph-mode.component';
 import { ChangeSizesDropdownComponent } from './controls/change-sizes-dropdown.component';
@@ -39,8 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     NavbarComponent,
     VizComponent,
-    ColourLegendButtonComponent,
-    SizeLegendButtonComponent,
+    ColourSortButtonComponent,
+    SizeSortButtonComponent,
     FilterSliderComponent,
     TooltipComponent,
     ModalComponent,

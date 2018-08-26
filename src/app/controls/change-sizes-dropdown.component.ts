@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { AppStatusService } from '../services/app-status.service';
 import { AppSimulationService } from '../services/app-simulation.service';
 import * as d3 from 'd3';
+import { circleWidth } from '../animations';
 
 @Component({
   selector: 'app-change-sizes-dropdown',
@@ -35,12 +36,14 @@ import * as d3 from 'd3';
     `
   ]
 })
-export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
+export class ChangeSizesDropdownComponent implements OnInit {
   // static inputs
-  @Input() public nodeAttraction;
-  @Input() public minRadius;
+  @Input()
+  nodeAttraction;
+  @Input()
+  minRadius;
   // subscriptions
-  public subscriptions = [
+  subscriptions = [
     'defaultCircleRadius',
     'radiusRange',
     'radiusScale',
@@ -51,19 +54,19 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
     'nodes',
     'filteredNodes'
   ];
-  public defaultCircleRadius;
-  public radiusRange;
-  public radiusScale;
-  public radiusSelector;
-  public forceSimulation;
-  public forceCollide;
-  public forceGravity;
-  public nodes;
-  public filteredNodes;
-  public active = true;
-  public data$;
+  defaultCircleRadius;
+  radiusRange;
+  radiusScale;
+  radiusSelector;
+  forceSimulation;
+  forceCollide;
+  forceGravity;
+  nodes;
+  filteredNodes;
+  active = true;
+  data$;
 
-  public radiusSelectorGroups = [
+  radiusSelectorGroups = [
     {
       name: 'Statistics',
       members: [
@@ -97,24 +100,22 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
       const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
       this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
     });
-
   }
 
-  ngAfterContentInit() {}
-
-  changeSelection($event) {
-
+  changeSelection(event) {
     // change the radius selector
-    this._statusService.changeRadiusSelector($event.value);
+    this._statusService.changeRadiusSelector(event.value);
 
     // recalculate the radius range
-    this._statusService.changeRadiusRange(
-      [ this.minRadius,
-      // max radius
-        ['skillsComp', 'skillsLogi', 'skillsMath', 'skillsLang'].includes($event.value)
-        ? this.defaultCircleRadius * 2.8 * 0.55
-        : this.defaultCircleRadius * 2.8]
-    );
+    this._statusService.changeRadiusRange([
+      this.minRadius,
+      // decrease the max radius for skillsets
+      ['skillsComp', 'skillsLogi', 'skillsMath', 'skillsLang'].includes(
+        event.value
+      )
+        ? this.defaultCircleRadius * 3.1 * 0.51
+        : this.defaultCircleRadius * 3.1
+    ]);
     // recalculate the radius scale
     this._statusService.changeRadiusScale(
       d3
@@ -123,25 +124,21 @@ export class ChangeSizesDropdownComponent implements OnInit, AfterContentInit {
         .range([this.radiusRange[0], this.radiusRange[1]])
     );
 
-    // transition the circle radii, then update node radii to match
+    // update the nodes, then transition the circle radii to match
 
-    d3.selectAll('circle').transition().attr(
-      'r',
-      this.radiusSelector === 'none'
-        ? this.defaultCircleRadius + 'vmin'
-        : d => this.radiusScale(+d.all[this.radiusSelector]) + 'vmin'
-    ).delay((d, i) => i * 0.8);
-
-    setTimeout(() => {
-      this._statusService.changeNodes(
+    this._statusService.changeNodes(
       this.nodes.map(d => {
         this.radiusSelector === 'none'
-        ? d.r = this.defaultCircleRadius
-        : d.r = this.radiusScale(+d.all[this.radiusSelector]);
+          ? (d.r = this.defaultCircleRadius)
+          : (d.r = this.radiusScale(+d.all[this.radiusSelector]));
         return d;
       })
     );
-    }, 1000);
+
+    d3.selectAll('circle')
+      .transition()
+      .attr('r', circleWidth)
+      .delay((d, i) => i * 0.8);
 
     setTimeout(() => {
       // change the collision force to the new radius

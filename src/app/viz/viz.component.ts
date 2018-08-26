@@ -24,28 +24,21 @@ import {
   animateChild
 } from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  ngIfAnimation,
+  easeInOut,
+  slideInFromRight,
+  slideHorizontal,
+  circleWidth,
+  circlePop
+} from '../animations';
 
 @Component({
   selector: 'app-viz',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'viz.component.html',
   styleUrls: ['viz.component.scss'],
-  animations: [
-    trigger('ngIfAnimation', [
-      transition(':enter, :leave', [query('@*', animateChild())])
-    ]),
-    trigger('easeInOut', [
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate('200ms ease-in-out', style({ opacity: 1 }))
-      ])
-      // TODO: transition-out bug opens tooltip before deleting
-      // transition('* => void', [
-      //   style({ opacity: '*' }),
-      //   animate('400ms ease-in-out', style({ opacity: 0 }))
-      // ])
-    ])
-  ]
+  animations: [ngIfAnimation, easeInOut, slideInFromRight, slideHorizontal]
 })
 export class VizComponent implements OnInit, AfterContentInit {
   constructor(
@@ -80,24 +73,34 @@ export class VizComponent implements OnInit, AfterContentInit {
   };
   circleImagesActive = false;
   // move the circles into the center
-  gTransform =
+  circlesGroupTransform =
     'translate(' +
     window.innerWidth / 2 +
     'px, ' +
-    (window.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
+    (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
     'px)';
 
   // ----- FILTER SLIDERS ----- //
   filterSliders = [
     {
       variable: 'skillsLang',
-      title: 'Language and Communication'
+      title: 'Language and Communication',
+      value: 0
     },
-    { variable: 'skillsLogi', title: 'Logic and Reasoning' },
-    { variable: 'skillsMath', title: 'Math and Spatial' },
+    {
+      variable: 'skillsLogi',
+      title: 'Logic and Reasoning',
+      value: 0
+    },
+    {
+      variable: 'skillsMath',
+      title: 'Math and Spatial',
+      value: 0
+    },
     {
       variable: 'skillsComp',
-      title: 'Computer and Information'
+      title: 'Computer and Information',
+      value: 0
     }
   ];
 
@@ -117,9 +120,11 @@ export class VizComponent implements OnInit, AfterContentInit {
     'clusterCenters',
     'numClusters',
     'defaultCircleRadius',
-    'svgTransform'
+    'svgTransform',
+    'sliderPositions'
   ];
   radiusSelector = 'none'; // default value because forceGravity defined before subscription
+  sliderPositions;
   clusterSelector;
   uniqueClusterValues;
   forceCluster;
@@ -155,12 +160,15 @@ export class VizComponent implements OnInit, AfterContentInit {
   autoFadeout;
   justClosed = false; // whether the tooltip was clicked-closed
 
+  // sliders
   mobileSliderActive = {
     skillsLang: false,
     skillsLogi: false,
     skillsMath: false,
     skillsComp: false
   };
+  slidersInUse = false;
+  mobileView;
 
   // // Drag functions used for interactivity
   dragstarted = d => {
@@ -194,6 +202,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.nodeAttraction,
       this.radiusScale
     );
+    // mobile view flag
+    this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -201,6 +211,9 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.canvasStyles.top = this.NAVBAR_HEIGHT + 'px';
     this.canvasStyles.width = event.target.innerWidth;
     this.canvasStyles.height = event.target.innerHeight - this.NAVBAR_HEIGHT;
+
+    // mobile view flag
+    this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
 
     // recalculate forces
     this.radiusSelector === 'none'
@@ -233,7 +246,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .restart()
     );
 
-    this.gTransform =
+    this.circlesGroupTransform =
       'translate(' +
       event.target.innerWidth / 2 +
       'px,' +
@@ -345,7 +358,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .style('stroke', 'black')
         .style('stroke-width', 0)
         .attr('id', d => 'circle_' + d.id)
-        .attr('r', d => d.r + 'vmin')
+        .attr('r', circleWidth)
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
@@ -386,6 +399,26 @@ export class VizComponent implements OnInit, AfterContentInit {
       this._statusService.changeForceSimulation(newForceSimulation);
     });
   } // end ngAfterContentinit
+
+  // circleWidth(d) {
+  //   const canvas = document.querySelector('#canvas');
+  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+  //     return d.r + 'vmin';
+  //   } else {
+  //     return d.r * 1.5 + 'vmin';
+  //   }
+  // }
+
+  // circlePop(d) {
+  //   const canvas = document.querySelector('#canvas');
+  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+  //     return d.r * 2 + 'vmin';
+  //   } else {
+  //     return d.r * 6 + 'vmin';
+  //   }
+  // }
 
   handleMouseover() {
     return d => {
@@ -480,10 +513,12 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
   }
 
-  // Filter slider function: $event = skill level, filterVariable = skill name
-  handleSliderUpdate($event, filterVariable) {
-    // update the nodes with the new slider positions
-    this._filterService.filterViz($event, filterVariable, this.nodes);
+  // While moving the slider, filter the circles
+
+  // After mouseup from the slider, restart the simulation and zoom in/out
+
+  handleSliderDrag(event, filterVariable) {
+    this._filterService.filterViz(event.value, filterVariable, this.nodes);
     // UPDATE the viz data
     this.circles = this.circles.data(this.filteredNodes, d => d.id);
     // EXIT
@@ -492,7 +527,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .transition()
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
-      .attr('r', d => d.r * 1.75 + 'vmin')
+      .attr('r', circlePop)
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -503,14 +538,34 @@ export class VizComponent implements OnInit, AfterContentInit {
       .data(this.filteredNodes)
       .enter()
       .append('svg:circle')
-      .attr('r', d => d.r + 'vmin')
+      .attr('r', circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
       // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
-      .on('mouseover', this.handleMouseover())
-      .on('mouseout', this.handleMouseout())
-      .on('click', this.handleClick())
+      .on('mouseover', this.handleMouseover)
+      .on('mouseout', this.handleMouseout)
+      .on('click', this.handleClick)
       .merge(this.circles);
+  }
+
+  // Filter slider function: $event = skill level, filterVariable = skill name
+  handleSliderMouseUp(event, filterVariable) {
+    // Save the slider position
+    this.filterSliders
+      .filter(slider => slider.variable === filterVariable)
+      .map(slider => (slider.value = event.value));
+
+    // Update all sliders based on new minimums
+    this._statusService.changeSliderPositions(
+      this.filterSliders.map(slider => {
+        return {
+          variable: slider.variable,
+          value: this.filteredNodes.reduce((min, node) => {
+            return Math.min(min, node[slider.variable]);
+          }, 999999)
+        };
+      })
+    );
 
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
@@ -518,13 +573,15 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.nodes.length / this.filteredNodes.length,
       0.45 // less than sqrt (0.5) to reduce overflow
     );
-    const yTranslateAmount = Math.max(
-      -this.nodes.length / this.filteredNodes.length,
-      -35
+    const circlesGroupYTranslate = Math.max(
+      -this.nodes.length / this.filteredNodes.length - 1,
+      -10
     );
+
     const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
-      'scale(' + zoomAmount + ') translate(0,' + yTranslateAmount + 'px)'
+      'scale(' + zoomAmount + ') translate(0,' + circlesGroupYTranslate + 'px)'
     );
+
     this._statusService.changeSvgTransform(newSvgTransform);
 
     // fill circles with images if <50 remain
@@ -538,7 +595,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             .attr('fill-opacity', 0.2)
             .attr('fill', d => 'url(#pattern_' + d.id + ')')
             .style('stroke', d => this.colourScale(d.cluster))
-            .style('stroke-width', 1.5)
+            .style('stroke-width', 5 / zoomAmount)
             .transition()
             .duration(1000)
             .attr('fill-opacity', 1)
@@ -562,13 +619,18 @@ export class VizComponent implements OnInit, AfterContentInit {
             );
     }, 1000);
 
-    // Update nodes and restart the simulation.
+    // Update nodes and restart the simulation
     this._statusService.changeForceSimulation(
       this.forceSimulation
         .nodes(this.filteredNodes)
         .alpha(0.3)
         .restart()
     );
+
+    // check if sliders are resettable
+    this.slidersInUse = this.filterSliders.filter(slider => slider.value > 0)
+      ? true
+      : false;
   }
 
   showMobileSlider(filterVar?) {
@@ -581,5 +643,22 @@ export class VizComponent implements OnInit, AfterContentInit {
     if (filterVar) {
       this.mobileSliderActive[filterVar] = true;
     }
+  }
+
+  resetFilters() {
+    this.filterSliders.map(slider => {
+      slider.value = 0;
+      this._filterService.filterViz(0, slider.variable, this.nodes);
+    });
+    this.handleSliderDrag(
+      { value: 0, variable: this.filterSliders[0].variable },
+      this.filterSliders[0].variable
+    );
+    this.handleSliderMouseUp(
+      { value: 0, variable: this.filterSliders[0].variable },
+      this.filterSliders[0].variable
+    );
+
+    this.slidersInUse = false;
   }
 }

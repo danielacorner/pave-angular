@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
 import * as d3 from 'd3';
+import { AppStatusService } from '../services/app-status.service';
 
 @Component({
   selector: 'app-filter-slider',
@@ -11,17 +12,17 @@ import * as d3 from 'd3';
       </div>
       <mat-slider thumbLabel [min]="min" [max]="max" step="1"
       [style.pointerEvents]="'auto'"
-      [(ngModel)]="sliderValue"
+      [(ngModel)]="value"
       tickInterval="10"
-      (change)="fireEvent()"
+      (input)="fireDragEvent($event)"
+      (change)="fireMouseUpEvent($event)"
       ></mat-slider>
     </div>
   `,
   styles: [
     `
-      .slider-container {
-      }
       .title p {
+        font-size: 14.5px;
         line-height: 1.5rem;
         word-wrap: break-word;
         height: 25px;
@@ -47,14 +48,22 @@ import * as d3 from 'd3';
   ]
 })
 export class FilterSliderComponent implements OnInit {
-  public sliderValue;
-  @Input() public title;
-  @Input() public filterVariable;
-  @Output() public childEvent = new EventEmitter();
-  public min;
-  public max;
+  value = 0;
+  @Input()
+  title;
+  @Input()
+  filterVariable;
+  @Output()
+  mouseUpEvent = new EventEmitter();
+  @Output()
+  dragEvent = new EventEmitter();
+  min;
+  max;
 
-  constructor(private _dataService: DataService) {}
+  constructor(
+    private _dataService: DataService,
+    private _statusService: AppStatusService
+  ) {}
 
   ngOnInit() {
     // load data and set slider range on creation
@@ -63,9 +72,21 @@ export class FilterSliderComponent implements OnInit {
       // shrink max to expand slider usability
       this.max = d3.max(receivedData.map(d => d[this.filterVariable])) * 0.7;
     });
+
+    // subscribe to the slider positions
+    this._statusService.currentSliderPositions.subscribe(v => {
+      if (v) {
+        this.value = v.find(
+          slider => slider.variable === this.filterVariable
+        ).value;
+      }
+    });
   }
 
-  fireEvent() {
-    this.childEvent.emit(this.sliderValue);
+  fireDragEvent(e) {
+    this.dragEvent.emit(e);
+  }
+  fireMouseUpEvent(e) {
+    this.mouseUpEvent.emit(e);
   }
 }

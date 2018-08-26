@@ -28,16 +28,20 @@ svg {
 .sliders-container {
   display: none;
 }
-.sliders-mobile-btn {
+.adjust-values-container button {
   position: relative;
-  margin: 20px 0 10px 0;
+  margin: 20px 10px 10px 10px;
+  transition: all 200ms ease-in-out;
+}
+.slider-container-mobile {
+  background: white;
 }
 .slider-container-mobile * {
   display: inline-block;
   background: white;
 }
 .slider-card-mobile {
-  width: 82%;
+  width: 91%;
 }
 .slider-card-mobile .slider {
   width: 85%;
@@ -46,6 +50,13 @@ svg {
   cursor: pointer;
   position: absolute;
   margin: 2px 0 0 -8px;
+}
+
+.reset-btn {
+  position: absolute;
+  right: calc(50% - 385px);
+  top: 180px;
+  pointer-events: auto;
 }
 
 // tablet & desktop
@@ -57,6 +68,7 @@ svg {
     display: none;
   }
 }
+
 .sliders-container {
   height: 160px;
   max-width: 700px;
@@ -119,11 +131,16 @@ svg {
 .controls-mobile-container {
   display: none;
 }
+
 //  }
 
 @media only screen and (max-width: 834px) {
   .sliders-title {
     font-size: 2.8vw;
+  }
+  .reset-btn {
+    right: calc(20vw - 140px);
+    top: calc(5vw + 135px);
   }
 }
 
@@ -139,6 +156,10 @@ svg {
 }
 // todo: switch to min-width for performance
 @media only screen and (max-width: 692px) {
+  .reset-btn {
+    right: calc(20vw - 100px);
+    top: calc(5vw + 100px);
+  }
   .grid-container {
     grid-template-columns: auto auto;
     grid-template-rows: repeat(2, 60px);
@@ -183,9 +204,9 @@ svg {
   .sliders-title {
     font-size: 3.8vw;
   }
-  .sliders-mobile-btn {
-    margin: 7px 0 10px 0;
-  }
+  // .sliders-mobile-btn {
+  //   margin: 7px 0 10px 0;
+  // }
 }
 // short mobile
 @media (max-height: 700px) {

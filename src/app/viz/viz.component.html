@@ -1,6 +1,6 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="handleSvgClick($event)">
-    <g class="circlesG" *ngIf="data$" [style.transform]="gTransform">
+    <g class="circlesG" *ngIf="data$" [style.transform]="circlesGroupTransform">
     </g>
   </svg>
   <!-- sliders -->
@@ -12,19 +12,44 @@
       <p class="sliders-subtitle">
         Adjust your skills:
       </p>
+
       <!-- sliders grid -->
       <div class="grid-container">
         <div class="spacer"></div>
         <div class="slider-container" *ngFor="let filter of filterSliders">
-          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-            [title]="filter.title"></app-filter-slider>
+          <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" (dragEvent)="handleSliderDrag($event, filter.variable)"
+            [filterVariable]="filter.variable" [title]="filter.title"></app-filter-slider>
         </div>
-        <div class="spacer"></div>
+        <div class="spacer">
+
+        </div>
+
+
+
       </div>
+
     </div>
+
+    <!-- reset button -->
+    <button *ngIf="slidersInUse && !mobileView" class="btn reset-btn green-text white" (click)="resetFilters()" @slideInFromRight>
+      <mat-icon>restore</mat-icon>
+    </button>
+
     <!-- mobile sliders -->
     <div class="sliders-container-mobile center">
-      <button class="btn sliders-mobile-btn white green-text" [matMenuTriggerFor]="slidersMenu">Adjust your skills</button>
+
+      <div class="adjust-values-container center">
+
+        <button class="btn sliders-mobile-btn white green-text" [matMenuTriggerFor]="slidersMenu">
+          Adjust your skills
+        </button>
+
+        <!-- mobile reset button -->
+        <button *ngIf="slidersInUse" class="btn reset-mobile-btn green-text white" (click)="resetFilters()" @slideInFromRight>
+          <mat-icon>restore</mat-icon>
+        </button>
+
+      </div>
 
       <mat-menu #slidersMenu="matMenu">
         <div mat-menu-item class="sliders-menu-item" *ngFor="let filter of filterSliders" (click)="showMobileSlider(filter.variable)">
@@ -33,52 +58,70 @@
       </mat-menu>
 
       <div class="slider-container-mobile" *ngFor="let filter of filterSliders">
-        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @ngIfAnimation @easeInOut>
-          <app-filter-slider class="slider" (childEvent)="handleSliderUpdate($event, filter.variable)" [filterVariable]="filter.variable"
-            [title]="filter.title"></app-filter-slider>
+        <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @easeInOut>
+          <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" [filterVariable]="filter.variable"
+            (dragEvent)="handleSliderDrag($event, filter.variable)" [filterVariable]="filter.variable" [title]="filter.title"
+            [(ngModel)]="filter.value"></app-filter-slider>
           <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]">close</mat-icon>
         </div>
       </div>
+
     </div>
 
 
+
+
   </div>
+
   <!-- controls -->
   <div class="controls-container">
+
     <!-- dropdowns -->
     <div class="dropdowns-container">
       <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
       <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [minRadius]="minRadius"></app-change-sizes-dropdown>
     </div>
+
     <!-- sort buttons -->
     <div class="sort-buttons-container center">
-      <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-        [height]="height"></app-colour-legend-button>
-      <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-        [height]="height"></app-size-legend-button>
+      <app-colour-sort-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+        [height]="height"></app-colour-sort-button>
+      <app-size-sort-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+        [height]="height"></app-size-sort-button>
     </div>
+
     <!-- mobile controls -->
     <div class="controls-mobile-container center">
+
       <!-- mobile sort buttons -->
-      <button class="btn legend-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="legendMenu">Legend</button>
+      <button class="btn legend-button-mobile btn-small white green-text z-depth-1" [matMenuTriggerFor]="legendMenu">Legend</button>
+
       <mat-menu #legendMenu="matMenu" yPosition="above">
+
         <div mat-menu-item class="legend-menu-item">
           <app-change-colours-dropdown [colourScale]="colourScale"></app-change-colours-dropdown>
         </div>
+
         <div mat-menu-item class="legend-menu-item">
           <app-change-sizes-dropdown [nodeAttraction]="nodeAttraction" [minRadius]="minRadius"></app-change-sizes-dropdown>
         </div>
+
       </mat-menu>
-      <button class="btn sort-button-mobile btn-small white green-text z-depth-0" [matMenuTriggerFor]="sortMenu">Sort</button>
+
+      <button class="btn sort-button-mobile btn-small white green-text z-depth-1" [matMenuTriggerFor]="sortMenu">Sort</button>
+
       <mat-menu #sortMenu="matMenu" yPosition="above" xPosition="before">
+
         <div mat-menu-item class="sort-menu-item">
-          <app-colour-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-            [height]="height"></app-colour-legend-button>
+          <app-colour-sort-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+            [height]="height"></app-colour-sort-button>
         </div>
+
         <div mat-menu-item class="sort-menu-item">
-          <app-size-legend-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
-            [height]="height"></app-size-legend-button>
+          <app-size-sort-button [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine" [nClusters]="numClusters" [width]="width"
+            [height]="height"></app-size-sort-button>
         </div>
+
       </mat-menu>
     </div>
     <!-- <div class="graph-button-container center">

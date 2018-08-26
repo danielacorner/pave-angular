@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { AppStatusService } from '../services/app-status.service';
 
 @Component({
-  selector: 'app-size-legend-button',
+  selector: 'app-size-sort-button',
   template: `
   <button class='sizeBtn btn waves-effect z-depth-3'
     [class.white]="!active"
@@ -72,7 +72,7 @@ import { AppStatusService } from '../services/app-status.service';
     `
   ]
 })
-export class SizeLegendButtonComponent implements OnInit, AfterContentInit {
+export class SizeSortButtonComponent implements OnInit, AfterContentInit {
   constructor(private _statusService: AppStatusService) {}
   // static inputs
   @Input()
