@@ -120,9 +120,11 @@ export class VizComponent implements OnInit, AfterContentInit {
     'clusterCenters',
     'numClusters',
     'defaultCircleRadius',
-    'svgTransform'
+    'svgTransform',
+    'sliderPositions'
   ];
   radiusSelector = 'none'; // default value because forceGravity defined before subscription
+  sliderPositions;
   clusterSelector;
   uniqueClusterValues;
   forceCluster;
@@ -166,6 +168,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     skillsComp: false
   };
   slidersInUse = false;
+  mobileView;
 
   // // Drag functions used for interactivity
   dragstarted = d => {
@@ -199,6 +202,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.nodeAttraction,
       this.radiusScale
     );
+    // mobile view flag
+    this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -206,6 +211,9 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.canvasStyles.top = this.NAVBAR_HEIGHT + 'px';
     this.canvasStyles.width = event.target.innerWidth;
     this.canvasStyles.height = event.target.innerHeight - this.NAVBAR_HEIGHT;
+
+    // mobile view flag
+    this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
 
     // recalculate forces
     this.radiusSelector === 'none'
@@ -546,6 +554,19 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.filterSliders
       .filter(slider => slider.variable === filterVariable)
       .map(slider => (slider.value = event.value));
+
+    // Update all sliders based on new minimums
+    this._statusService.changeSliderPositions(
+      this.filterSliders.map(slider => {
+        return {
+          variable: slider.variable,
+          value: this.filteredNodes.reduce((min, node) => {
+            return Math.min(min, node[slider.variable]);
+          }, 999999)
+        };
+      })
+    );
+
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
     const zoomAmount = Math.pow(

@@ -34,12 +34,15 @@ const easeInOut = trigger('easeInOut', [
 ]);
 const slideInFromRight = trigger('slideInFromRight', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'translate(100px,0)' }),
-    animate('200ms ease-in-out')
+    style({ opacity: 0, transform: 'translateX(100px)' }),
+    animate('200ms ease-in')
   ]),
   transition(':leave', [
     // style({ transform: 'translate(0,0)' }),
-    animate('200ms ease-in-out', style({ transform: 'translate(150px,0)' }))
+    animate(
+      '200ms ease-out',
+      style({ opacity: 0, transform: 'translateX(150px)' })
+    )
   ])
 ]);
 

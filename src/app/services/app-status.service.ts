@@ -56,6 +56,9 @@ export class AppStatusService {
   private _svgTransformSource = new BehaviorSubject<any>(1);
   public currentSvgTransform = this._svgTransformSource.asObservable();
 
+  private _sliderPositionsSource = new BehaviorSubject<any>(null);
+  public currentSliderPositions = this._sliderPositionsSource.asObservable();
+
   // private _circlesSource = new BehaviorSubject<any>(null);
   // public currentCircles = this._circlesSource.asObservable();
 
@@ -127,6 +130,10 @@ export class AppStatusService {
 
   public changeSvgTransform(v) {
     this._svgTransformSource.next(v);
+  }
+
+  public changeSliderPositions(v) {
+    this._sliderPositionsSource.next(v);
   }
 
   constructor() {}

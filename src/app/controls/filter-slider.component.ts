@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
 import * as d3 from 'd3';
+import { AppStatusService } from '../services/app-status.service';
 
 @Component({
   selector: 'app-filter-slider',
@@ -11,7 +12,7 @@ import * as d3 from 'd3';
       </div>
       <mat-slider thumbLabel [min]="min" [max]="max" step="1"
       [style.pointerEvents]="'auto'"
-      [(ngModel)]="sliderValue"
+      [(ngModel)]="value"
       tickInterval="10"
       (input)="fireDragEvent($event)"
       (change)="fireMouseUpEvent($event)"
@@ -21,6 +22,7 @@ import * as d3 from 'd3';
   styles: [
     `
       .title p {
+        font-size: 14.5px;
         line-height: 1.5rem;
         word-wrap: break-word;
         height: 25px;
@@ -46,8 +48,7 @@ import * as d3 from 'd3';
   ]
 })
 export class FilterSliderComponent implements OnInit {
-  @Input()
-  sliderValue;
+  value = 0;
   @Input()
   title;
   @Input()
@@ -59,7 +60,10 @@ export class FilterSliderComponent implements OnInit {
   min;
   max;
 
-  constructor(private _dataService: DataService) {}
+  constructor(
+    private _dataService: DataService,
+    private _statusService: AppStatusService
+  ) {}
 
   ngOnInit() {
     // load data and set slider range on creation
@@ -68,6 +72,13 @@ export class FilterSliderComponent implements OnInit {
       // shrink max to expand slider usability
       this.max = d3.max(receivedData.map(d => d[this.filterVariable])) * 0.7;
     });
+
+    // subscribe to the slider positions
+    this._statusService.currentSliderPositions.subscribe(
+      v => {
+        if (v) { this.value = v.find(slider => slider.variable === this.filterVariable).value; }
+      });
+    )
   }
 
   fireDragEvent(e) {

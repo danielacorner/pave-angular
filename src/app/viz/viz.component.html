@@ -20,9 +20,20 @@
           <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" (dragEvent)="handleSliderDrag($event, filter.variable)"
             [filterVariable]="filter.variable" [title]="filter.title"></app-filter-slider>
         </div>
-        <div class="spacer"></div>
+        <div class="spacer">
+
+        </div>
+
+
+
       </div>
+
     </div>
+
+    <!-- reset button -->
+    <button *ngIf="slidersInUse && !mobileView" class="btn reset-btn green-text white" (click)="resetFilters()" @slideInFromRight>
+      <mat-icon>restore</mat-icon>
+    </button>
 
     <!-- mobile sliders -->
     <div class="sliders-container-mobile center">
@@ -50,7 +61,7 @@
         <div class="slider-card-mobile z-depth-1" *ngIf="mobileSliderActive[filter.variable]" @easeInOut>
           <app-filter-slider class="slider" (mouseUpEvent)="handleSliderMouseUp($event, filter.variable)" [filterVariable]="filter.variable"
             (dragEvent)="handleSliderDrag($event, filter.variable)" [filterVariable]="filter.variable" [title]="filter.title"
-            [sliderValue]="filter.value"></app-filter-slider>
+            [(ngModel)]="filter.value"></app-filter-slider>
           <mat-icon (click)="showMobileSlider(null)" *ngIf="mobileSliderActive[filter.variable]">close</mat-icon>
         </div>
       </div>
