@@ -74,11 +74,13 @@ export class FilterSliderComponent implements OnInit {
     });
 
     // subscribe to the slider positions
-    this._statusService.currentSliderPositions.subscribe(
-      v => {
-        if (v) { this.value = v.find(slider => slider.variable === this.filterVariable).value; }
-      });
-    )
+    this._statusService.currentSliderPositions.subscribe(v => {
+      if (v) {
+        this.value = v.find(
+          slider => slider.variable === this.filterVariable
+        ).value;
+      }
+    });
   }
 
   fireDragEvent(e) {
