@@ -20,8 +20,6 @@ import * as d3 from 'd3';
   `,
   styles: [
     `
-      .slider-container {
-      }
       .title p {
         line-height: 1.5rem;
         word-wrap: break-word;

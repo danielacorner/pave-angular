@@ -24,28 +24,21 @@ import {
   animateChild
 } from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  ngIfAnimation,
+  easeInOut,
+  slideInFromRight,
+  slideHorizontal,
+  circleWidth,
+  circlePop
+} from '../animations';
 
 @Component({
   selector: 'app-viz',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'viz.component.html',
   styleUrls: ['viz.component.scss'],
-  animations: [
-    trigger('ngIfAnimation', [
-      transition(':enter, :leave', [query('@*', animateChild())])
-    ]),
-    trigger('easeInOut', [
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate('200ms ease-in-out', style({ opacity: 1 }))
-      ])
-      // TODO: transition-out bug opens tooltip before deleting
-      // transition('* => void', [
-      //   style({ opacity: '*' }),
-      //   animate('400ms ease-in-out', style({ opacity: 0 }))
-      // ])
-    ])
-  ]
+  animations: [ngIfAnimation, easeInOut, slideInFromRight, slideHorizontal]
 })
 export class VizComponent implements OnInit, AfterContentInit {
   constructor(
@@ -165,12 +158,14 @@ export class VizComponent implements OnInit, AfterContentInit {
   autoFadeout;
   justClosed = false; // whether the tooltip was clicked-closed
 
+  // sliders
   mobileSliderActive = {
     skillsLang: false,
     skillsLogi: false,
     skillsMath: false,
     skillsComp: false
   };
+  slidersInUse = false;
 
   // // Drag functions used for interactivity
   dragstarted = d => {
@@ -355,7 +350,7 @@ export class VizComponent implements OnInit, AfterContentInit {
         .style('stroke', 'black')
         .style('stroke-width', 0)
         .attr('id', d => 'circle_' + d.id)
-        .attr('r', this.circleWidth)
+        .attr('r', circleWidth)
         .attr('fill', d => this.colourScale(d.cluster))
         .call(
           d3
@@ -397,25 +392,25 @@ export class VizComponent implements OnInit, AfterContentInit {
     });
   } // end ngAfterContentinit
 
-  circleWidth(d) {
-    const canvas = document.querySelector('#canvas');
-    const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
-    if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
-      return d.r + 'vmin';
-    } else {
-      return d.r * 1.5 + 'vmin';
-    }
-  }
+  // circleWidth(d) {
+  //   const canvas = document.querySelector('#canvas');
+  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+  //     return d.r + 'vmin';
+  //   } else {
+  //     return d.r * 1.5 + 'vmin';
+  //   }
+  // }
 
-  circlePop(d) {
-    const canvas = document.querySelector('#canvas');
-    const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
-    if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
-      return d.r * 2 + 'vmin';
-    } else {
-      return d.r * 6 + 'vmin';
-    }
-  }
+  // circlePop(d) {
+  //   const canvas = document.querySelector('#canvas');
+  //   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+  //   if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+  //     return d.r * 2 + 'vmin';
+  //   } else {
+  //     return d.r * 6 + 'vmin';
+  //   }
+  // }
 
   handleMouseover() {
     return d => {
@@ -524,7 +519,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .transition()
       .duration(500)
       // exit "pop" transition: enlarge radius & fade out
-      .attr('r', this.circlePop)
+      .attr('r', circlePop)
       .styleTween('opacity', d => {
         const i = d3.interpolate(1, 0);
         return t => i(t);
@@ -535,7 +530,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .data(this.filteredNodes)
       .enter()
       .append('svg:circle')
-      .attr('r', this.circleWidth)
+      .attr('r', circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
       // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
@@ -558,13 +553,14 @@ export class VizComponent implements OnInit, AfterContentInit {
       0.45 // less than sqrt (0.5) to reduce overflow
     );
     const circlesGroupYTranslate = Math.max(
-      -this.nodes.length / this.filteredNodes.length,
+      -this.nodes.length / this.filteredNodes.length - 1,
       -10
     );
 
     const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
       'scale(' + zoomAmount + ') translate(0,' + circlesGroupYTranslate + 'px)'
     );
+
     this._statusService.changeSvgTransform(newSvgTransform);
 
     // fill circles with images if <50 remain
@@ -602,13 +598,18 @@ export class VizComponent implements OnInit, AfterContentInit {
             );
     }, 1000);
 
-    // Update nodes and restart the simulation.
+    // Update nodes and restart the simulation
     this._statusService.changeForceSimulation(
       this.forceSimulation
         .nodes(this.filteredNodes)
         .alpha(0.3)
         .restart()
     );
+
+    // check if sliders are resettable
+    this.slidersInUse = this.filterSliders.filter(slider => slider.value > 0)
+      ? true
+      : false;
   }
 
   showMobileSlider(filterVar?) {
@@ -621,5 +622,22 @@ export class VizComponent implements OnInit, AfterContentInit {
     if (filterVar) {
       this.mobileSliderActive[filterVar] = true;
     }
+  }
+
+  resetFilters() {
+    this.filterSliders.map(slider => {
+      slider.value = 0;
+      this._filterService.filterViz(0, slider.variable, this.nodes);
+    });
+    this.handleSliderDrag(
+      { value: 0, variable: this.filterSliders[0].variable },
+      this.filterSliders[0].variable
+    );
+    this.handleSliderMouseUp(
+      { value: 0, variable: this.filterSliders[0].variable },
+      this.filterSliders[0].variable
+    );
+
+    this.slidersInUse = false;
   }
 }

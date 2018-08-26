@@ -28,16 +28,20 @@ svg {
 .sliders-container {
   display: none;
 }
-.sliders-mobile-btn {
+.adjust-values-container button {
   position: relative;
-  margin: 20px 0 10px 0;
+  margin: 20px 10px 10px 10px;
+  transition: all 200ms ease-in-out;
+}
+.slider-container-mobile {
+  background: white;
 }
 .slider-container-mobile * {
   display: inline-block;
   background: white;
 }
 .slider-card-mobile {
-  width: 82%;
+  width: 91%;
 }
 .slider-card-mobile .slider {
   width: 85%;
@@ -47,6 +51,14 @@ svg {
   position: absolute;
   margin: 2px 0 0 -8px;
 }
+
+// trying to center the mat-menu
+// .cdk-overlay-connected-position-bounding-box {
+//   position: relative;
+//   width: fit-content;
+//   margin: auto;
+//   left: null;
+// }
 
 // tablet & desktop
 @media (min-width: 450px) {
@@ -183,9 +195,9 @@ svg {
   .sliders-title {
     font-size: 3.8vw;
   }
-  .sliders-mobile-btn {
-    margin: 7px 0 10px 0;
-  }
+  // .sliders-mobile-btn {
+  //   margin: 7px 0 10px 0;
+  // }
 }
 // short mobile
 @media (max-height: 700px) {

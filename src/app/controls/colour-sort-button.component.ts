@@ -3,7 +3,7 @@ import { AppStatusService } from '../services/app-status.service';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-colour-legend-button',
+  selector: 'app-colour-sort-button',
   template: `
   <button class='btn waves-effect z-depth-3'
     [class.white]="!colourSortActive"
@@ -69,7 +69,7 @@ import * as d3 from 'd3';
     `
   ]
 })
-export class ColourLegendButtonComponent implements OnInit {
+export class ColourSortButtonComponent implements OnInit {
   // static inputs
   @Input()
   public forceXCombine;
@@ -93,7 +93,7 @@ export class ColourLegendButtonComponent implements OnInit {
   public btnHeight = 70;
   public btnStyles = {
     height: this.btnHeight + 'px',
-    width: '130px',
+    width: '130px'
   };
   public clusterCenters = [];
   public refreshInterval;
