@@ -437,7 +437,13 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     console.log('data$', this.data$);
 
-    const nodes = d3.hierarchy(dataset).sum(d => d.workers);
+    const nodes = d3.hierarchy(dataset).sum(d => {
+      if (this.radiusSelector === 'none') {
+        return 10;
+      } else {
+        return d[this.radiusSelector];
+      }
+    });
     console.log(nodes);
 
     const node = svg
