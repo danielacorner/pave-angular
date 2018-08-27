@@ -79,6 +79,12 @@ export class VizComponent implements OnInit, AfterContentInit {
     'px, ' +
     (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
     'px)';
+  bubblesGroupTransform =
+    'translate(' +
+    window.innerWidth / 2 +
+    'px, ' +
+    (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
+    'px)';
 
   // ----- FILTER SLIDERS ----- //
   filterSliders = [
@@ -136,6 +142,8 @@ export class VizComponent implements OnInit, AfterContentInit {
   clusterCenters;
   numClusters;
   svgTransform = 'scale(1)'; // zoom when fewer nodes
+  zoomAmount;
+  staticChartResizer;
 
   // ----- SIMULATION & FORCES ----- //
   // clusteringAmount = 0.5;
@@ -221,7 +229,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     if (this.sufficientMemory) {
       this.recenterForceSimulation(event);
     } else {
-      console.log('recentering the packed circles viz');
+      this.recenterStaticChart();
     }
   }
 
@@ -262,10 +270,30 @@ export class VizComponent implements OnInit, AfterContentInit {
       'px)';
   }
 
-  ngAfterContentInit() {
-    // todo: check web API indicating device memory and determine cut-off
-    this.sufficientMemory = false;
+  private getDims = (d, w) =>
+    document.querySelector(d).getBoundingClientRect()[w];
+  private getWidth = d => this.getDims(d, 'width');
+  private getHeight = d => this.getDims(d, 'height');
 
+  private recenterStaticChart() {
+    const canvasWidth = this.getWidth('#canvas');
+    const chartWidth = this.getWidth('.bubble');
+    const chartHeight = this.getHeight('.bubble');
+    const canvasHeight = this.getHeight('#canvas');
+
+    // center the chart
+    // todo: this breaks when loaded on width > 1000px
+    const translateX = 0.5 * (canvasWidth - chartWidth);
+    const translateY =
+      (1 - this.staticChartResizer) * 0.5 * canvasHeight + this.NAVBAR_HEIGHT;
+
+    d3.select('.bubble').attr(
+      'transform',
+      `translate(${translateX},${translateY})`
+    );
+  }
+
+  ngAfterContentInit() {
     // load the data & initialize the nodes
     this._dataService.getData().subscribe(receivedData => {
       this.data$ = receivedData;
@@ -299,6 +327,11 @@ export class VizComponent implements OnInit, AfterContentInit {
 
       // circle svg image patterns
       this.attachImages();
+
+      // todo: check web API indicating device memory and determine cut-off
+      if (true) {
+        this.sufficientMemory = false;
+      }
 
       if (this.sufficientMemory) {
         // append the circles to svg then style
@@ -395,35 +428,21 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   private initStaticChart() {
-    // const dataset = {
-    //   children: [
-    //     { Name: 'Olives', Count: 4319 },
-    //     { Name: 'Tea', Count: 4159 },
-    //     { Name: 'Mashed Potatoes', Count: 2583 },
-    //     { Name: 'Boiled Potatoes', Count: 2074 },
-    //     { Name: 'Milk', Count: 1894 },
-    //     { Name: 'Chicken Salad', Count: 1809 },
-    //     { Name: 'Vanilla Ice Cream', Count: 1713 },
-    //     { Name: 'Cocoa', Count: 1636 },
-    //     { Name: 'Lettuce Salad', Count: 1566 },
-    //     { Name: 'Lobster Salad', Count: 1511 },
-    //     { Name: 'Chocolate', Count: 1489 },
-    //     { Name: 'Apple Pie', Count: 1487 },
-    //     { Name: 'Orange Juice', Count: 1423 },
-    //     { Name: 'American Cheese', Count: 1372 },
-    //     { Name: 'Green Peas', Count: 1341 },
-    //     { Name: 'Assorted Cakes', Count: 1331 },
-    //     { Name: 'French Fried Potatoes', Count: 1328 },
-    //     { Name: 'Potato Salad', Count: 1306 },
-    //     { Name: 'Baked Potatoes', Count: 1293 },
-    //     { Name: 'Roquefort', Count: 1273 },
-    //     { Name: 'Stewed Prunes', Count: 1268 }
-    //   ]
-    // };
+    // todo: resize chart on zoom
+    // todo: hide appended text under threshold < zoom * circle radius
+    // todo: hide appended text under threshold
+    this.staticChartResizer = 0.7;
+
+    const canvasWidth = document
+      .querySelector('#canvas')
+      .getBoundingClientRect().width;
+    const canvasHeight = document
+      .querySelector('#canvas')
+      .getBoundingClientRect().height;
 
     const [width, height] = [
-      document.querySelector('#canvas').getBoundingClientRect().width,
-      document.querySelector('#canvas').getBoundingClientRect().height
+      canvasWidth * this.staticChartResizer,
+      canvasHeight * this.staticChartResizer
     ];
 
     const bubble = d3
@@ -431,11 +450,18 @@ export class VizComponent implements OnInit, AfterContentInit {
       .size([width, height])
       .padding(1.5);
 
-    const svg = d3.select('#canvas').attr('class', 'bubble');
+    // center the chart
+    const translateX = (1 - this.staticChartResizer) * 0.5 * canvasWidth;
+    const translateY =
+      (1 - this.staticChartResizer) * 0.5 * canvasHeight + this.NAVBAR_HEIGHT;
+
+    const svg = d3
+      .select('#canvas')
+      .append('g')
+      .attr('class', 'bubble')
+      .attr('transform', `translate(${translateX},${translateY})`);
 
     const dataset = { children: this.data$ };
-
-    console.log('data$', this.data$);
 
     const nodes = d3.hierarchy(dataset).sum(d => {
       if (this.radiusSelector === 'none') {
@@ -444,7 +470,6 @@ export class VizComponent implements OnInit, AfterContentInit {
         return d[this.radiusSelector];
       }
     });
-    console.log(nodes);
 
     const node = svg
       .selectAll('.node')
@@ -553,34 +578,11 @@ export class VizComponent implements OnInit, AfterContentInit {
   handleClick() {
     return d => {
       // todo: how to identify current tooltip ? these both identify mouse target
-      // todo: let previousTooltipData somewhere
-      //   console.log('case 1');
       this.tooltipExpanded = !this.tooltipExpanded;
       //
       if (!this.tooltipExpanded) {
         this.justClosed = true;
-        // this.tooltipData = null;
       }
-      // if clicking on another circle,
-      // } else if (d3.event.target.id !== this.tooltipData.d.id) {
-      //   console.log('case 2');
-      //   // (tooltip should be expanded in this case)
-      //   console.log('tooltipExpanded', this.tooltipExpanded);
-      //   this.tooltipExpanded = false;
-      //   this.initTooltip(d);
-      //   // this.tooltipExpanded = true;
-      // } else {
-      //   console.log('case 3');
-      //   this.handleSvgClick(d3.event);
-      //   // this.tooltipData = null;
-      //   // this.tooltipExpanded = false;
-      //   setTimeout(this.initTooltip(d), 301);
-      //   // this.tooltipExpanded = true;
-      // }
-      // expand the tooltip, or close if expanded
-      // this.tooltipExpanded = !this.tooltipExpanded;
-
-      // if tooltip was clicked-closed, prevent re-opening
     };
   }
 
@@ -604,7 +606,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   // While moving the slider, filter the circles
-
   // After mouseup from the slider, restart the simulation and zoom in/out
 
   handleSliderDrag(event, filterVariable) {
@@ -659,7 +660,7 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
-    const zoomAmount = Math.pow(
+    this.zoomAmount = Math.pow(
       this.nodes.length / this.filteredNodes.length,
       0.45 // less than sqrt (0.5) to reduce overflow
     );
@@ -669,7 +670,11 @@ export class VizComponent implements OnInit, AfterContentInit {
     );
 
     const newSvgTransform = this._sanitizer.bypassSecurityTrustStyle(
-      'scale(' + zoomAmount + ') translate(0,' + circlesGroupYTranslate + 'px)'
+      'scale(' +
+        this.zoomAmount +
+        ') translate(0,' +
+        circlesGroupYTranslate +
+        'px)'
     );
 
     this._statusService.changeSvgTransform(newSvgTransform);
@@ -685,7 +690,7 @@ export class VizComponent implements OnInit, AfterContentInit {
             .attr('fill-opacity', 0.2)
             .attr('fill', d => 'url(#pattern_' + d.id + ')')
             .style('stroke', d => this.colourScale(d.cluster))
-            .style('stroke-width', 5 / zoomAmount)
+            .style('stroke-width', 5 / this.zoomAmount)
             .transition()
             .duration(1000)
             .attr('fill-opacity', 1)

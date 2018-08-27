@@ -1,6 +1,6 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="handleSvgClick($event)">
-    <g class="circlesG" *ngIf="data$" [style.transform]="circlesGroupTransform">
+    <g class="circlesG" *ngIf="data$ && sufficientMemory" [style.transform]="circlesGroupTransform">
     </g>
   </svg>
   <!-- sliders -->
@@ -31,7 +31,8 @@
     </div>
 
     <!-- reset button -->
-    <button *ngIf="slidersInUse && !mobileView" class="btn reset-btn green-text white" (click)="resetFilters()" @slideInFromRight>
+    <button *ngIf="slidersInUse && !mobileView" class="btn reset-btn green-text white waves-effect" (click)="resetFilters()"
+      @slideInFromRight>
       <mat-icon>restore</mat-icon>
     </button>
 
@@ -45,7 +46,7 @@
         </button>
 
         <!-- mobile reset button -->
-        <button *ngIf="slidersInUse" class="btn reset-mobile-btn green-text white" (click)="resetFilters()" @slideInFromRight>
+        <button *ngIf="slidersInUse" class="btn reset-mobile-btn green-text white waves-effect" (click)="resetFilters()" @slideInFromRight>
           <mat-icon>restore</mat-icon>
         </button>
 
