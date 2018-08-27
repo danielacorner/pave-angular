@@ -217,7 +217,6 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     // init either force simulation or static chart based on device memory
     // todo: check web API indicating device memory and determine cut-off
-
     this.forceSimulationActive = JSON.parse(
       localStorage.getItem('forceSimulationActive')
     ); // default to true
@@ -410,7 +409,7 @@ export class VizComponent implements OnInit, AfterContentInit {
           .on('drag', this.dragged)
           .on('end', this.dragended)
       );
-    this.addMouseoverFunction(this.circles);
+    this.addMouseInteractions(this.circles);
 
     setTimeout(() => {
       this.circles
@@ -438,7 +437,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   private initStaticChart() {
-    // todo: extract circle styling, tooltips function
     // todo: filter chart on drag
     // todo: re-render chart after mouseup
     // todo: scale and re-render chart on filter
@@ -503,7 +501,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('r', d => d.r)
       .style('fill', d => this.colourScale(d.data.all.cluster));
 
-    this.addMouseoverFunction(node);
+    this.addMouseInteractions(node);
 
     node
       .append('text')
@@ -528,7 +526,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     d3.select(self.frameElement).style('height', height + 'px');
   }
 
-  private addMouseoverFunction(node) {
+  private addMouseInteractions(node) {
     node
       .on('mouseover', this.handleMouseover())
       .on('mouseout', this.handleMouseout())
@@ -669,11 +667,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       .append('svg:circle')
       .attr('r', circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
-      // add tooltips to each circle
-      .on('mouseover', this.handleMouseover)
-      .on('mouseout', this.handleMouseout)
-      .on('click', this.handleClick)
       .merge(this.circles);
+    this.addMouseInteractions(this.circles);
   }
 
   // Filter slider function: $event = skill level, filterVariable = skill name
