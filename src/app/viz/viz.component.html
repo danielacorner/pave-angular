@@ -1,6 +1,6 @@
 <div>
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="handleSvgClick($event)">
-    <g class="circlesG" *ngIf="data$ && sufficientMemory" [style.transform]="circlesGroupTransform">
+    <g class="circlesG" *ngIf="data$ && forceSimulationActive" [style.transform]="circlesGroupTransform">
     </g>
   </svg>
   <!-- sliders -->
@@ -125,17 +125,17 @@
 
       </mat-menu>
     </div>
-    <!-- <div class="graph-button-container center">
-      <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
-        [nClusters]="numClusters" [width]="width" [height]="height" ></app-graph-mode>
-    </div> -->
+    <div class="graph-button-container center">
+      <mat-slide-toggle [checked]="forceSimulationActive" (change)="toggleForceSimulationActive()">Force Simulation</mat-slide-toggle>
+      <!-- <app-graph-mode class="graph-button" [nodes]="nodes" [forceXCombine]="forceXCombine" [forceYCombine]="forceYCombine"
+        [nClusters]="numClusters" [width]="width" [height]="height" ></app-graph-mode> -->
+    </div>
 
   </div>
 
   <!-- tooltip -->
-  <div *ngIf="tooltipData" @ngIfAnimation>
-    <!-- todo: tooltipExpanded passed down -- does that even work? -->
-    <app-tooltip @easeInOut [tooltipData]="tooltipData" [expanded]="tooltipExpanded"></app-tooltip>
+  <div *ngIf="tooltipData">
+    <app-tooltip [tooltipData]="tooltipData" [expanded]="tooltipExpanded"></app-tooltip>
   </div>
 
 </div>

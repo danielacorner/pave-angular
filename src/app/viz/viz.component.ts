@@ -178,7 +178,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   slidersInUse = false;
   mobileView;
 
-  sufficientMemory = true;
+  forceSimulationActive = true;
 
   // // Drag functions used for interactivity
   dragstarted = d => {
@@ -214,6 +214,13 @@ export class VizComponent implements OnInit, AfterContentInit {
     );
     // mobile view flag
     this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
+
+    // init either force simulation or static chart based on device memory
+    // todo: check web API indicating device memory and determine cut-off
+
+    this.forceSimulationActive = JSON.parse(
+      localStorage.getItem('forceSimulationActive')
+    ); // default to true
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -226,11 +233,19 @@ export class VizComponent implements OnInit, AfterContentInit {
     this.mobileView = window.innerWidth < CONFIG.DEFAULTS.MOBILE_BREAKPOINT;
 
     // recalculate forces
-    if (this.sufficientMemory) {
+    if (this.forceSimulationActive) {
       this.recenterForceSimulation(event);
     } else {
       this.recenterStaticChart();
     }
+  }
+  private toggleForceSimulationActive() {
+    this.forceSimulationActive = !this.forceSimulationActive;
+    localStorage.setItem(
+      'forceSimulationActive',
+      JSON.stringify(this.forceSimulationActive)
+    );
+    location.reload();
   }
 
   private recenterForceSimulation(event: any) {
@@ -328,12 +343,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       // circle svg image patterns
       this.attachImages();
 
-      // todo: check web API indicating device memory and determine cut-off
-      if (true) {
-        this.sufficientMemory = false;
-      }
-
-      if (this.sufficientMemory) {
+      if (this.forceSimulationActive) {
         // append the circles to svg then style
         // add functions for interaction
         this.initForceSimulation();
@@ -343,6 +353,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     });
   } // end ngAfterContentinit
 
+  // include any data to be displayed
   private defineNodes() {
     this._statusService.changeNodes(
       this.data$.map(d => {
@@ -398,10 +409,9 @@ export class VizComponent implements OnInit, AfterContentInit {
           .on('start', this.dragstarted)
           .on('drag', this.dragged)
           .on('end', this.dragended)
-      )
-      .on('mouseover', this.handleMouseover())
-      .on('mouseout', this.handleMouseout())
-      .on('click', this.handleClick());
+      );
+    this.addMouseoverFunction(this.circles);
+
     setTimeout(() => {
       this.circles
         .transition()
@@ -428,7 +438,11 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   private initStaticChart() {
-    // todo: resize chart on zoom
+    // todo: extract circle styling, tooltips function
+    // todo: filter chart on drag
+    // todo: re-render chart after mouseup
+    // todo: scale and re-render chart on filter
+    // todo: scale and re-render chart on resize
     // todo: hide appended text under threshold < zoom * circle radius
     // todo: hide appended text under threshold
     this.staticChartResizer = 0.7;
@@ -446,7 +460,7 @@ export class VizComponent implements OnInit, AfterContentInit {
     ];
 
     const bubble = d3
-      .pack(this.data$)
+      .pack(this.nodes)
       .size([width, height])
       .padding(1.5);
 
@@ -461,8 +475,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('class', 'bubble')
       .attr('transform', `translate(${translateX},${translateY})`);
 
-    const dataset = { children: this.data$ };
+    const dataset = { children: this.nodes };
 
+    // size of each node
     const nodes = d3.hierarchy(dataset).sum(d => {
       if (this.radiusSelector === 'none') {
         return 10;
@@ -480,18 +495,22 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('class', 'node')
       .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
 
-    node.append('title').text(d => d.job + ': ' + d.workers);
+    node.append('title').text(d => d.data.all.job + ': ' + d.data.all.workers);
 
     node
       .append('circle')
+      .attr('id', d => `circle_${d.data.id}`)
       .attr('r', d => d.r)
-      .style('fill', d => this.colourScale(d.data.cluster));
+      .style('fill', d => this.colourScale(d.data.all.cluster));
+
+    this.addMouseoverFunction(node);
 
     node
       .append('text')
       .attr('dy', '.2em')
       .style('text-anchor', 'middle')
-      .text(d => d.data.job.substring(0, d.r / 3))
+      .style('pointer-events', 'none')
+      .text(d => d.data.all.job.substring(0, d.r / 3))
       .attr('font-family', 'sans-serif')
       .attr('font-size', d => d.r / 5)
       .attr('fill', 'white');
@@ -500,7 +519,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       .append('text')
       .attr('dy', '1.3em')
       .style('text-anchor', 'middle')
-      .text(d => d.data.workers)
+      .style('pointer-events', 'none')
+      .text(d => d.data.all.workers)
       .attr('font-family', 'Gill Sans', 'Gill Sans MT')
       .attr('font-size', d => d.r / 5)
       .attr('fill', 'white');
@@ -508,6 +528,12 @@ export class VizComponent implements OnInit, AfterContentInit {
     d3.select(self.frameElement).style('height', height + 'px');
   }
 
+  private addMouseoverFunction(node) {
+    node
+      .on('mouseover', this.handleMouseover())
+      .on('mouseout', this.handleMouseout())
+      .on('click', this.handleClick());
+  }
   private attachImages() {
     d3.select('#canvas')
       .append('defs')
@@ -537,7 +563,6 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   handleMouseover() {
     return d => {
-      // initialize the tooltip
       this.initTooltip(d);
 
       // highlight the circle border
@@ -587,11 +612,24 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   private initTooltip(d: any) {
-    this.tooltipData = {
-      d: d,
-      x: d.x + this.width / 2,
-      y: d.y + this.height / 2
-    };
+    if (this.forceSimulationActive) {
+      // for the force simulation
+      this.tooltipData = {
+        d: d,
+        x: d.x + this.width / 2,
+        y: d.y + this.height / 2 + 180
+      };
+    } else {
+      // for the static chart
+      this.tooltipData = {
+        d: d.data,
+        x:
+          d.x < this.getWidth('.bubble') / 2
+            ? d.x + this.width / 2 + 40
+            : d.x + this.width / 2 - 340,
+        y: d.y + this.height / 2 - 80
+      };
+    }
   }
 
   // close tooltip on background click
@@ -631,7 +669,6 @@ export class VizComponent implements OnInit, AfterContentInit {
       .append('svg:circle')
       .attr('r', circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
-      // .attr('stroke', d => this.colourScale(d.cluster))
       // add tooltips to each circle
       .on('mouseover', this.handleMouseover)
       .on('mouseout', this.handleMouseout)
