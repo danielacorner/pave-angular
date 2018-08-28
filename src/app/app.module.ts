@@ -34,6 +34,7 @@ import { MatDialogTitle } from '@angular/material';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StaticChartComponent } from './viz/static-chart/static-chart.component';
+import { ForceSimulationComponent } from './viz/force-simulation/force-simulation.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { StaticChartComponent } from './viz/static-chart/static-chart.component'
     AboutComponent,
     DetailsComponent,
     ContactComponent,
-    StaticChartComponent
+    StaticChartComponent,
+    ForceSimulationComponent
   ],
   imports: [
     BrowserModule,

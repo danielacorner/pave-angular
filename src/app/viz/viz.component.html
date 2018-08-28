@@ -1,8 +1,12 @@
 <div>
+
   <svg id="canvas" class="center" [ngStyle]="canvasStyles" [style.transform]="svgTransform" (click)="handleSvgClick($event)">
     <g class="circlesG" *ngIf="data$ && forceSimulationActive" [style.transform]="circlesGroupTransform">
     </g>
   </svg>
+
+  <app-static-chart *ngIf="!forceSimulationActive" #staticChart [colourScale]="colourScale" (chartInit)="addMouseInteractions($event)"></app-static-chart>
+
   <!-- sliders -->
   <p class="sliders-title">Explore Canada’s job landscape according to your present or future skills</p>
 
