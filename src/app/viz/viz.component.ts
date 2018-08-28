@@ -35,6 +35,7 @@ import {
 } from '../animations';
 import { getWidth, getHeight } from './utils';
 import { StaticChartComponent } from './static-chart/static-chart.component';
+import { ForceSimulationComponent } from './force-simulation/force-simulation.component';
 
 @Component({
   selector: 'app-viz',
@@ -55,6 +56,9 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   @ViewChild(StaticChartComponent)
   private staticChartComponent: StaticChartComponent;
+
+  @ViewChild(ForceSimulationComponent)
+  private forceSimulationComponent: ForceSimulationComponent;
 
   // ----- POSITIONING ----- //
   wdw = window;
@@ -153,7 +157,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   numClusters;
   svgTransform = 'scale(1)'; // zoom when fewer nodes
   zoomAmount;
-  // staticChartResizer;
 
   // ----- SIMULATION & FORCES ----- //
   // clusteringAmount = 0.5;

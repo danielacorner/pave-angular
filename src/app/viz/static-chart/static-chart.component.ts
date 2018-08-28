@@ -16,9 +16,10 @@ export class StaticChartComponent implements OnInit {
   bubbleSvg;
   staticNodes;
   staticCircles;
-
   staticChartResizer;
+
   NAVBAR_HEIGHT = CONFIG.DEFAULTS.NAVBAR_HEIGHT;
+
   subscriptions = [
     'radiusSelector',
     'clusterSelector',
@@ -35,6 +36,7 @@ export class StaticChartComponent implements OnInit {
     'defaultCircleRadius',
     'sliderPositions'
   ];
+
   radiusSelector = 'none'; // default value because forceGravity defined before subscription
   sliderPositions;
   clusterSelector;
