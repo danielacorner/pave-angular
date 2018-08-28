@@ -665,7 +665,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       .data(this.filteredNodes)
       .exit()
       .style('opacity', 0.1);
-    // todo: pop and remove
+      // todo: re-style opacity-1 the enter() selection
+      // todo: pop and remove on mouseup
   }
 
   // Filter slider function: $event = skill level, filterVariable = skill name
