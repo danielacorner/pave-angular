@@ -32,6 +32,7 @@ import {
   circleWidth,
   circlePop
 } from '../animations';
+import { getWidth, getHeight } from './utils';
 
 @Component({
   selector: 'app-viz',
@@ -287,16 +288,11 @@ export class VizComponent implements OnInit, AfterContentInit {
       'px)';
   }
 
-  private getDims = (d, w) =>
-    document.querySelector(d).getBoundingClientRect()[w];
-  private getWidth = d => this.getDims(d, 'width');
-  private getHeight = d => this.getDims(d, 'height');
-
   private recenterStaticChart() {
-    const canvasWidth = this.getWidth('#canvas');
-    const chartWidth = this.getWidth('.bubble');
-    const chartHeight = this.getHeight('.bubble');
-    const canvasHeight = this.getHeight('#canvas');
+    const canvasWidth = getWidth('#canvas');
+    const chartWidth = getWidth('.bubble');
+    const chartHeight = getHeight('.bubble');
+    const canvasHeight = getHeight('#canvas');
 
     // center the chart
     // todo: this breaks when loaded on width > 1000px
@@ -443,8 +439,8 @@ export class VizComponent implements OnInit, AfterContentInit {
     // todo: hide appended text under threshold
     this.staticChartResizer = 0.7;
 
-    const canvasWidth = this.getWidth('#canvas');
-    const canvasHeight = this.getHeight('#canvas');
+    const canvasWidth = getWidth('#canvas');
+    const canvasHeight = getHeight('#canvas');
 
     const [width, height] = [
       canvasWidth * this.staticChartResizer,
@@ -616,7 +612,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.tooltipData = {
         d: d.data,
         x:
-          d.x < this.getWidth('.bubble') / 2
+          d.x < getWidth('.bubble') / 2
             ? d.x + this.width / 2 + 40
             : d.x + this.width / 2 - 340,
         y: d.y + this.height / 2 - 80
@@ -659,24 +655,26 @@ export class VizComponent implements OnInit, AfterContentInit {
     }
   }
 
-  filterStaticChart() {
-    // select nodes whose ids aren't in remainingids
+  private filterStaticChart() {
+    const remainingIds = this.filteredNodes.map(d => d.id);
+
+    // turn to-be-filtered nodes transparent
     d3.selectAll('.node')
-      .data(this.filteredNodes)
-      .exit()
+      .style('opacity', 1)
+      .filter(d => !remainingIds.includes(d.data.id))
       .style('opacity', 0.1);
-      // todo: re-style opacity-1 the enter() selection
-      // todo: pop and remove on mouseup
+
+    // todo: pop and remove the final exit() selection on mouseup
   }
 
   // Filter slider function: $event = skill level, filterVariable = skill name
   handleSliderMouseUp(event, filterVariable) {
-    // Save the slider position
+    // Save this slider's position
     this.filterSliders
       .filter(slider => slider.variable === filterVariable)
       .map(slider => (slider.value = event.value));
 
-    // Update all sliders based on new minimums
+    // Update all other sliders based on new minimums
     this._statusService.changeSliderPositions(
       this.filterSliders.map(slider => {
         return {
@@ -688,6 +686,19 @@ export class VizComponent implements OnInit, AfterContentInit {
       })
     );
 
+    if (!this.forceSimulationActive) {
+      this.rerenderStaticChart();
+    } else {
+      this.rerenderForceSimulation();
+    }
+
+    // check if sliders are resettable (show/hide reset button)
+    this.slidersInUse = this.filterSliders.filter(slider => slider.value > 0)
+      ? true
+      : false;
+  }
+
+  rerenderForceSimulation() {
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
     this.zoomAmount = Math.pow(
@@ -744,32 +755,32 @@ export class VizComponent implements OnInit, AfterContentInit {
           .restart()
       );
     }
-    // check if sliders are resettable
-    this.slidersInUse = this.filterSliders.filter(slider => slider.value > 0)
-      ? true
-      : false;
   }
 
   rerenderStaticChart() {
-    // this.staticChartResizer = 0.7;
+    const remainingIds = this.filteredNodes.map(d => d.id);
 
-    const canvasWidth = this.getWidth('#canvas');
-    const canvasHeight = this.getHeight('#canvas');
-
-    const [width, height] = [
-      canvasWidth * this.staticChartResizer,
-      canvasHeight * this.staticChartResizer
-    ];
+    // remove all nodes
+    d3.selectAll('.node')
+      .transition()
+      .duration(500)
+      .style('opacity', 0)
+      .remove();
 
     const bubble = d3
       .pack(this.filteredNodes)
-      .size([width, height])
+      .size([
+        getWidth('#canvas') * this.staticChartResizer,
+        getHeight('#canvas') * this.staticChartResizer
+      ])
       .padding(1.5);
 
     // center the chart
-    const translateX = (1 - this.staticChartResizer) * 0.5 * canvasWidth;
+    const translateX =
+      (1 - this.staticChartResizer) * 0.5 * getWidth('#canvas');
     const translateY =
-      (1 - this.staticChartResizer) * 0.5 * canvasHeight + this.NAVBAR_HEIGHT;
+      (1 - this.staticChartResizer) * 0.5 * getHeight('#canvas') +
+      this.NAVBAR_HEIGHT;
 
     const bubbleSvg = d3
       .select('#canvas')
@@ -805,7 +816,11 @@ export class VizComponent implements OnInit, AfterContentInit {
       .append('circle')
       .attr('id', d => `circle_${d.data.id}`)
       .attr('r', d => d.r)
-      .style('fill', d => this.colourScale(d.data.all.cluster));
+      .style('fill', d => this.colourScale(d.data.all.cluster))
+      .style('opacity', 0)
+      .transition()
+      .duration(1000)
+      .style('opacity', 1);
 
     this.addMouseInteractions(this.circles);
 
@@ -829,7 +844,10 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('font-size', d => d.r / 5)
       .attr('fill', 'white');
 
-    d3.select(self.frameElement).style('height', height + 'px');
+    d3.select(self.frameElement).style(
+      'height',
+      getHeight('#canvas') * this.staticChartResizer + 'px'
+    );
   }
 
   private applyDragBehaviour(node) {

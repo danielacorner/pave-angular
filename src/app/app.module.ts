@@ -33,6 +33,7 @@ import { MatDialogTitle } from '@angular/material';
 // Material
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StaticChartComponent } from './viz/static-chart/static-chart.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TooltipMobileComponent,
     AboutComponent,
     DetailsComponent,
-    ContactComponent
+    ContactComponent,
+    StaticChartComponent
   ],
   imports: [
     BrowserModule,
