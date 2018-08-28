@@ -109,6 +109,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       value: 0
     }
   ];
+  staticNodes;
+  bubble;
+  bubbleSvg;
 
   // ----- CIRCLE PROPERTIES ----- //
   // subscriptions are defined in ngOnInit() through the _statusService
@@ -401,14 +404,9 @@ export class VizComponent implements OnInit, AfterContentInit {
       .style('stroke-width', 0)
       .attr('id', d => 'circle_' + d.id)
       .attr('r', circleWidth)
-      .attr('fill', d => this.colourScale(d.cluster))
-      .call(
-        d3
-          .drag()
-          .on('start', this.dragstarted)
-          .on('drag', this.dragged)
-          .on('end', this.dragended)
-      );
+      .attr('fill', d => this.colourScale(d.cluster));
+
+    this.applyDragBehaviour(this.circles);
     this.addMouseInteractions(this.circles);
 
     setTimeout(() => {
@@ -445,20 +443,16 @@ export class VizComponent implements OnInit, AfterContentInit {
     // todo: hide appended text under threshold
     this.staticChartResizer = 0.7;
 
-    const canvasWidth = document
-      .querySelector('#canvas')
-      .getBoundingClientRect().width;
-    const canvasHeight = document
-      .querySelector('#canvas')
-      .getBoundingClientRect().height;
+    const canvasWidth = this.getWidth('#canvas');
+    const canvasHeight = this.getHeight('#canvas');
 
     const [width, height] = [
       canvasWidth * this.staticChartResizer,
       canvasHeight * this.staticChartResizer
     ];
 
-    const bubble = d3
-      .pack(this.nodes)
+    this.bubble = d3
+      .pack()
       .size([width, height])
       .padding(1.5);
 
@@ -467,16 +461,14 @@ export class VizComponent implements OnInit, AfterContentInit {
     const translateY =
       (1 - this.staticChartResizer) * 0.5 * canvasHeight + this.NAVBAR_HEIGHT;
 
-    const svg = d3
+    this.bubbleSvg = d3
       .select('#canvas')
       .append('g')
       .attr('class', 'bubble')
       .attr('transform', `translate(${translateX},${translateY})`);
 
-    const dataset = { children: this.nodes };
-
     // size of each node
-    const nodes = d3.hierarchy(dataset).sum(d => {
+    this.staticNodes = d3.hierarchy({ children: this.nodes }).sum(d => {
       if (this.radiusSelector === 'none') {
         return 10;
       } else {
@@ -484,26 +476,28 @@ export class VizComponent implements OnInit, AfterContentInit {
       }
     });
 
-    const node = svg
+    this.circles = this.bubbleSvg
       .selectAll('.node')
-      .data(bubble(nodes).descendants())
+      .data(this.bubble(this.staticNodes).descendants(), d => d.id)
       .enter()
       .filter(d => !d.children)
       .append('g')
       .attr('class', 'node')
       .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
 
-    node.append('title').text(d => d.data.all.job + ': ' + d.data.all.workers);
+    this.circles
+      .append('title')
+      .text(d => d.data.all.job + ': ' + d.data.all.workers);
 
-    node
+    this.circles
       .append('circle')
       .attr('id', d => `circle_${d.data.id}`)
       .attr('r', d => d.r)
       .style('fill', d => this.colourScale(d.data.all.cluster));
 
-    this.addMouseInteractions(node);
+    this.addMouseInteractions(this.circles);
 
-    node
+    this.circles
       .append('text')
       .attr('dy', '.2em')
       .style('text-anchor', 'middle')
@@ -513,7 +507,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       .attr('font-size', d => d.r / 5)
       .attr('fill', 'white');
 
-    node
+    this.circles
       .append('text')
       .attr('dy', '1.3em')
       .style('text-anchor', 'middle')
@@ -646,29 +640,32 @@ export class VizComponent implements OnInit, AfterContentInit {
 
   handleSliderDrag(event, filterVariable) {
     this._filterService.filterViz(event.value, filterVariable, this.nodes);
-    // UPDATE the viz data
-    this.circles = this.circles.data(this.filteredNodes, d => d.id);
-    // EXIT
-    this.circles
-      .exit()
-      .transition()
-      .duration(500)
-      // exit "pop" transition: enlarge radius & fade out
-      .attr('r', circlePop)
-      .styleTween('opacity', d => {
-        const i = d3.interpolate(1, 0);
-        return t => i(t);
-      })
-      .remove();
-    // ENTER and MERGE
-    this.circles = this.circles
+    if (!this.forceSimulationActive) {
+      this.filterStaticChart();
+    } else {
+      // UPDATE the viz data
+      this.circles = this.circles.data(this.filteredNodes, d => d.id);
+      // EXIT
+      circlePop(this.circles);
+      // ENTER and MERGE
+      this.circles = this.circles
+        .data(this.filteredNodes)
+        .enter()
+        .append('svg:circle')
+        .attr('r', circleWidth)
+        .attr('fill', d => this.colourScale(d.cluster))
+        .merge(this.circles);
+      this.addMouseInteractions(this.circles);
+    }
+  }
+
+  filterStaticChart() {
+    // select nodes whose ids aren't in remainingids
+    d3.selectAll('.node')
       .data(this.filteredNodes)
-      .enter()
-      .append('svg:circle')
-      .attr('r', circleWidth)
-      .attr('fill', d => this.colourScale(d.cluster))
-      .merge(this.circles);
-    this.addMouseInteractions(this.circles);
+      .exit()
+      .style('opacity', 0.1);
+    // todo: pop and remove
   }
 
   // Filter slider function: $event = skill level, filterVariable = skill name
@@ -711,55 +708,138 @@ export class VizComponent implements OnInit, AfterContentInit {
 
     this._statusService.changeSvgTransform(newSvgTransform);
 
-    // fill circles with images if <50 remain
-    setTimeout(() => {
-      this.filteredNodes.length <= 50
-        ? (this.circleImagesActive = true)
-        : (this.circleImagesActive = false);
+    // forceSimulation
+    if (!this.forceSimulationActive) {
+      // this.rerenderStaticChart();
+    } else {
+      // fill circles with images if <50 remain
+      setTimeout(() => {
+        this.filteredNodes.length <= 50
+          ? (this.circleImagesActive = true)
+          : (this.circleImagesActive = false);
 
-      this.circleImagesActive
-        ? this.circles
-            .attr('fill-opacity', 0.2)
-            .attr('fill', d => 'url(#pattern_' + d.id + ')')
-            .style('stroke', d => this.colourScale(d.cluster))
-            .style('stroke-width', 5 / this.zoomAmount)
-            .transition()
-            .duration(1000)
-            .attr('fill-opacity', 1)
-            .call(
-              d3
-                .drag()
-                .on('start', this.dragstarted)
-                .on('drag', this.dragged)
-                .on('end', this.dragended)
-            )
-        : this.circles
-            .attr('fill', d => this.colourScale(d.cluster))
-            .style('stroke', 'black')
-            .style('stroke-width', 0)
-            .call(
-              d3
-                .drag()
-                .on('start', this.dragstarted)
-                .on('drag', this.dragged)
-                .on('end', this.dragended)
-            );
-    }, 1000);
+        this.circleImagesActive
+          ? this.circles
+              .attr('fill-opacity', 0.2)
+              .attr('fill', d => 'url(#pattern_' + d.id + ')')
+              .style('stroke', d => this.colourScale(d.cluster))
+              .style('stroke-width', 5 / this.zoomAmount)
+              .transition()
+              .duration(1000)
+              .attr('fill-opacity', 1)
+          : this.circles
+              .attr('fill', d => this.colourScale(d.cluster))
+              .style('stroke', 'black')
+              .style('stroke-width', 0);
 
-    // Update nodes and restart the simulation
-    this._statusService.changeForceSimulation(
-      this.forceSimulation
-        .nodes(this.filteredNodes)
-        .alpha(0.3)
-        .restart()
-    );
+        this.applyDragBehaviour(this.circles);
+      }, 1000);
 
+      // Update nodes and restart the simulation
+      this._statusService.changeForceSimulation(
+        this.forceSimulation
+          .nodes(this.filteredNodes)
+          .alpha(0.3)
+          .restart()
+      );
+    }
     // check if sliders are resettable
     this.slidersInUse = this.filterSliders.filter(slider => slider.value > 0)
       ? true
       : false;
   }
 
+  rerenderStaticChart() {
+    // this.staticChartResizer = 0.7;
+
+    const canvasWidth = this.getWidth('#canvas');
+    const canvasHeight = this.getHeight('#canvas');
+
+    const [width, height] = [
+      canvasWidth * this.staticChartResizer,
+      canvasHeight * this.staticChartResizer
+    ];
+
+    const bubble = d3
+      .pack(this.filteredNodes)
+      .size([width, height])
+      .padding(1.5);
+
+    // center the chart
+    const translateX = (1 - this.staticChartResizer) * 0.5 * canvasWidth;
+    const translateY =
+      (1 - this.staticChartResizer) * 0.5 * canvasHeight + this.NAVBAR_HEIGHT;
+
+    const bubbleSvg = d3
+      .select('#canvas')
+      .append('g')
+      .attr('class', 'bubble')
+      .attr('transform', `translate(${translateX},${translateY})`);
+
+    const dataset = { children: this.filteredNodes };
+
+    // size of each node
+    const nodes = d3.hierarchy(dataset).sum(d => {
+      if (this.radiusSelector === 'none') {
+        return 10;
+      } else {
+        return d[this.radiusSelector];
+      }
+    });
+
+    this.circles = bubbleSvg
+      .selectAll('.node')
+      .data(bubble(nodes).descendants())
+      .enter()
+      .filter(d => !d.children)
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+
+    this.circles
+      .append('title')
+      .text(d => d.data.all.job + ': ' + d.data.all.workers);
+
+    this.circles
+      .append('circle')
+      .attr('id', d => `circle_${d.data.id}`)
+      .attr('r', d => d.r)
+      .style('fill', d => this.colourScale(d.data.all.cluster));
+
+    this.addMouseInteractions(this.circles);
+
+    this.circles
+      .append('text')
+      .attr('dy', '.2em')
+      .style('text-anchor', 'middle')
+      .style('pointer-events', 'none')
+      .text(d => d.data.all.job.substring(0, d.r / 3))
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', d => d.r / 5)
+      .attr('fill', 'white');
+
+    this.circles
+      .append('text')
+      .attr('dy', '1.3em')
+      .style('text-anchor', 'middle')
+      .style('pointer-events', 'none')
+      .text(d => d.data.all.workers)
+      .attr('font-family', 'Gill Sans', 'Gill Sans MT')
+      .attr('font-size', d => d.r / 5)
+      .attr('fill', 'white');
+
+    d3.select(self.frameElement).style('height', height + 'px');
+  }
+
+  private applyDragBehaviour(node) {
+    node.call(
+      d3
+        .drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended)
+    );
+  }
   showMobileSlider(filterVar?) {
     this.mobileSliderActive = {
       skillsLang: false,

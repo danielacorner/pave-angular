@@ -8,6 +8,7 @@ import {
   animateChild
 } from '@angular/animations';
 import CONFIG from './app.config';
+import * as d3 from 'd3';
 export {
   ngIfAnimation,
   easeInOut,
@@ -60,12 +61,26 @@ const circleWidth = d => {
   }
 };
 
-const circlePop = d => {
+const circlePopWidth = d => {};
+
+const circlePop = nodes => {
   const canvas = document.querySelector('#canvas');
   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
-  if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
-    return d.r * 2 + 'vmin';
-  } else {
-    return d.r * 6 + 'vmin';
-  }
+  nodes
+    .exit()
+    .transition()
+    .duration(500)
+    // exit "pop" transition: enlarge radius & fade out
+    .attr('r', d => {
+      if (canvasWidth > CONFIG.DEFAULTS.MOBILE_BREAKPOINT) {
+        return d.r * 2 + 'vmin';
+      } else {
+        return d.r * 6 + 'vmin';
+      }
+    })
+    .styleTween('opacity', d => {
+      const i = d3.interpolate(1, 0);
+      return t => i(t);
+    })
+    .remove();
 };
