@@ -59,6 +59,9 @@ export class AppStatusService {
   private _sliderPositionsSource = new BehaviorSubject<any>(null);
   public currentSliderPositions = this._sliderPositionsSource.asObservable();
 
+  private _circleImagesActiveSource = new BehaviorSubject<any>(false);
+  public currentCircleImagesActive = this._circleImagesActiveSource.asObservable();
+
   // private _circlesSource = new BehaviorSubject<any>(null);
   // public currentCircles = this._circlesSource.asObservable();
 
@@ -134,6 +137,10 @@ export class AppStatusService {
 
   public changeSliderPositions(v) {
     this._sliderPositionsSource.next(v);
+  }
+
+  public changeCircleImagesActive(v) {
+    this._circleImagesActiveSource.next(v);
   }
 
   constructor() {}

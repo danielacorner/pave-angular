@@ -5,7 +5,8 @@
     </g>
   </svg>
 
-  <app-force-simulation *ngIf="forceSimulationActive" [colourScale]="colourScale" (forceSimInit)="addMouseInteractions($event)"></app-force-simulation>
+  <app-force-simulation *ngIf="forceSimulationActive" [colourScale]="colourScale" (forceSimInit)="addMouseInteractions($event)"
+    (circleImagesActive)="circleImagesActive=$event"></app-force-simulation>
   <app-static-chart *ngIf="!forceSimulationActive" [colourScale]="colourScale" (chartInit)="addMouseInteractions($event)"></app-static-chart>
 
   <!-- sliders -->
