@@ -167,6 +167,7 @@ export class TooltipComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       // setTimeout 0 to fix ExpressionChangedAfterItHasBeenCheckedError
       this.bottomSheet.open(TooltipMobileComponent, {
+        panelClass: 'myapp-no-padding-bottomsheet',
         data: {
           ttdata: this.tooltipData.d.all
         }

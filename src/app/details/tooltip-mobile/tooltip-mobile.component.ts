@@ -25,9 +25,6 @@ import * as d3 from 'd3';
       .titlelistitem div {
         margin: 5px 20px 5px 5px;
       }
-      .mat-bottom-sheet-container {
-        padding: 0;
-      }
       mat-action-row {
         justify-content: flex-center;
       }
@@ -54,7 +51,14 @@ export class TooltipMobileComponent implements OnInit {
           this.data.ttdata.noc +
           '.jpg"'
     );
-    d3.select('.mat-bottom-sheet-container').style('overflow', 'hidden');
+
+    // todo: move these to global scss file
+    d3.select('.mat-bottom-sheet-container')
+      .style('overflow', 'hidden')
+      .style('padding', 0);
+
+    d3.select('.mat-list').style('padding-top', 0);
+    d3.select('.list-title-item').style('padding-right', '32px');
   }
 
   // openLink(event: MouseEvent): void {

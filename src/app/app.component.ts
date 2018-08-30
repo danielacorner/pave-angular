@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
   `,
-  styles: []
+  styles: [``]
 })
 export class AppComponent {
   constructor() {}

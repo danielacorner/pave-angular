@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "~@angular/cdk/_overlay.scss";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/cdk/_overlay.scss';
 @include cdk-overlay;
+
+// .myapp-no-padding-bottomsheet .mat-bottom-sheet-container {
+//   padding: 0;
+//   overflow: hidden;
+// }
