@@ -149,7 +149,7 @@ export class ForceSimulationComponent implements OnInit {
       .attr('fill', d => this.colourScale(d.cluster));
 
     this.forceSimInit.emit(this.simCircles);
-    // this.applyDragBehaviour(this.simCircles);
+    this.applyDragBehaviour(this.simCircles);
     // this.addMouseInteractions(this.simCircles);
 
     setTimeout(() => {
@@ -225,21 +225,31 @@ export class ForceSimulationComponent implements OnInit {
   }
 
   filterForceSimulation() {
-    // UPDATE the viz data
+    // 2. UPDATE the viz data
     this.simCircles = this.simCircles.data(this.filteredNodes, d => d.id);
-    // EXIT
+    // 1. EXIT
     circlePop(this.simCircles);
-    // ENTER and MERGE
+    // 3. ENTER and MERGE
     this.simCircles = this.simCircles
       .data(this.filteredNodes)
       .enter()
       .append('svg:circle')
+      .style('stroke', 'black')
+      .style('stroke-width', 0)
+      .attr('id', d => 'circle_' + d.id)
       .attr('r', circleWidth)
       .attr('fill', d => this.colourScale(d.cluster))
+      // remove the translucent clone before merging
+      .each(d => {
+        d3.select(`#circleClone_${d.id}`).remove();
+      })
       .merge(this.simCircles);
     // this.addMouseInteractions(this.simCircles);
   }
   rerenderForceSimulation() {
+    // remove all filtered clones
+    d3.selectAll('.filteredClone').remove();
+
     // ZOOM to fit remaining of circles
     // todo: if size-changed circles don't fit, calculate zoom based on total circle area
     this.zoomAmount = Math.pow(
@@ -281,6 +291,7 @@ export class ForceSimulationComponent implements OnInit {
             .style('stroke', 'black')
             .style('stroke-width', 0);
 
+      this.forceSimInit.emit(this.simCircles);
       this.applyDragBehaviour(this.simCircles);
     }, 1000);
 

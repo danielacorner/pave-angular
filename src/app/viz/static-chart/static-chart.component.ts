@@ -125,6 +125,7 @@ export class StaticChartComponent implements OnInit {
       .attr('r', d => d.r)
       .style('fill', d => this.colourScale(d.data.all.cluster));
 
+    // handle mouseover
     this.chartInit.emit(this.staticCircles);
 
     this.staticCircles
@@ -156,6 +157,8 @@ export class StaticChartComponent implements OnInit {
     const chartHeight = getHeight('.bubble');
     const canvasHeight = getHeight('#canvas');
 
+    console.log(chartWidth);
+
     // center the chart
     // todo: this breaks when loaded on width > 1000px
     const translateX = 0.5 * (canvasWidth - chartWidth);
@@ -185,6 +188,7 @@ export class StaticChartComponent implements OnInit {
 
     // remove all nodes
     d3.selectAll('.node')
+      // .filter(d => !remainingIds.includes(d.data.id))
       .transition()
       .duration(500)
       .style('opacity', 0)
@@ -223,6 +227,7 @@ export class StaticChartComponent implements OnInit {
       }
     });
 
+    // append new nodes
     this.staticCircles = bubbleSvg
       .selectAll('.node')
       .data(bubble(nodes).descendants())
@@ -232,10 +237,12 @@ export class StaticChartComponent implements OnInit {
       .attr('class', 'node')
       .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
 
+    // titles
     this.staticCircles
       .append('title')
       .text(d => d.data.all.job + ': ' + d.data.all.workers);
 
+    // circles
     this.staticCircles
       .append('circle')
       .attr('id', d => `circle_${d.data.id}`)

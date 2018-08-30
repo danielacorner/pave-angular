@@ -61,11 +61,27 @@ const circleWidth = d => {
   }
 };
 
-const circlePopWidth = d => {};
+function clone(selector) {
+  const node = d3.select(selector).node();
+  return d3.select(
+    node.parentNode.insertBefore(node.cloneNode(true), node.nextSibling)
+  );
+}
 
 const circlePop = nodes => {
   const canvas = document.querySelector('#canvas');
   const canvasWidth = parseInt(window.getComputedStyle(canvas).width, 10);
+
+  nodes.exit().each(d => {
+    // if it doesn't already exist, append temporary translucent placeholder 'clone' to display after pop
+    if (!document.querySelector(`#circleClone_${d.id}`)) {
+      clone(`#circle_${d.id}`)
+        .style('opacity', 0.15)
+        .attr('class', 'filteredClone')
+        .attr('id', `circleClone_${d.id}`);
+    }
+  });
+
   nodes
     .exit()
     .transition()

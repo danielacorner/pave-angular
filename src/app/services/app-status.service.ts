@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AppStatusService {
+  // this service keeps data in sync between all components via subscriptions
+
   private _radiusSelectorSource = new BehaviorSubject<any>('none');
   public currentRadiusSelector = this._radiusSelectorSource.asObservable();
 
