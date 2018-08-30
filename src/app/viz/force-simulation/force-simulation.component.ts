@@ -52,14 +52,6 @@ export class ForceSimulationComponent implements OnInit {
   forceCollide;
   ticked;
 
-  // move the circles into the center
-  circlesGroupTransform =
-    'translate(' +
-    window.innerWidth / 2 +
-    'px, ' +
-    (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
-    'px)';
-
   subscriptions = [
     'radiusSelector',
     'clusterSelector',
@@ -76,7 +68,8 @@ export class ForceSimulationComponent implements OnInit {
     'defaultCircleRadius',
     'svgTransform',
     'sliderPositions',
-    'circleImagesActive'
+    'circleImagesActive',
+    'circlesGroupTransform'
   ];
   radiusSelector = 'none'; // default value because forceGravity defined before subscription
   sliderPositions;
@@ -92,6 +85,7 @@ export class ForceSimulationComponent implements OnInit {
   numClusters;
   svgTransform = 'scale(1)'; // zoom when fewer nodes
   zoomAmount;
+  circlesGroupTransform;
 
   circleImagesActive;
 
@@ -129,6 +123,15 @@ export class ForceSimulationComponent implements OnInit {
       const titleCase = s.charAt(0).toUpperCase() + s.slice(1);
       this._statusService['current' + titleCase].subscribe(v => (this[s] = v));
     });
+
+    // move the circles into the center
+    this._statusService.changeCirclesGroupTransform(
+      'translate(' +
+        window.innerWidth / 2 +
+        'px, ' +
+        (window.innerHeight - this.NAVBAR_HEIGHT + 20) / 2 +
+        'px)'
+    );
   }
 
   initForceSimulation() {
@@ -175,6 +178,8 @@ export class ForceSimulationComponent implements OnInit {
   }
 
   recenterForceSimulation(event: any) {
+    console.log(event);
+
     this.radiusSelector === 'none'
       ? (this.nodeAttraction =
           Math.min(
@@ -203,12 +208,20 @@ export class ForceSimulationComponent implements OnInit {
         .alpha(0.3)
         .restart()
     );
-    this.circlesGroupTransform =
-      'translate(' +
-      event.target.innerWidth / 2 +
-      'px,' +
-      (event.target.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
-      'px)';
+    this._statusService.changeCirclesGroupTransform(
+      (this.circlesGroupTransform =
+        'translate(' +
+        event.target.innerWidth / 2 +
+        'px,' +
+        (event.target.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
+        'px)')
+    );
+    // this.circlesGroupTransform =
+    //   'translate(' +
+    //   event.target.innerWidth / 2 +
+    //   'px,' +
+    //   (event.target.innerHeight - this.NAVBAR_HEIGHT + 80) / 2 +
+    //   'px)';
   }
 
   filterForceSimulation() {

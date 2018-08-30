@@ -142,7 +142,8 @@ export class VizComponent implements OnInit, AfterContentInit {
     'numClusters',
     'defaultCircleRadius',
     'svgTransform',
-    'sliderPositions'
+    'sliderPositions',
+    'circlesGroupTransform'
   ];
   radiusSelector = 'none'; // default value because forceGravity defined before subscription
   sliderPositions;
@@ -158,7 +159,7 @@ export class VizComponent implements OnInit, AfterContentInit {
   numClusters;
   svgTransform = 'scale(1)'; // zoom when fewer nodes
   zoomAmount;
-
+  circlesGroupTransform;
 
   // ----- SIMULATION & FORCES ----- //
   // clusteringAmount = 0.5;
@@ -176,8 +177,6 @@ export class VizComponent implements OnInit, AfterContentInit {
   // forceCollide = null;
   forceCollide;
   ticked;
-
-
 
   // tooltip
   tooltipData;

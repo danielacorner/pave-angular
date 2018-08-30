@@ -62,6 +62,9 @@ export class AppStatusService {
   private _circleImagesActiveSource = new BehaviorSubject<any>(false);
   public currentCircleImagesActive = this._circleImagesActiveSource.asObservable();
 
+  private _circlesGroupTransformSource = new BehaviorSubject<any>(null);
+  public currentCirclesGroupTransform = this._circlesGroupTransformSource.asObservable();
+
   // private _circlesSource = new BehaviorSubject<any>(null);
   // public currentCircles = this._circlesSource.asObservable();
 
@@ -141,6 +144,10 @@ export class AppStatusService {
 
   public changeCircleImagesActive(v) {
     this._circleImagesActiveSource.next(v);
+  }
+
+  public changeCirclesGroupTransform(v) {
+    this._circlesGroupTransformSource.next(v);
   }
 
   constructor() {}
