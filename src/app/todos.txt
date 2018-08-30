@@ -2,6 +2,11 @@ todos
 -----
 
 next:
+- materializecss
+  - scale-transition, scale-out, scale-in classes https://materializecss.com/css-transitions.html#!
+  - floating button https://materializecss.com/buttons.html
+    - replicate this style https://material.io/design/components/sheets-bottom.html#behavior
+      - halfway FAB in navbar https://materializecss.com/navbar.html
 - debug mobile view: positioning after filtering
 
 - colour spectra for each colour-sort variable

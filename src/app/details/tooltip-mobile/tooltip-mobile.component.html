@@ -1,0 +1,71 @@
+<mat-list role="list">
+  <a class="btn-floating btn-large halfway-fab header-image-mobile">
+  </a>
+  <mat-list-item role="listitem" class="purple white-text">
+    {{data.ttdata.job | titlecase}}
+  </mat-list-item>
+  <mat-list-item role="listitem">Item 2</mat-list-item>
+  <mat-list-item role="listitem">Item 3</mat-list-item>
+</mat-list>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="header-image-mobile"></div>
+    <mat-card-title>{{data.ttdata.job}}</mat-card-title>
+    <mat-card-subtitle>{{data.ttdata.sector}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    Here is a very brief job description; it could be roughly 100 characters.
+  </mat-card-content>
+  <div class="center">
+    <mat-card-actions>
+      <button (click)="openDetails(data.ttdata)" mat-button>
+        <mat-icon class="btn-icon blue-icon">info</mat-icon>
+        LEARN MORE</button>
+      <button mat-button>
+        <mat-icon class="btn-icon orange-icon">star</mat-icon>
+        FAVOURITE</button>
+    </mat-card-actions>
+  </div>
+
+  <img mat-card-image [src]="(wdw.location.href.includes('localhost')
+      ? '../../assets/img/NOC_images/' + data.ttdata.noc + '.jpg'
+      : '../../pave-angular/assets/img/NOC_images/' + data.ttdata.noc + '.jpg')" alt="Photo of {{data.ttdata.job}}">
+  <p>
+    Here is a longer job description; it could be roughly 250 characters. Lorem Ipsum is simply dummy text of the printing and
+    typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+  </p>
+
+
+
+  <!-- PANEL 2 -->
+  <mat-expansion-panel class="panel" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        What to study
+      </mat-panel-title>
+      <mat-panel-description>
+        Programs, courses, scholarships, tuition
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>
+      Here are details about the program of study, such as courses, timeline, tuition, scholarships... Lorem Ipsum is simply dummy
+      text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
+      1500s,
+    </p>
+  </mat-expansion-panel>
+  <!-- PANEL 3 -->
+  <mat-expansion-panel class="panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Where to study
+      </mat-panel-title>
+      <mat-panel-description>
+        Schools offering this program of study
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>
+      Here are details about schools offering this program of study. Lorem Ipsum is simply dummy text of the printing and typesetting
+      industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+    </p>
+  </mat-expansion-panel>
