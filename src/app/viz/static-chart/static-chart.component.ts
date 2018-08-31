@@ -67,7 +67,7 @@ export class StaticChartComponent implements OnInit {
   }
 
   initStaticChart() {
-    // todo: extract force simulation to its own component
+    // todo: extract render() from init() and rerender()
     // todo: scale and re-render chart on resize
     // todo: hide appended text under threshold < circle radius
     // todo: hide appended text under threshold
@@ -123,6 +123,8 @@ export class StaticChartComponent implements OnInit {
       .append('circle')
       .attr('id', d => `circle_${d.data.id}`)
       .attr('r', d => d.r)
+      .style('stroke', 'black')
+      .style('stroke-width', 0)
       .style('fill', d => this.colourScale(d.data.all.cluster));
 
     // handle mouseover
@@ -249,6 +251,8 @@ export class StaticChartComponent implements OnInit {
       .attr('r', d => d.r)
       .style('fill', d => this.colourScale(d.data.all.cluster))
       .style('opacity', 0)
+      .style('stroke', 'black')
+      .style('stroke-width', 0)
       .transition()
       .duration(1000)
       .style('opacity', 1);

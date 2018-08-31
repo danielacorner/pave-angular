@@ -16,7 +16,7 @@ import APP_CONFIG from '../../app.config';
 <div id="tooltip" class="tooltip z-depth-3"
   [style.top]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? null : tooltipY - 173 + 'px')"
   [style.bottom]="(tooltipY + 595 > windowInnerHeight && headerOpenState ? '20px' : null)"
-  [style.left]="(tooltipX > windowInnerWidth * 0.5 ? tooltipX - 360 - circleR + 'px' : tooltipX + circleR + 'px')"
+  [style.left]="(tooltipX + 'px')"
   [style.pointerEvents]="(expanded ? 'auto' : 'none')"
   [style.display]="(windowInnerWidth < this.MOBILE_BREAKPOINT ? 'none' : 'inline')"
   >

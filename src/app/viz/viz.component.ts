@@ -351,7 +351,8 @@ export class VizComponent implements OnInit, AfterContentInit {
       this.initTooltip(d);
 
       // highlight the circle border
-      d3.select('#circle_' + d.id).style('stroke-width', 2);
+      d3.select(`#circle_${d.id || d.data.id}`).style('stroke-width', 2);
+      // : d3.select(`#circle_${d.data.id}`).style('stroke-width', 2);
 
       // start the clock for auto-expansion after 2 seconds unless clicked-closed
       if (!this.justClosed) {
@@ -371,7 +372,7 @@ export class VizComponent implements OnInit, AfterContentInit {
       clearTimeout(this.autoExpand);
 
       // remove the border highlight (unless zoomed in and circle images are showing)
-      d3.select('#circle_' + d.id).style(
+      d3.select(`#circle_${d.id || d.data.id}`).style(
         'stroke-width',
         this.circleImagesActive ? 1.5 : 0
       );
@@ -399,24 +400,18 @@ export class VizComponent implements OnInit, AfterContentInit {
   }
 
   private initTooltip(d: any) {
-    if (this.forceSimulationActive) {
+    const circleBox = document
+      .querySelector(`#circle_${d.id || d.data.id}`)
+      .getBoundingClientRect();
+
+    const { left, top } = circleBox;
+
+    this.tooltipData = {
       // for the force simulation
-      this.tooltipData = {
-        d: d,
-        x: d.x + this.width / 2,
-        y: d.y + this.height / 2 + 180
-      };
-    } else {
-      // for the static chart
-      this.tooltipData = {
-        d: d.data,
-        x:
-          d.x < getWidth('.bubble') / 2
-            ? d.x + this.width / 2 + 40
-            : d.x + this.width / 2 - 340,
-        y: d.y + this.height / 2 - 80
-      };
-    }
+      d: this.forceSimulationActive ? d : d.data,
+      x: left < window.innerWidth / 2 ? left + 20 : left - 360,
+      y: top + 120
+    };
   }
 
   // close tooltip on background click

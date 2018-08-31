@@ -178,8 +178,6 @@ export class ForceSimulationComponent implements OnInit {
   }
 
   recenterForceSimulation(event: any) {
-    console.log(event);
-
     this.radiusSelector === 'none'
       ? (this.nodeAttraction =
           Math.min(
