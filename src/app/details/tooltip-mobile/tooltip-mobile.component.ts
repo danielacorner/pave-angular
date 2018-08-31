@@ -161,7 +161,8 @@ export class TooltipMobileComponent implements OnInit {
       .style('justify-content', 'center')
       .style('padding-bottom', '11px');
 
-    d3.selectAll('.mat-button-wrapper')
+    d3.select('.mat-list')
+      .selectAll('.mat-button-wrapper')
       .style('display', 'grid')
       .style('grid-template-columns', 'auto auto')
       .selectAll('*')
