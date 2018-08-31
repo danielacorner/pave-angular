@@ -12,34 +12,41 @@ import * as d3 from 'd3';
 
 @Component({
   selector: 'app-tooltip-mobile',
-  template: `<mat-list role="list">
-  <a class="btn-floating btn-large halfway-fab header-image-mobile">
-  </a>
-  <mat-list-item role="listitem" class="titlelistitem purple white-text">
-    {{data.ttdata.job | titlecase}}
-  </mat-list-item>
-  <mat-list-item role="listitem" class="subtitlelistitem white grey-text">
-  {{data.ttdata.sector}}
-  </mat-list-item>
-  <mat-list-item role="listitem" class="descriptionlistitem white">
-  Here is a very brief job description; it could be roughly 100 characters.
-  </mat-list-item>
+  template: `
+  <mat-list role="list"
+  appDraggable dragHandle=".mat-bottom-sheet-container" dragTarget=".mat-bottom-sheet-container"
+  >
+    <div class="titlelist">
 
-  <mat-list-item role="listitem" class="buttonslistitem white">
+    <a class="btn-floating btn-large halfway-fab header-image-mobile">
+    </a>
+    <mat-list-item role="listitem" class="titlelistitem purple white-text">
+      {{data.ttdata.job | titlecase}}
+    </mat-list-item>
+    <mat-list-item role="listitem" class="subtitlelistitem white grey-text">
+    {{data.ttdata.sector}}
+    </mat-list-item>
+    <mat-list-item role="listitem" class="descriptionlistitem white">
+    Here is a very brief job description; it could be roughly 100 characters.
+    </mat-list-item>
 
-      <button (click)="openDetails(data.ttdata)" mat-button>
-      <mat-icon class="btn-icon blue-icon">info</mat-icon>
-      <span btn-text>LEARN MORE</span>
-      </button>
+    <mat-list-item role="listitem" class="buttonslistitem white">
 
-      <button mat-button>
-      <mat-icon class="btn-icon orange-icon">star</mat-icon>
-      <span btn-text>FAVOURITE</span>
-      </button>
+        <button (click)="openDetails(data.ttdata)" mat-button>
+        <mat-icon class="btn-icon blue-icon">info</mat-icon>
+        <span btn-text>LEARN MORE</span>
+        </button>
 
-  </mat-list-item>
+        <button mat-button>
+        <mat-icon class="btn-icon orange-icon">star</mat-icon>
+        <span btn-text>FAVOURITE</span>
+        </button>
 
-  <mat-divider></mat-divider>
+    </mat-list-item>
+
+    </div>
+
+    <mat-divider></mat-divider>
 
 </mat-list>
 
@@ -135,12 +142,21 @@ export class TooltipMobileComponent implements OnInit {
 
     // todo: move these to global scss file
     d3.select('.mat-bottom-sheet-container')
-      .style('overflow', 'hidden')
+      // .style('overflow', 'hidden')
       .style('padding', 0)
+      .style('max-height', '100vh')
+      .style('position', 'absolute')
+      .style('left', '0px')
+      .style(
+        'top',
+        `${window.innerHeight -
+          document.querySelector('.titlelist').getBoundingClientRect().height -
+          100}px`
+      )
       .style('box-shadow', 'none')
       .style('background-color', 'rgba(0,0,0,0)');
 
-    d3.selectAll('.white')
+    d3.selectAll('mat-list-item .white')
       .style('height', 'auto')
       .style('padding-top', '11px');
 
@@ -159,7 +175,7 @@ export class TooltipMobileComponent implements OnInit {
 
     d3.select('.buttonslistitem div')
       .style('justify-content', 'center')
-      .style('padding-bottom', '11px');
+      .style('padding', '11px 16px');
 
     d3.select('.mat-list')
       .selectAll('.mat-button-wrapper')
@@ -171,6 +187,11 @@ export class TooltipMobileComponent implements OnInit {
     d3.selectAll('[btn-text]').style('margin-left', '4px');
   }
 
+  // todo: draggable directive ends at max bottomsheet height -- or revert to scroll behaviour?
+
+  // todo: "learn more" button transitions up the bottomsheet to full screen
+  // todo: title gets sticks at top
+  // todo: avatar image shrinks at top
   // openLink(event: MouseEvent): void {
   //   this.bottomSheetRef.dismiss();
   //   event.preventDefault();

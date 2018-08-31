@@ -13,6 +13,8 @@ import { VizComponent } from './viz/viz.component';
 import { TooltipComponent } from './details/tooltip/tooltip.component';
 import { TooltipMobileComponent } from './details/tooltip-mobile/tooltip-mobile.component';
 import { ModalComponent } from './details/modal/modal.component';
+import { StaticChartComponent } from './viz/static-chart/static-chart.component';
+import { ForceSimulationComponent } from './viz/force-simulation/force-simulation.component';
 // Other pages
 import { ContactComponent } from './pages/contact.component';
 import { AboutComponent } from './pages/about.component';
@@ -30,11 +32,12 @@ import { DataService } from './services/data.service';
 import { AppStatusService } from './services/app-status.service';
 import { MatDialogTitle } from '@angular/material';
 
+// Directives
+import { DraggableDirective } from './directives/draggable-directive';
+
 // Material
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StaticChartComponent } from './viz/static-chart/static-chart.component';
-import { ForceSimulationComponent } from './viz/force-simulation/force-simulation.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,8 @@ import { ForceSimulationComponent } from './viz/force-simulation/force-simulatio
     DetailsComponent,
     ContactComponent,
     StaticChartComponent,
-    ForceSimulationComponent
+    ForceSimulationComponent,
+    DraggableDirective
   ],
   imports: [
     BrowserModule,
