@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -12,9 +12,9 @@ import * as d3 from 'd3';
 
 @Component({
   selector: 'app-tooltip-mobile',
+  // appDraggable dragHandle=".mat-bottom-sheet-container" dragTarget=".mat-bottom-sheet-container"
   template: `
   <mat-list role="list"
-  appDraggable dragHandle=".mat-bottom-sheet-container" dragTarget=".mat-bottom-sheet-container"
   >
     <div class="titlelist">
 
@@ -48,7 +48,6 @@ import * as d3 from 'd3';
 
     <mat-divider></mat-divider>
 
-</mat-list>
 
 <mat-card>
 
@@ -93,6 +92,10 @@ import * as d3 from 'd3';
       industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
     </p>
   </mat-expansion-panel>
+</mat-card>
+
+</mat-list>
+
 `,
   styles: [
     `
@@ -119,7 +122,7 @@ import * as d3 from 'd3';
     `
   ]
 })
-export class TooltipMobileComponent implements OnInit {
+export class TooltipMobileComponent implements OnInit, OnDestroy {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<TooltipMobileComponent>,
     public dialog: MatDialog,
@@ -127,6 +130,8 @@ export class TooltipMobileComponent implements OnInit {
   ) {}
   public wdw = window;
   public expanded = false;
+
+  private scrollListener;
 
   ngOnInit() {
     d3.select('.header-image-mobile').style(
@@ -141,11 +146,15 @@ export class TooltipMobileComponent implements OnInit {
     );
 
     // todo: move these to global scss file
+    // d3.select('body, html').style('overflow-y', 'visible');
+    // d3.select('body').style('overflow', 'visible');
+
     d3.select('.mat-bottom-sheet-container')
       // .style('overflow', 'hidden')
       .style('padding', 0)
+      .style('height', '100vh')
       .style('max-height', '100vh')
-      .style('position', 'absolute')
+      // .style('position', 'absolute')
       .style('left', '0px')
       .style(
         'top',
@@ -154,7 +163,25 @@ export class TooltipMobileComponent implements OnInit {
           100}px`
       )
       .style('box-shadow', 'none')
-      .style('background-color', 'rgba(0,0,0,0)');
+      .style('background-color', 'rgba(0,0,0,0)')
+      .on('click', () => {
+        // dismiss if clicking outside of the tooltip
+        if (
+          Array.from(d3.event.target.classList).includes(
+            'mat-bottom-sheet-container'
+          )
+        ) {
+          this.bottomSheetRef.dismiss();
+        }
+      });
+
+    const marginTop =
+      window.innerHeight -
+      document.querySelector('.titlelist').getBoundingClientRect().height -
+      100;
+
+    d3.select('.header-image-mobile').style('margin-top', `${marginTop}px`);
+    d3.select('.mat-list').style('margin-top', `${marginTop}px`);
 
     d3.selectAll('mat-list-item .white')
       .style('height', 'auto')
@@ -162,7 +189,7 @@ export class TooltipMobileComponent implements OnInit {
 
     d3.select('.titlelistitem div')
       .style('margin-top', '32px')
-      .style('padding', '11px 60px 11px 16px');
+      .style('padding', '11px 80px 11px 16px');
 
     d3.select('.titlelistitem')
       .style('min-height', '45px')
@@ -187,6 +214,10 @@ export class TooltipMobileComponent implements OnInit {
     d3.selectAll('[btn-text]').style('margin-left', '4px');
   }
 
+  scrollTooltip(e) {
+    console.log(e);
+  }
+
   // todo: draggable directive ends at max bottomsheet height -- or revert to scroll behaviour?
 
   // todo: "learn more" button transitions up the bottomsheet to full screen
@@ -196,6 +227,9 @@ export class TooltipMobileComponent implements OnInit {
   //   this.bottomSheetRef.dismiss();
   //   event.preventDefault();
   // }
+  ngOnDestroy(): void {
+    // window.removeEventListener('scroll', this.scrollListener);
+  }
 
   openDetails(jobData): void {
     // drag-up bottom sheet

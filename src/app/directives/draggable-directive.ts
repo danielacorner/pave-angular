@@ -28,6 +28,10 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  private allTheWayUp;
+  private draggingUp;
+  private maxOffsetY;
+
   constructor(private elementRef: ElementRef, private zone: NgZone) {}
 
   public ngAfterViewInit(): void {
@@ -51,19 +55,51 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
       const mousemove$ = fromEvent(document, 'mousemove');
       const mouseup$ = fromEvent(document, 'mouseup');
 
+      let maxMouseY;
+
       const mousedrag$ = mousedown$.pipe(
         switchMap((event: MouseEvent) => {
           // const startX = event.clientX;
           const startY = event.clientY;
+          let lastY;
 
           return mousemove$.pipe(
             map((e: MouseEvent) => {
               e.preventDefault();
+              // todo: if allthewayup, save mouse position
+              // todo: if dragging down, delta =
+              // console.log(e);
+              // console.log('oldY', oldY);
+              // console.log('pageY', e.pageY);
+              // console.log('oldY > pageY', oldY > e.pageY);
+
+              this.allTheWayUp =
+                this.target.getBoundingClientRect().bottom < window.innerHeight;
+              this.draggingUp = lastY > e.pageY;
               this.delta = {
                 // x: e.clientX - startX,
                 x: 0,
-                y: e.clientY - startY
+                y: !this.allTheWayUp
+                  ? e.clientY - startY
+                  : (() => {
+                      maxMouseY = maxMouseY || e.clientY;
+                      // console.log('maxmouse', maxMouseY);
+                      // console.log('clientY', e.clientY);
+                      // console.log('startY', startY);
+                      // console.log('clientY-startY', e.clientY - startY);
+                      // if (this.draggingUp) {
+                      //   return 0;
+                      // } else {
+                      const underMaxMouseY = e.clientY > maxMouseY;
+                      if (underMaxMouseY) {
+                        return e.clientY - startY;
+                      } else {
+                        return 0;
+                      }
+                      // }
+                    })()
               };
+              lastY = e.clientY;
             }),
 
             takeUntil(mouseup$)
@@ -82,8 +118,9 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
       });
 
       mouseup$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-        this.offset.x += this.delta.x;
+        // this.offset.x += this.delta.x;
         this.offset.y += this.delta.y;
+
         this.delta = { x: 0, y: 0 };
       });
     });
@@ -93,7 +130,12 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
     requestAnimationFrame(() => {
       this.target.style.transform = `
         translate(${this.offset.x + this.delta.x}px,
-                  ${this.offset.y + this.delta.y}px)
+                  ${(() => {
+                    if (this.allTheWayUp && this.draggingUp) {
+                      return;
+                    }
+                    return this.offset.y + this.delta.y;
+                  })()}px)
       `;
     });
   }
